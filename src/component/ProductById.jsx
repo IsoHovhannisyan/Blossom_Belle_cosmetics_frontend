@@ -31,8 +31,9 @@ export function ProductById() {
     
       async function loadingData() {
 
-        const productData = await axios.get(`${path}/${id}`);
+        const productData = await axios.get(`/api/${path}/${id}`);
         setProduct(productData.data);
+        console.log(productData.data);
     
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
@@ -55,7 +56,7 @@ export function ProductById() {
         }
     }
 
-    console.log(currentCategory);
+    console.log(product);
 
   return (
     <div className='Product'>

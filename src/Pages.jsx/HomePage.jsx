@@ -9,38 +9,37 @@ export function HomePage() {
   const [slider, setSlider]= useState([]);
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
-  console.log(slider);
 
-  useEffect(()=>{
-    loadingData();
-  },[])
+//   useEffect(()=>{
+//     loadingData();
+//   },[])
 
 
-  async function loadingData() {
+//   async function loadingData() {
 
-    const savedData = getSavedDataFromLocalStorage();
-    if (savedData) {
-        setSlider(savedData.sliderData);
-    }
+//     const savedData = getSavedDataFromLocalStorage();
+//     if (savedData) {
+//         setSlider(savedData.sliderData);
+//     }
 
-    if (currentLanguage) {
-        fetchData(currentLanguage)
-            .then(data => {
-                setSlider(data.sliderData);
-                localStorage.setItem('fetchedData', JSON.stringify(data));
-            })
-            .catch(error => {
-                console.error("An error occurred while fetching data:", error);
-            });
-    }
-}
+//     if (currentLanguage) {
+//         fetchData(currentLanguage)
+//             .then(data => {
+//                 setSlider(data.sliderData);
+//                 localStorage.setItem('fetchedData', JSON.stringify(data));
+//             })
+//             .catch(error => {
+//                 console.error("An error occurred while fetching data:", error);
+//             });
+//     }
+// }
 
   return (
     <div>
-      { <Slider slider={slider} />}
+      {/* { <Slider slider={slider} />} */}
     <h2 className='heading'> best sellers </h2>
     <div className='bestsellers'>
-       {<BestSellers slider={slider} />}
+       {/* {<BestSellers slider={slider} />} */}
       </div>
 
       <h2 className='heading'>Limited edition</h2>
