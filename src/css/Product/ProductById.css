@@ -1,0 +1,131 @@
+.Product .Box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    height: 600px;
+}
+
+.Product .Box .Image, .Title, .Price{
+    width: 25%;
+    height: 100%;
+}
+.Product .Box .Image img{
+    width: 100%;
+    height: 100%;
+}
+
+.Product .Box .Price .quantity{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Product .Box .Title h2{
+    font-size: 2rem;
+    font-weight: 200;
+    margin-bottom: 1rem;
+}
+
+.Product .Box .Price h2{
+    font-size: 2.5rem;
+    border-bottom: 1px solid rgb(188, 188, 188);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+}
+
+.Product .Box .Price .quantity{
+    width: 100%;
+    border: solid 1px rgb(188, 188, 188);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.Product .Box .Price .BoxBtn .btn{
+    width: 100%;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.Product .Box .Price .BoxFav .Fav{
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.5rem;
+    background-color: rgb(226, 223, 223);
+}
+
+.Product .DetailAndDelivery {
+    width: 90%;
+    max-height: 300px;
+    border: solid 1px rgb(226, 223, 223);
+}
+
+.Product .DetailAndDelivery .Title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.Product .DetailAndDelivery .Title div{
+    width: 50%;
+    text-align: center;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.Product .DetailAndDelivery .Title .notshow{
+    background-color: rgb(226, 223, 223);
+    transition: .5s;
+}
+
+.Product .DetailAndDelivery .Title .show{
+    transition: .5s;
+}
+
+
+.Product .DetailAndDelivery .DetailOrDelivery{
+    padding: 2.5rem;
+}
+
+/* aaaaaaaaaaaaaaaaaaaaaaa */
+
+
+
+
+
+.IntrestingProducts {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid rgb(216, 214, 214);
+    padding-bottom: 2rem;
+    
+}
+
+.IntrestingProducts .Product {
+    box-shadow: 0 0 1px;
+    border-radius: .5rem;
+    position: relative;
+    height: 400px;
+    width: 22%;
+}
+
+
+.IntrestingProducts .Product .image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+}
+.IntrestingProducts .Product .image img{
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem; 
+}
+

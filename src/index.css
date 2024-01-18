@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  outline: none;
+  box-sizing: border-box;
+}
+
+body{
+  padding: 2rem 15rem;
+}
+
+/* .btn{
+  border: 1px;
+  background-color: blue;
+  padding: .5rem 1rem;
+  border-radius: 1rem;
+  color: blanchedalmond;
+} */
+
+.hearth {
+  position: absolute;
+  top: 0;
+  left: 93.5%;
+
+  z-index: 999;
+  background-color: aqua;
+
+  cursor: pointer;
+}
+ .hearth:hover {
+  background-color: orange;
+  transition: .2s;
+  color: red;
+}
+ .basket {
+  position: absolute;
+  right: -10px;
+  cursor: pointer;
+  padding: .3rem .2rem;
+  font-size: 1.3rem;
+  bottom: 10px;
+
+}
+ .basket:hover {
+  background-color: black;
+  transition: .2s;
+  color: white;
+  /* padding: .3rem .2rem; */
+}
+
+.fa-star {
+  font-size: .8rem;
+}
+
+.LinkDiv{
+  margin-bottom: .7rem;
+}
+
+/* /////////////////////////////////// Headerrrr /////////////////////////////*/
+
+
+.Header{
+  margin-bottom: 4rem;
+}
+
+.Header form{
+  border-bottom: 2px solid black;
+}
+
+.Search{
+  font-size: .9rem;
+  margin-right: .5rem;
+}
+
+.Header .components {
+  position: absolute;
+  top: 160%;
+  left: 15%;
+  right: 15%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Link{
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.active{
+  border-bottom: solid 2px black;
+}
+
+.Link:hover{
+  border-bottom: 2px solid black;
+  transition: .3s;
+ }
+
+ .heading{
+    padding: 2rem 0;
+    color: gray;
+    font-size: 2rem;
+    text-transform: uppercase;
+ }
+
+
+/* .Header .active{
+  color: #b20cc4;
+  border-bottom: 2px solid #8e0b9c; ;
+} */
+
+/* /////////////////////////// slider ///////////////////////// */
+
+/* //////////////////////////////////// bestSellerrs ////////////////////////////// */
+
+
+/* .bestsellers .image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.bestsellers .img3{
+  width: 30%;
+  position: relative;
+}
+.bestsellers .image .img3 img{
+  width: 100%;
+} */
+
+/* //////////////////////////////// limited Edition////////////////////////// */
+
+/* .limitedEdition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.limitedEdition .box{
+  position: relative;
+}
+
+.limitedEdition .box img{
+  width: 100%;
+} */
+
+
+/* /////////////////////////////// your skin //////////////////////////////// */
+
+
+/* .yourskin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px gray;
+  border-radius: .5rem;
+}
+
+.yourskin .image {
+  width: 50%;
+}
+
+.yourskin .image img{
+  width: 100%;
+  border-radius: .5rem;
+}
+
+.yourskin .content {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: .5rem;
+
+}
+
+.yourskin .content h3{
+  font-size: 2.5rem;
+}
+
+.yourskin .content h4{
+  font-size: 1.5rem;
+} */

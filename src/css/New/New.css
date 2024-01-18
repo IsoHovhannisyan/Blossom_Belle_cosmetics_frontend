@@ -1,0 +1,14 @@
+.New{
+    display: flex;
+    align-items: flex-start;
+}
+
+.New .NewNav{
+    border-right: solid gray 1px;
+    padding-right: 2rem;
+    margin-right: 1rem;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}

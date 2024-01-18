@@ -1,0 +1,47 @@
+.Makeup{
+    display: flex;
+    /* justify-content: center; */
+    align-items: flex-start;
+}
+
+.Makeup .MakeupNav{
+    /* border-right: solid gray 1px;
+    padding-right: 2rem;
+    margin-right: 1rem;
+    height: 200px;
+    display: flex;
+    flex-direction: column; */
+    width: 25%;
+    /* justify-content: center; */
+
+}
+
+.Makeup .products{
+    width: 74%;
+}
+
+.Makeup .products .box{
+    display: none;
+}
+
+.Makeup .products .box.show{
+    display: block;
+}
+
+.Products {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid rgb(216, 214, 214);
+    padding-bottom: 2rem;
+    
+}
+
+.Products .Product {
+    box-shadow: 0 0 1px;
+    border-radius: .5rem;
+    position: relative;
+    height: 400px;
+    width: 22%;
+}
