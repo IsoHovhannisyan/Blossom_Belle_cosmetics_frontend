@@ -12,6 +12,7 @@ export function HomePage() {
 
   useEffect(()=>{
     loadingData();
+    localStorage.clear();
   },[])
 
 

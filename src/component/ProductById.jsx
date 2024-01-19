@@ -3,9 +3,10 @@ import axios from '../axios'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchData, getSavedDataFromLocalStorage } from './Header';
 import '../css/Product/ProductById.css';
-import { IntrestingProducts } from './IntrestingProducts';
 
-export function ProductById() {
+export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity,showQuantity}) {
+
+    const [quantity, setQuantity] = useState(1);
 
     const [product, setProduct] = useState()
     const [productLabel, setProductLabel] = useState();
@@ -18,9 +19,6 @@ export function ProductById() {
     const id = searchParams.get('id');
     const pathName = path+'Data';
     const navigate = useNavigate();
-
-    
-    const [quantity, setQuantity] = useState(1);
 
 
 
@@ -62,6 +60,14 @@ export function ProductById() {
         window.location.reload();
     }
 
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        setBasketQuantity( basketQuantity + quantity);
+        sessionStorage.setItem(JSON.stringify(product));
+        setShowQuantity(true);
+        setQuantity(1);   
+    }
+
 
   return (
      showIntrestingProducts && <div className='Product'>
@@ -83,7 +89,7 @@ export function ProductById() {
                  <div onClick={()=> setQuantity(quantity+1)} className=' cursor-pointer'>+</div>
              </div>
              <div className='BoxBtn'>
-                 <button className='btn'>{productLabel?.[0]?.btn_text}</button>
+                 <button className='btn' onClick={handleSubmit}>{productLabel?.[0]?.btn_text}</button>
              </div>
              <div className='BoxFav'>
                  <button className='Fav'>{productLabel?.[0]?.basket_text}<i className="fa-regular fa-heart ml-[.5rem]"></i></button>

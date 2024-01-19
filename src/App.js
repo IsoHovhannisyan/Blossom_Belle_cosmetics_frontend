@@ -19,9 +19,12 @@ import { ProductById } from './component/ProductById'
 
 export function App() {
 
+  const [basketQuantity, setBasketQuantity] = useState(0);
+  const [showQuantity, setShowQuantity] = useState(false);
+
   return (
     <div>
-      <Header/>
+      <Header basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity}  />
         <Routes >
           <Route path='/'  element={<HomePage />}/>
           <Route path='/new' element={<NewPage/>}>
@@ -40,7 +43,7 @@ export function App() {
           <Route path='/brushes'  element={< BrushPage/>} />
 
 
-          <Route path='/product' element={< ProductById />}  />
+          <Route path='/product' element={< ProductById basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} />}  />
           
 
         </Routes>

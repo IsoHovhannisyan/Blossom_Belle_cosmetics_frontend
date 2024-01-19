@@ -46,7 +46,7 @@ export function getSavedDataFromLocalStorage() {
   return null;
 }
 
-export function Header() {
+export function Header({basketQuantity, setBasketQuantity, showQuantity}) {
 
 
   return (
@@ -62,7 +62,11 @@ export function Header() {
             <div>
                 <i className="fa-regular fa-heart mr-4"></i>
                 <i className="fa-regular fa-user mr-4"> </i>
-                <i className="fa-solid fa-bag-shopping mr-4"></i>
+                <div>
+                    <i className="fa-solid fa-bag-shopping mr-4"></i>
+                    {showQuantity && basketQuantity}
+                </div>
+                
             </div>
             <div className=' components'>
                 <Link to='/new' className='Link' >New <div className='DivLink'></div></Link>
