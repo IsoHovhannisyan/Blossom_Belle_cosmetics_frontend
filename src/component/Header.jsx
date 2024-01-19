@@ -6,14 +6,14 @@ export async function fetchData(language) {
 
   try {
       const [
-        //   sliderData,
+          sliderData,
           makeupData,
           skincareData,
           hairData,
           brushData,
           ProductLabelData,
       ] = await Promise.all([
-        //   axios.get(`/api/slider?lang=${language}`),
+          axios.get(`/api/slider?lang=${language}`),
           axios.get(`/api/makeup?lang=${language}`),
           axios.get(`/api/skincare?lang=${language}`),
           axios.get(`/api/hair?lang=${language}`),
@@ -22,7 +22,7 @@ export async function fetchData(language) {
       ]);
 
       const data = {
-        //   sliderData: sliderData.data,
+          sliderData: sliderData.data,
           makeupData: makeupData.data,
           skincareData: skincareData.data,
           hairData: hairData.data,
