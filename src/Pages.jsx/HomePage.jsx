@@ -33,8 +33,6 @@ export function HomePage() {
             });
     }
 
-    localStorage.clear();
-
 }
 
   return (
@@ -42,7 +40,7 @@ export function HomePage() {
       { <Slider slider={slider} />}
     <h2 className='heading'> best sellers </h2>
     <div className='bestsellers'>
-       {/* {<BestSellers slider={slider} />} */}
+       {<BestSellers slider={slider} />}
       </div>
 
       <h2 className='heading'>Limited edition</h2>

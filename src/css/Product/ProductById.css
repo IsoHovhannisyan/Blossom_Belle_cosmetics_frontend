@@ -59,8 +59,8 @@
 
 .Product .DetailAndDelivery {
     width: 90%;
-    max-height: 300px;
     border: solid 1px rgb(226, 223, 223);
+    margin-bottom: 3rem;
 }
 
 .Product .DetailAndDelivery .Title{
@@ -89,6 +89,8 @@
 
 .Product .DetailAndDelivery .DetailOrDelivery{
     padding: 2.5rem;
+    height: 300px;
+    overflow-y: scroll;
 }
 
 /* aaaaaaaaaaaaaaaaaaaaaaa */
