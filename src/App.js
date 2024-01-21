@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Header } from './component/Header'
 import { Footer } from './component/Footer'
@@ -16,11 +16,13 @@ import { NewBrushes } from './component/New/NewBrushes'
 import { NewHairCare } from './component/New/NewHairCare'
 import { NewGifts } from './component/New/NewGifts'
 import { ProductById } from './component/ProductById'
+import { BasketPage } from './Pages.jsx/BasketPage'
 
 export function App() {
 
   const [basketQuantity, setBasketQuantity] = useState(0);
   const [showQuantity, setShowQuantity] = useState(false);
+  const [basketProducts, setBasketProducts] = useState([]);
 
   return (
     <div>
@@ -42,7 +44,7 @@ export function App() {
           <Route path='/skincare'  element={< SkincarePage/>} />
           <Route path='/brushes'  element={< BrushPage/>} />
 
-
+          <Route path='/basket' element={<BasketPage />} />
           <Route path='/product' element={< ProductById basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} />}  />
           
 

@@ -7,7 +7,7 @@ import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 export function HomePage() {
 
   const [slider, setSlider]= useState([]);
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'am';
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
 
   useEffect(()=>{

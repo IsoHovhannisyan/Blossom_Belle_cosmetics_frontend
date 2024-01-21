@@ -1,5 +1,5 @@
 
-import { NavLink as Link } from 'react-router-dom'
+import { NavLink as Link, useNavigate } from 'react-router-dom'
 import axios from '../axios';
 
 export async function fetchData(language) {
@@ -12,6 +12,7 @@ export async function fetchData(language) {
           hairData,
           brushData,
           ProductLabelData,
+          BasketLabelData,
       ] = await Promise.all([
           axios.get(`/api/slider?lang=${language}`),
           axios.get(`/api/makeup?lang=${language}`),
@@ -19,6 +20,7 @@ export async function fetchData(language) {
           axios.get(`/api/hair?lang=${language}`),
           axios.get(`/api/brush?lang=${language}`),
           axios.get(`/api/product?lang=${language}`),
+          axios.get(`/api/basket?lang=${language}`),
       ]);
 
       const data = {
@@ -27,7 +29,8 @@ export async function fetchData(language) {
           skincareData: skincareData.data,
           hairData: hairData.data,
           brushData: brushData.data,
-          ProductLabelData: ProductLabelData.data
+          ProductLabelData: ProductLabelData.data,
+          BasketLabelData: BasketLabelData.data
       };
 
       localStorage.setItem('fetchedData', JSON.stringify(data));
@@ -46,8 +49,9 @@ export function getSavedDataFromLocalStorage() {
   return null;
 }
 
-export function Header({basketQuantity, setBasketQuantity, showQuantity}) {
+export function Header({basketQuantity, showQuantity}) {
 
+    const navigate = useNavigate();
 
   return (
     <div className='Header flex justify-between items-center relative'>
@@ -62,7 +66,7 @@ export function Header({basketQuantity, setBasketQuantity, showQuantity}) {
             <div>
                 <i className="fa-regular fa-heart mr-4"></i>
                 <i className="fa-regular fa-user mr-4"> </i>
-                <div>
+                <div onClick={()=> navigate('/basket')}>
                     <i className="fa-solid fa-bag-shopping mr-4"></i>
                     {showQuantity && basketQuantity}
                 </div>

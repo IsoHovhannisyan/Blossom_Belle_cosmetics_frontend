@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../axios'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { json, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchData, getSavedDataFromLocalStorage } from './Header';
 import '../css/Product/ProductById.css';
 
-export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity,showQuantity}) {
+export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity }) {
 
     const [quantity, setQuantity] = useState(1);
 
     const [product, setProduct] = useState()
     const [productLabel, setProductLabel] = useState();
     const [currentCategory, setCurrentCategory] = useState([]);
-    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
     const [toggle, setToggle] = useState(1);
     const [showIntrestingProducts, setShowIntrestingProducts] = useState(false);
     const [searchParams] = useSearchParams();
+    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
     const path = searchParams.get('path');
     const id = searchParams.get('id');
     const pathName = path+'Data';
@@ -31,7 +31,6 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity,sh
 
         const productData = await axios.get(`/api/${path}/${id}`);
         setProduct(productData.data);
-        console.log(productData.data);
     
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
@@ -63,7 +62,27 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity,sh
     const handleSubmit = (e)=>{
         e.preventDefault();
         setBasketQuantity( basketQuantity + quantity);
-        sessionStorage.setItem(JSON.stringify(product));
+
+        if(sessionStorage.getItem('Basket-Products') != null){
+            product.quantityForOrder = quantity
+            let sessionStorageProducts = JSON.parse(sessionStorage.getItem('Basket-Products'));
+            let findProductInSesionStorage = false;
+            for(let elem of sessionStorageProducts){
+                if(elem.image == product.image){
+                    elem.quantityForOrder += quantity;
+                    findProductInSesionStorage = true;
+                }
+            }
+            if(findProductInSesionStorage){
+                sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts]))
+            }else{
+                sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts,product]));
+            }
+            console.log(JSON.parse(sessionStorage.getItem('Basket-Products')));
+        }else{
+            product.quantityForOrder = quantity
+            sessionStorage.setItem('Basket-Products', JSON.stringify([product]));
+        }
         setShowQuantity(true);
         setQuantity(1);   
     }
