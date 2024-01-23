@@ -117,6 +117,18 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
                  <div>{quantity}</div>
                  <div onClick={()=> setQuantity(quantity+1)} className=' cursor-pointer'>+</div>
              </div>
+             <div className='flex justify-left items-center gap-1 mb-[1rem] text-[1.2rem]'>
+                <div>
+                    {productLabel?.[0]?.product_qty_text.split(', ')[0]}
+                </div>
+                <div>
+                    {product?.quantity}
+                </div>
+                <div>
+                    {productLabel?.[0]?.product_qty_text.split(', ')[1]}
+                </div>
+                
+             </div>
              <div className='BoxBtn'>
                  <button className='btn' onClick={handleSubmit}>{productLabel?.[0]?.btn_text}</button>
              </div>
