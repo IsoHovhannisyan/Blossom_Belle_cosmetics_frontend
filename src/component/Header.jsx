@@ -89,7 +89,7 @@ export function Header({navbar}) {
                 <div className='border'></div>
                 <div className='Div'>{navbar?.[0]?.log.split(', ')[1]}</div>
                 <div className='border'></div>
-                <i className=" Icone fa-solid fa-bag-shopping"></i>
+                <i className=" Icone fa-solid fa-bag-shopping" onClick={()=> navigate('/basket')}></i>
                 <i className=" Icone fa-regular fa-heart"></i>
             </div>
             <div className='HeaderRight'>
@@ -143,7 +143,7 @@ export function Header({navbar}) {
                         <i className="fa-solid fa-car-side"></i>
                     </div>
 
-                    <div className={scrollDown ? 'Blossom_text active': 'Blossom_text'}>
+                    <div className={scrollDown ? 'Blossom_text active': 'Blossom_text'} onClick={()=>(navigate('/'))}>
                         <div>Blossom Belle</div>
                         <div>Cosmetics</div>
                 </div>

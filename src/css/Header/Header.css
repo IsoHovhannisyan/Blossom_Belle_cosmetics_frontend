@@ -97,7 +97,6 @@
     gap: 1rem;
     cursor: pointer; 
     position: relative;
-    z-index: 3;
 }
 
 .Header .BlossomBelle .AboutDelivery .row1{
@@ -139,6 +138,7 @@
     font-size: 1rem;
     font-weight: 300;
     transition: .2s;
+    z-index: 4;
 
 }
 
