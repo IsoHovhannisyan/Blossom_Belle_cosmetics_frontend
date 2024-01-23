@@ -7,8 +7,18 @@
   box-sizing: border-box;
 }
 
-body{
-  padding: 2rem 15rem;
+.HeaderBackground{
+  height: 3rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  z-index: 1;
+}
+
+.App{
+  padding: 0 15rem;
 }
 
 /* .btn{
@@ -61,7 +71,7 @@ body{
 /* /////////////////////////////////// Headerrrr /////////////////////////////*/
 
 
-.Header{
+/* .Header{
   margin-bottom: 4rem;
 }
 
@@ -97,7 +107,7 @@ body{
 .Link:hover{
   border-bottom: 2px solid black;
   transition: .3s;
- }
+ } */
 
  .heading{
     padding: 2rem 0;

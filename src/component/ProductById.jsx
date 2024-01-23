@@ -8,17 +8,22 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
 
     const [quantity, setQuantity] = useState(1);
 
+    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+
     const [product, setProduct] = useState()
     const [productLabel, setProductLabel] = useState();
     const [currentCategory, setCurrentCategory] = useState([]);
+    let   currentProductAnotherLang;
     const [toggle, setToggle] = useState(1);
     const [showIntrestingProducts, setShowIntrestingProducts] = useState(false);
     const [searchParams] = useSearchParams();
-    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
     const path = searchParams.get('path');
     const id = searchParams.get('id');
     const pathName = path+'Data';
     const navigate = useNavigate();
+
+    console.log(product);
+
 
 
 
@@ -30,13 +35,15 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
       async function loadingData() {
 
         const productData = await axios.get(`/api/${path}/${id}`);
-        setProduct(productData.data);
+        // setProduct( productData.data);
+
     
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
+            setProduct(savedData[pathName].filter(el=> el.image == productData.data.image)[0]);
             setProductLabel(savedData.ProductLabelData);
             setCurrentCategory(savedData[pathName].filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-            setShowIntrestingProducts(true);
+            sessionStorage.setItem('Product-Lang', JSON.stringify(currentProductAnotherLang));
         }
     
         if (currentLanguage) {
@@ -44,6 +51,8 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
                 .then(data => {
                     setProductLabel(data.ProductLabelData);
                     setCurrentCategory(data[pathName].filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+                    setProduct(data[pathName].filter(el=> el.image == productData.data.image)[0]);
+                    sessionStorage.setItem('Product-Lang', JSON.stringify(currentProductAnotherLang));
                     localStorage.setItem('fetchedData', JSON.stringify(data));
                 })
                 .catch(error => {
@@ -78,7 +87,6 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
             }else{
                 sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts,product]));
             }
-            console.log(JSON.parse(sessionStorage.getItem('Basket-Products')));
         }else{
             product.quantityForOrder = quantity
             sessionStorage.setItem('Basket-Products', JSON.stringify([product]));
@@ -86,6 +94,8 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
         setShowQuantity(true);
         setQuantity(1);   
     }
+
+    // setProduct(sessionStorage.getItem('Product-Lang') != null && JSON.parse(sessionStorage.getItem('Product-Lang'))[0]);
 
 
   return (

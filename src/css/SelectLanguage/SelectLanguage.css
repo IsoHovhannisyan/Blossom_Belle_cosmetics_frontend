@@ -1,0 +1,52 @@
+.SelectLanguage {
+    display: flex;
+    align-items: center;
+    padding: 2px 6px;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.SelectLanguage .selectedLanguage {
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.SelectLanguage i {
+    margin-left: .5rem;
+}
+
+/* .SelectLanguage .selectedLanguage .dropdown .selectedLang{
+} */
+
+.SelectLanguage .dropdown {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    text-align: center;
+    background: black;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    color: white;
+    z-index: 999;
+}
+
+.SelectLanguage .dropdown .selectedLanguag{
+    transition: .2s;
+}
+
+.SelectLanguage .dropdown .selectedLanguage:hover{
+    background-color: white;
+    color: black;
+    transition: .2s;
+}
+
+/* .SelectLanguage .selectedLanguage .dropdown .selectedLang{
+    color: black;
+} */
+
+
+.SelectLanguage .dropdown.activeSelectLang {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}

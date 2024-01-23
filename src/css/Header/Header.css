@@ -1,0 +1,168 @@
+/* *{
+    margin: 0;
+    padding: 0;
+
+} */
+
+.Header{
+    position: relative;
+}
+
+.Header .HeaderTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3rem;
+    color: rgb(181, 181, 181);
+    width: 100%;
+    z-index: 2;
+    font-size: 1.5rem;
+    padding: 0 12rem;
+}
+
+.Header .HeaderTop .HeaderLeft{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Header .HeaderTop .HeaderLeft .Icone{
+    transition: .2s;
+    margin-right: 1rem;
+}
+
+.Header .HeaderTop .HeaderLeft .Div{
+    transition: .2s;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.Header .HeaderTop .HeaderLeft .border{
+    border-right: solid 1px rgb(212, 212, 212);
+    height: 100%;
+    margin-right: 1rem;
+}
+
+.Header .HeaderTop .HeaderLeft .Div:hover{
+    transition: .2s;
+    color: white;
+}
+
+.Header .HeaderTop .HeaderLeft .Icone:hover{
+    transition: .2s;
+    color: white;
+    cursor: pointer;
+}
+.Header .HeaderTop .HeaderRight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Header .HeaderTop .HeaderRight .Icone{
+    transition: .2s;
+}
+
+.Header .HeaderTop .HeaderRight .Icone:hover {
+    transition: .2s;
+    color: white;
+    cursor: pointer;
+}
+
+.Header .HeaderTop .HeaderRight .Div{
+    cursor: pointer;
+    margin: 0 1rem;
+    transition: .2s;
+}
+
+.Header .HeaderTop .HeaderRight .Div:hover{
+    transition: .2s;
+    color: white;
+}
+
+/* //////////////////////////////////// BlossomBelle */
+
+.Header .BlossomBelle{
+    margin-top: 5rem;
+}
+
+.Header .BlossomBelle .AboutDelivery{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer; 
+    position: relative;
+    z-index: 3;
+}
+
+.Header .BlossomBelle .AboutDelivery .row1{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #666666;
+}
+
+.Header .BlossomBelle .AboutDelivery .row2{
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: #666666;
+}
+
+.Header .BlossomBelle .AboutDelivery .row3{
+    font-size: 1rem;
+    font-weight: 200;
+    color: #999999;
+    letter-spacing: .3rem;
+}
+
+.Header .BlossomBelle  .Blossom_text {
+    position: fixed;
+    left: 50%;
+    top: 6rem;
+    transform: translateX(-50%);
+    background-color: black;   
+    color: white; 
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: .2s;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0 .5rem;
+}
+
+.Header .BlossomBelle  .Blossom_text.active{
+    top: 0;
+    font-size: 1rem;
+    font-weight: 300;
+    transition: .2s;
+
+}
+
+.Header .BlossomBelle .AboutDelivery .CarIcone{
+    padding: .7rem .9rem;
+    background-color: black;
+    color: white;
+    font-size: 2rem;
+    border-radius: 50%;
+}
+
+/* ////////////////////////// navbar /////////// */
+
+.HeaderNavbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    font-size: 2rem;
+}
+
+.HeaderNavbar .Link {
+    margin-left: 2rem;
+}
+
+
+

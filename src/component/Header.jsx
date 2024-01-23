@@ -1,6 +1,10 @@
 
 import { NavLink as Link, useNavigate } from 'react-router-dom'
 import axios from '../axios';
+import { SelectLanguage } from './SelectLanguage';
+import '../css/SelectLanguage/SelectLanguage.css';
+import '../css/Header/Header.css';
+import { useEffect, useState } from 'react';
 
 export async function fetchData(language) {
 
@@ -13,6 +17,7 @@ export async function fetchData(language) {
           brushData,
           ProductLabelData,
           BasketLabelData,
+          navbarData,
       ] = await Promise.all([
           axios.get(`/api/slider?lang=${language}`),
           axios.get(`/api/makeup?lang=${language}`),
@@ -21,6 +26,7 @@ export async function fetchData(language) {
           axios.get(`/api/brush?lang=${language}`),
           axios.get(`/api/product?lang=${language}`),
           axios.get(`/api/basket?lang=${language}`),
+          axios.get(`/api/navbar?lang=${language}`),
       ]);
 
       const data = {
@@ -30,7 +36,8 @@ export async function fetchData(language) {
           hairData: hairData.data,
           brushData: brushData.data,
           ProductLabelData: ProductLabelData.data,
-          BasketLabelData: BasketLabelData.data
+          BasketLabelData: BasketLabelData.data,
+          navbarData: navbarData.data
       };
 
       localStorage.setItem('fetchedData', JSON.stringify(data));
@@ -49,19 +56,57 @@ export function getSavedDataFromLocalStorage() {
   return null;
 }
 
-export function Header({basketQuantity, showQuantity}) {
+export function Header({navbar}) {
+
+    const [scrollDown, setScrollDown] = useState(false);
+    const [showNavBar, setShowNavBar] = useState(false);
+
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScrollWindow);
+    }, []);
+
+    const onScrollWindow = () => {
+        if (window.innerWidth < 1250) {
+            setScrollDown(false);
+        } else {
+            setShowNavBar(false);
+            if (window.scrollY > 10) setScrollDown(true);
+            else setScrollDown(false);
+        }
+    };
 
     const navigate = useNavigate();
+    console.log(navbar);
 
   return (
-    <div className='Header flex justify-between items-center relative'>
+    <div className='Header'>
+
+        <div className='HeaderTop'>
+            <div className='HeaderLeft'>
+                <i className=" Icone fa-solid fa-unlock-keyhole"></i>
+                <div className='Div'>{navbar?.[0]?.log.split(', ')[0]}</div>
+                <div className='border'></div>
+                <div className='Div'>{navbar?.[0]?.log.split(', ')[1]}</div>
+                <div className='border'></div>
+                <i className=" Icone fa-solid fa-bag-shopping"></i>
+                <i className=" Icone fa-regular fa-heart"></i>
+            </div>
+            <div className='HeaderRight'>
+                <i className="Icone fa-solid fa-phone"></i>
+                <div className='Div'>+374 55 55 55 55</div>
+                    <SelectLanguage />
+                
+            </div>
+
+        </div>
         
-            <form action="">
+            {/* <form action="">
             <i className=" Search fa-solid fa-magnifying-glass"></i>
                 <input type="search" placeholder='Search' />
             </form>
             <div>
-                <Link to='/' className='Link mr-[5rem]'>SEPHORA</Link>
+                <Link to='/' className='Link mr-[5rem]'>BLOSSOM BELLE</Link>
             </div>
             <div>
                 <i className="fa-regular fa-heart mr-4"></i>
@@ -71,8 +116,8 @@ export function Header({basketQuantity, showQuantity}) {
                     {showQuantity && basketQuantity}
                 </div>
                 
-            </div>
-            <div className=' components'>
+            </div> */}
+            {/* <div className=' components'>
                 <Link to='/new' className='Link' >New <div className='DivLink'></div></Link>
                 <Link to='/makeup' className='Link'>Makeup</Link>
                 <Link to='/skincare' className='Link'>Skincare</Link>
@@ -81,6 +126,42 @@ export function Header({basketQuantity, showQuantity}) {
                 <Link to='/gifts' className='Link'>Gifts</Link>
                 <Link to='/sale' className='Link'>Sale</Link>
        
+            </div> */}
+
+            <div className='BlossomBelle'>
+
+                <div className='AboutDelivery'>
+                    <div>
+                        <div className='row1'>
+                            {navbar?.[0]?.delivery.split(', ')[0]}
+                        </div>
+                        <div className='row2'>{navbar?.[0]?.delivery.split(', ')[1]}</div>
+                        <div className='row3'>{navbar?.[0]?.delivery.split(', ')[2]}</div>
+                    </div>
+                    
+                    <div className='CarIcone'>
+                        <i className="fa-solid fa-car-side"></i>
+                    </div>
+
+                    <div className={scrollDown ? 'Blossom_text active': 'Blossom_text'}>
+                        <div>Blossom Belle</div>
+                        <div>Cosmetics</div>
+                </div>
+                    
+                </div>
+                
+            </div>
+
+            <div className='HeaderNavbar'>
+
+                <Link to={`/new`} className='Link' >{navbar?.[0]?.navbar.split(', ')[0]}</Link>
+                <Link to={`/makeup`} className='Link' >{navbar?.[0]?.navbar.split(', ')[1]}</Link>
+                <Link to={`/skincare`} className='Link' >{navbar?.[0]?.navbar.split(', ')[2]}</Link>
+                <Link to={`/brushes`} className='Link' >{navbar?.[0]?.navbar.split(', ')[3]}</Link>
+                <Link to={`/hair`} className='Link' >{navbar?.[0]?.navbar.split(', ')[4]}</Link>
+                <Link to={`/gifts`} className='Link' >{navbar?.[0]?.navbar.split(', ')[5]}</Link>
+                <Link to={`/sale`} className='Link' >{navbar?.[0]?.navbar.split(', ')[6]}</Link>
+
             </div>
 
     </div>

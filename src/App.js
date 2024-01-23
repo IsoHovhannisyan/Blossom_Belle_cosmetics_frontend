@@ -17,6 +17,7 @@ import { NewHairCare } from './component/New/NewHairCare'
 import { NewGifts } from './component/New/NewGifts'
 import { ProductById } from './component/ProductById'
 import { BasketPage } from './Pages.jsx/BasketPage'
+import { fetchData, getSavedDataFromLocalStorage } from './component/Header';
 
 export function App() {
 
@@ -24,9 +25,35 @@ export function App() {
   const [showQuantity, setShowQuantity] = useState(false);
   const [basketProducts, setBasketProducts] = useState([]);
 
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+  const [navbar, setNavbar] = useState([]);
+  const [footer, setFooter] = useState([]);
+
+  useEffect(() => {
+    const savedData = getSavedDataFromLocalStorage();
+    if (savedData) {
+      setNavbar(savedData.navbarData);
+      // setFooter(savedData.footer);
+    }
+
+    if (currentLanguage) {
+      fetchData(currentLanguage)
+        .then(data => {
+          setNavbar(data.navbarData);
+          // setFooter(data.footerData);
+        })
+        .catch(error => {
+          console.error("An error occurred while fetching data:", error);
+        });
+    }
+  }, [currentLanguage]);
+
+
   return (
-    <div>
-      <Header basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity}  />
+    <div className=''>
+      <div className='HeaderBackground'></div>
+        <div className='App'>
+      <Header basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} navbar={navbar} />
         <Routes >
           <Route path='/'  element={<HomePage />}/>
           <Route path='/new' element={<NewPage/>}>
@@ -50,6 +77,7 @@ export function App() {
 
         </Routes>
       <Footer/>
+    </div>
     </div>
   )
 }
