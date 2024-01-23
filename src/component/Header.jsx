@@ -5,6 +5,7 @@ import { SelectLanguage } from './SelectLanguage';
 import '../css/SelectLanguage/SelectLanguage.css';
 import '../css/Header/Header.css';
 import { useEffect, useState } from 'react';
+import logo from "../Images/logo1.jpg"
 
 export async function fetchData(language) {
 
@@ -144,8 +145,10 @@ export function Header({navbar}) {
                     </div>
 
                     <div className={scrollDown ? 'Blossom_text active': 'Blossom_text'} onClick={()=>(navigate('/'))}>
-                        <div>Blossom Belle</div>
-                        <div>Cosmetics</div>
+                        <div className='BlossomLogo'>
+                            <img src={logo} alt="" />
+                        </div>
+                        
                 </div>
                     
                 </div>

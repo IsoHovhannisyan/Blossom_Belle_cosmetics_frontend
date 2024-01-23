@@ -133,13 +133,31 @@
     padding: 0 .5rem;
 }
 
-.Header .BlossomBelle  .Blossom_text.active{
+.Header .BlossomBelle  .Blossom_text .BlossomLogo{
+    height: 4rem;
+    width: 15rem;
+    transition: .2s;
+}
+
+.Header .BlossomBelle  .Blossom_text .BlossomLogo img{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+.Header .BlossomBelle  .Blossom_text.active {
     top: 0;
-    font-size: 1rem;
-    font-weight: 300;
     transition: .2s;
     z-index: 4;
+}
 
+.Header .BlossomBelle  .Blossom_text.active .BlossomLogo{
+    height: 3rem;
+    width: 13rem;
+    transition: .2s;
 }
 
 .Header .BlossomBelle .AboutDelivery .CarIcone{
