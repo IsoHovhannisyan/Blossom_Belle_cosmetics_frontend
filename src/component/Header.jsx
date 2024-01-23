@@ -5,7 +5,7 @@ import { SelectLanguage } from './SelectLanguage';
 import '../css/SelectLanguage/SelectLanguage.css';
 import '../css/Header/Header.css';
 import { useEffect, useState } from 'react';
-import logo from "../Images/logo1.jpg"
+import logo from "../Images/logo3.jpg"
 
 export async function fetchData(language) {
 
