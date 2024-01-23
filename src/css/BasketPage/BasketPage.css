@@ -142,6 +142,45 @@
     transform: translateY(-50%) translateX(-50%);
 }
 
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Quantity .ProductQtyText{
+    /* width: 100%;
+    position: absolute;
+    top: 150%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    display: none;
+}
+
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Quantity .ProductQtyText.active{
+    width: 100%;
+    position: absolute;
+    top: 150%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+}
+
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Quantity .ProductQtyText.active i {
+    position: relative;
+    left: 0;
+    top: 0;
+    font-size: 1rem;
+}
+
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Quantity .ProductQtyText.active .Insufficient{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    font-size: .7rem;
+    gap: .1rem;
+    width: 120%;
+    position: relative;
+}
+
 .NotEmptyBasket .Basket .BasketProducts .BasketProduct .PriceQty{
     padding: 2rem;
     position: relative;

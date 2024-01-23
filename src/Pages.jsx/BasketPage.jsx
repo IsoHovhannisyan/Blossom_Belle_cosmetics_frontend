@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export function BasketPage() {
 
     const [basketLabel, setBasketLabel] = useState([]);
+    const [productLabel, setProductLabel] = useState();
     const navigate = useNavigate();
     const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
     let [sessionStorageBasketProducts, setSessionStorageBasketProducts] = useState(JSON.parse(sessionStorage.getItem('Basket-Products')));
@@ -23,12 +24,14 @@ export function BasketPage() {
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
             setBasketLabel(savedData.BasketLabelData);
+            setProductLabel(savedData.ProductLabelData);
         }
     
         if (currentLanguage) {
             fetchData(currentLanguage)
                 .then(data => {
                     setBasketLabel(data.BasketLabelData);
+                    setProductLabel(data.ProductLabelData);
                     localStorage.setItem('fetchedData', JSON.stringify(data));
                 })
                 .catch(error => {
@@ -121,6 +124,19 @@ export function BasketPage() {
                                         <div className='minus' onClick={()=> minus(el)}><i className="fa-solid fa-minus"><div></div></i></div>
                                         <div className='qty'>{el.quantityForOrder}</div>
                                         <div className='plus' onClick={()=> plus(el)}><i className="fa-solid fa-plus"></i></div>
+                                        <div className={el.quantityForOrder > el.quantity ? 'ProductQtyText active': 'ProductQtyText'}>
+                                            <i className="fa-solid fa-xmark "></i>
+                                            <div className='Insufficient'>
+                                                <p>{productLabel?.[0]?.product_qty_text.split(', ')[0]}</p>
+                                                <div className='flex justify-center items-center'>
+                                                    <p>{el.quantity}</p>
+                                                    <p>{productLabel?.[0]?.product_qty_text.split(', ')[1]}</p>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            
+                                        </div>
                                     </div>
                                     <div onClick={()=> refreshProducts()}>
                                         <i className="fa-solid fa-rotate-right text-green-600 cursor-pointer text-[20px]"></i>
