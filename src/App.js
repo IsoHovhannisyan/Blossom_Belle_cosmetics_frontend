@@ -18,6 +18,8 @@ import { NewGifts } from './component/New/NewGifts'
 import { ProductById } from './component/ProductById'
 import { BasketPage } from './Pages.jsx/BasketPage'
 import { fetchData, getSavedDataFromLocalStorage } from './component/Header';
+import { LoginPage } from './Pages.jsx/LoginPage'
+import { RegisterPage } from './Pages.jsx/RegisterPage'
 
 export function App() {
 
@@ -55,6 +57,8 @@ export function App() {
         <div className='App'>
       <Header basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} navbar={navbar} />
         <Routes >
+          <Route path='/login' element={<LoginPage currentLanguage={currentLanguage} />} />
+          <Route path='/register' element={<RegisterPage currentLanguage={currentLanguage}  />} />
           <Route path='/'  element={<HomePage />}/>
           <Route path='/new' element={<NewPage/>}>
             <Route path='/new' element={<NewMakeup />}/>

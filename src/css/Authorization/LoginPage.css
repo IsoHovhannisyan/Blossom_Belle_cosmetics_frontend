@@ -1,0 +1,136 @@
+.Login{
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Login .LoginBox{
+    width: 40%;
+}
+
+.Login .LoginBox .Login_title_box{
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.Login .LoginBox .Login_title_box .Login_title{
+    font-size: 2rem;
+    letter-spacing: .3rem;
+    font-weight: 700;
+}
+
+.Login .LoginBox .Login_title_box .Login_text{
+    font-family: cursive;
+    font-weight: 300;
+}
+
+.Login .LoginBox .Authorization {
+    width: 60%;
+    margin: auto;
+}
+
+.Login .InputBox{
+    position: relative;
+    width: 350px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.Login .InputBox input{
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #a0a0a0;
+    color: black;
+    border-radius: 5px;
+    transition: .3s;
+    font-size: 1.5rem;
+}
+
+.Login .InputBox span{
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+    pointer-events: none;
+    transition: .3s;
+    color: #a0a0a0;
+    font-size: 1.5rem;
+}
+
+.Login .InputBox input:valid ~ span,
+.Login .InputBox input:focus ~ span{
+    color: black;
+    transform: translateX(10px) translateY(-50%);
+    padding: 0 10px;
+    font-size: .8rem;
+    background-color: white;
+}
+
+.Login .InputBox input:valid,
+.Login .InputBox input:focus{
+    border: 2px solid black;
+}
+
+.Login .LoginBox .Authorization .forgotPassword{
+    text-align: right;
+}
+
+.Login .LoginBox .Authorization .login_btn{
+    width: 100%;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.Login .LoginBox .Authorization .login_btn:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
+}
+
+.Login .LoginBox .Authorization .Register_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.Login .LoginBox .Authorization .Register_text .left{
+    position: absolute;
+    border: solid #a0a0a0 1px;
+    width: 35%;
+    left: 0;
+}
+
+/* .Login .LoginBox .Authorization .Register_text a{
+    width: 20%;
+} */
+
+.Login .LoginBox .Authorization .Register_text .right{
+    position: absolute;
+    border: solid #a0a0a0 1px;
+    width: 35%;
+    right: 0;
+}
+
+.Login .LoginBox .login_text_bottom{
+    text-align: center;
+    /* width: 90%; */
+    font-family: cursive;
+    color: #a0a0a0;
+}
+
+@media (max-width: 1600px) {
+    .Login .InputBox input{
+        padding: .5rem;
+        font-size: 1.2rem;
+    }
+
+    .Login .InputBox span{
+        padding: .5rem;
+        font-size: 1.2rem;
+    }
+}

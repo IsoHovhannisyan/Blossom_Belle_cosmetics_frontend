@@ -19,6 +19,7 @@ export async function fetchData(language) {
           ProductLabelData,
           BasketLabelData,
           navbarData,
+          authLabelData,
       ] = await Promise.all([
           axios.get(`/api/slider?lang=${language}`),
           axios.get(`/api/makeup?lang=${language}`),
@@ -28,6 +29,7 @@ export async function fetchData(language) {
           axios.get(`/api/product?lang=${language}`),
           axios.get(`/api/basket?lang=${language}`),
           axios.get(`/api/navbar?lang=${language}`),
+          axios.get(`/api/auth?lang=${language}`)
       ]);
 
       const data = {
@@ -38,7 +40,8 @@ export async function fetchData(language) {
           brushData: brushData.data,
           ProductLabelData: ProductLabelData.data,
           BasketLabelData: BasketLabelData.data,
-          navbarData: navbarData.data
+          navbarData: navbarData.data,
+          authLabelData: authLabelData.data
       };
 
       localStorage.setItem('fetchedData', JSON.stringify(data));
@@ -68,7 +71,7 @@ export function Header({navbar}) {
     }, []);
 
     const onScrollWindow = () => {
-        if (window.innerWidth < 1250) {
+        if (window.innerWidth < 1100) {
             setScrollDown(false);
         } else {
             setShowNavBar(false);
@@ -78,7 +81,6 @@ export function Header({navbar}) {
     };
 
     const navigate = useNavigate();
-    console.log(navbar);
 
   return (
     <div className='Header'>
@@ -86,9 +88,9 @@ export function Header({navbar}) {
         <div className='HeaderTop'>
             <div className='HeaderLeft'>
                 <i className=" Icone fa-solid fa-unlock-keyhole"></i>
-                <div className='Div'>{navbar?.[0]?.log.split(', ')[0]}</div>
+                <div className='Div' onClick={()=> navigate('/login')}>{navbar?.[0]?.log.split(', ')[0]}</div>
                 <div className='border'></div>
-                <div className='Div'>{navbar?.[0]?.log.split(', ')[1]}</div>
+                <div className='Div' onClick={()=> navigate('/register')}>{navbar?.[0]?.log.split(', ')[1]}</div>
                 <div className='border'></div>
                 <i className=" Icone fa-solid fa-bag-shopping" onClick={()=> navigate('/basket')}></i>
                 <i className=" Icone fa-regular fa-heart"></i>
