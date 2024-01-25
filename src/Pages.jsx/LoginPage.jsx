@@ -42,10 +42,6 @@ export function LoginPage({currentLanguage}) {
         <h2 className='Login_title'>{loginLabelArr?.[0]}</h2>
         <h3 className='Login_text'>{loginLabelArr?.[1]}</h3>
     </div>
-        <div>
-
-        </div>
-
         <form className='Authorization'>
             <div className='InputBox'>
                 <input type="text" required='required' /> <span>{loginLabelArr?.[2]}</span>

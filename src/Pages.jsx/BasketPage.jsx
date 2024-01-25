@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 import '../css/BasketPage/BasketPage.css';
 import { useNavigate } from 'react-router-dom';
+import Checkout from '../component/Checkout';
 
 export function BasketPage() {
 
     const [basketLabel, setBasketLabel] = useState([]);
     const [productLabel, setProductLabel] = useState();
+    const [myData, setMyData] = useState(true);
+    const [checkoutData, setCheckoutData] = useState(false)
+    const [confirmData, setConfirmData] = useState(false);
     const navigate = useNavigate();
     const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
     let [sessionStorageBasketProducts, setSessionStorageBasketProducts] = useState(JSON.parse(sessionStorage.getItem('Basket-Products')));
@@ -88,26 +92,26 @@ export function BasketPage() {
                     </div>
                     <div className=' Sequence'>
                         <div>
-                            <h2>1</h2>
-                            <h3>{basketLabel?.[0]?.mybasket}</h3>
+                            <h2 className={myData ? 'active': ''}>1</h2>
+                            <h3 className={myData ? 'active': ''}>{basketLabel?.[0]?.mybasket}</h3>
                         </div>
                         <div>
-                            <i className="fa-solid fa-arrow-right "></i>
+                            <i className='fa-solid fa-arrow-right'></i>
                         </div>
                         <div>
-                            <h2>2</h2>
-                            <h3>{basketLabel?.[0]?.data}</h3>
+                            <h2 className={checkoutData ? 'active': ''}>2</h2>
+                            <h3 className={checkoutData ? 'active': ''}>{basketLabel?.[0]?.data}</h3>
                         </div>
                         <div>
-                            <i className="fa-solid fa-arrow-right "></i>
+                            <i className='fa-solid fa-arrow-right'></i>
                         </div>
                         <div>
-                            <h2>3</h2>
-                            <h3>{basketLabel?.[0]?.confirmation}</h3>
+                            <h2 className={confirmData ? 'active': ''}>3</h2>
+                            <h3 className={confirmData ? 'active': ''}>{basketLabel?.[0]?.confirmation}</h3>
                         </div>
                     </div>
 
-                    <div className=' BasketBox'>
+                    {myData && <div className=' BasketBox'>
                     <div className='BasketProducts'>
                         {
                             sessionStorageBasketProducts.map((el, index) => <div className='BasketProduct'>
@@ -173,21 +177,28 @@ export function BasketPage() {
                             <h2>{total} ֏</h2>
                         </div>
                         <div className=' buttons'>
-                            <div className='Continue'>
+                            <div className='Continue' onClick={()=> navigate('/')}>
                                 <button className=''>{basketLabel?.[0]?.continueshop}</button> 
                             </div>
                             <div className='btn'>
-                                <button className=''>{basketLabel?.[0]?.checkout}</button>
+                                <button className='' onClick={()=> {
+                                    setMyData(false);
+                                    setCheckoutData(true)
+                                    setConfirmData(false);
+                                    }
+                                    }
+                                    >{basketLabel?.[0]?.checkout}</button>
                             </div>
                         </div>
                         
                         
                     </div>
-                    </div>
-                    
+                    </div>}
 
-                    
-                    
+                    {checkoutData && <Checkout basketLabel={basketLabel} />}
+
+
+
                 </div>
                 
             </div>:

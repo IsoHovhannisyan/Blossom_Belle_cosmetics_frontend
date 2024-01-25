@@ -39,6 +39,11 @@
     justify-content: center;
 }
 
+.NotEmptyBasket .Basket .Sequence .active{
+    color: black;
+    font-weight: 500;
+}
+
 .NotEmptyBasket .Basket .Sequence div h2{
     font-size: 2rem;
     margin-right: 1rem;
@@ -340,4 +345,136 @@
 .BasketEmpty .Basket .BtnBox .Btn:hover{
     background-color: rgb(55, 55, 55);
     transition: .3s;
+}
+
+
+
+
+
+/* //////////////////////////////////////////// checkout //////////////// */
+
+.Checkout_data .DataBox {
+    width: 50%;
+}
+
+
+.Checkout_data .DataBox .Checkout_data_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(226, 223, 223);
+    margin: 1rem 0;
+
+}
+
+
+.Checkout_data .DataBox .Data {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.Checkout_data .DataBox .Data .InputBox{
+    position: relative;
+    width: 48%;
+    margin-bottom: 1rem;
+}
+
+.Checkout_data .DataBox .Data .CommentBox{
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.Checkout_data .DataBox .Data .CommentBox textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #a0a0a0;
+    color: black;
+    border-radius: 5px;
+    transition: .3s;
+    font-size: 1.2rem;
+    min-height: 150px;
+    resize: none;
+}
+
+.Checkout_data .DataBox .Data .CommentBox span{
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+    pointer-events: none;
+    transition: .3s;
+    color: #a0a0a0;
+    font-size: 1.2rem;
+    z-index: 50;
+}
+
+.Checkout_data .DataBox .Data .CommentBox textarea:valid ~ span,
+.Checkout_data .DataBox .Data .CommentBox textarea:focus ~ span{
+    color: black;
+    transform: translateX(10px) translateY(-50%);
+    padding: 0 10px;
+    font-size: .8rem;
+    background-color: white;
+}
+
+.Checkout_data .DataBox .Data .InputBox input{
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #a0a0a0;
+    color: black;
+    border-radius: 5px;
+    transition: .3s;
+    font-size: 1.2rem;
+}
+
+.Checkout_data .DataBox .Data .InputBox span{
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+    pointer-events: none;
+    transition: .3s;
+    color: #a0a0a0;
+    font-size: 1rem;
+}
+
+.Checkout_data .DataBox .Data .InputBox input:valid ~ span,
+.Checkout_data .DataBox .Data .InputBox input:focus ~ span{
+    color: black;
+    transform: translateX(10px) translateY(-50%);
+    padding: 0 10px;
+    font-size: .8rem;
+    background-color: white;
+}
+
+.Checkout_data .DataBox .Data .InputBox input:valid,
+.Checkout_data .DataBox .Data .InputBox input:focus{
+    border: 2px solid black;
+}
+
+.Checkout_data .DataBox .Payment_method .PaymentTitleBox{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: .7rem;
+}
+
+
+.Checkout_data .DataBox .Payment_method .PaymentBox{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+}
+
+.Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image{
+    width: 15%;
+}
+
+.Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image img{
+    width: 100%;
 }
