@@ -8,7 +8,7 @@ export function SelectLanguage() {
     const onChangeSelect = (e) => {
         const selectedLanguage = e.target.innerText.toLowerCase();
         localStorage.setItem('Blossom-Belle-Language', selectedLanguage);
-        sessionStorage.clear();
+        // sessionStorage.clear();
         window.location.reload();
     };
 

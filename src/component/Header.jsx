@@ -7,6 +7,33 @@ import '../css/Header/Header.css';
 import { useEffect, useState } from 'react';
 import logo from "../Images/logo3.jpg"
 
+export async function AllCategories(){
+    try {
+        const [
+            makeupData,
+            skincareData,
+            hairData,
+            brushData,
+        ] = await Promise.all([
+            axios.get('/api/makeup'),
+            axios.get('/api/skincare'),
+            axios.get('/api/hair'),
+            axios.get('/api/brush'),
+        ]);
+  
+        const data = {
+            makeupData: makeupData.data,
+            skincareData: skincareData.data,
+            hairData: hairData.data,
+            brushData: brushData.data,
+        };
+        return data;
+    } catch (error) {
+        console.error("An error occurred:", error);
+        throw error;
+    }
+}
+
 export async function fetchData(language) {
 
   try {

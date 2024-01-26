@@ -41,7 +41,7 @@
 
 .NotEmptyBasket .Basket .Sequence .active{
     color: black;
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 
 .NotEmptyBasket .Basket .Sequence div h2{
@@ -53,6 +53,7 @@
 
 .NotEmptyBasket .Basket .Sequence div h3{
     color: #B4B4B4;
+    font-weight: 500;
 }
 
 .NotEmptyBasket .Basket .Sequence div i{
@@ -66,7 +67,7 @@
 
 .NotEmptyBasket .Basket .BasketProducts{
    width: 100%;
-   max-height: 800px;
+   height: 600px;
    overflow-y: scroll;
    padding: .5rem 2rem;
 }
@@ -86,7 +87,8 @@
 .NotEmptyBasket .Basket .BasketBox .BasketProducts .BasketProduct .Image {
     width: 15%;
     height: 100%;
-    border: solid 1px #e1e1e1; 
+    border: solid 1px #e1e1e1;
+    cursor: pointer; 
 }
 
 .NotEmptyBasket .Basket .BasketBox .BasketProducts .BasketProduct .Image img {

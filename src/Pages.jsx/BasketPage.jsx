@@ -6,21 +6,22 @@ import Checkout from '../component/Checkout';
 
 export function BasketPage() {
 
+    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+    const [allBasketProducts, setAllBasketProducts] = useState(JSON.parse(sessionStorage.getItem('Basket-Products')));
     const [basketLabel, setBasketLabel] = useState([]);
     const [productLabel, setProductLabel] = useState();
     const [myData, setMyData] = useState(true);
     const [checkoutData, setCheckoutData] = useState(false)
     const [confirmData, setConfirmData] = useState(false);
     const navigate = useNavigate();
-    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
-    let [sessionStorageBasketProducts, setSessionStorageBasketProducts] = useState(JSON.parse(sessionStorage.getItem('Basket-Products')));
-    const total = sessionStorageBasketProducts != null ? sessionStorageBasketProducts.reduce((sum,el) => sum + el.quantityForOrder * el.price, 0): null;
+    const [basketProductsCurrentLang, setBasketProductsCurrentLang] = useState(allBasketProducts != null ?allBasketProducts.filter(el => el.lang == currentLanguage): null);
+    const total = basketProductsCurrentLang != null ? basketProductsCurrentLang.reduce((sum,el) => sum + el.quantityForOrder * el.price, 0): null;
 
     useEffect(()=>{
         loadingData();
     },[])
 
-    console.log(sessionStorageBasketProducts);
+    console.log(basketProductsCurrentLang);
     
     
       async function loadingData() {
@@ -46,15 +47,20 @@ export function BasketPage() {
 
     const minus = (product)=>{
         if(product.quantityForOrder !== 1){
-            product.quantityForOrder -= 1;
-            setSessionStorageBasketProducts(sessionStorageBasketProducts.map(el => {
-                if(product.id === el.id) return product;
+            setAllBasketProducts(allBasketProducts.map(el => {
+                if(product.image === el.image) {
+                    el.quantityForOrder -= 1;
+                    return el
+                };
                 return el
             }))
         }else{
-            product.quantityForOrder = 1;
-            setSessionStorageBasketProducts(sessionStorageBasketProducts.map(el => {
-                if(product.id === el.id) return product;
+            
+            setAllBasketProducts(allBasketProducts.map(el => {
+                if(product.image === el.image) {
+                    el.quantityForOrder = 1;
+                    return el
+                };
                 return el
             }))
         }
@@ -62,20 +68,23 @@ export function BasketPage() {
     }
 
     const plus = (product)=>{
-        product.quantityForOrder += 1;
-        setSessionStorageBasketProducts(sessionStorageBasketProducts.map(el => {
-            if(product.id === el.id) return product;
+        setAllBasketProducts(allBasketProducts.map(el => {
+            if(product.image === el.image) {
+                el.quantityForOrder += 1;
+                return el
+            };
             return el
         }));
     }
 
     const refreshProducts = ()=>{
-        sessionStorage.setItem('Basket-Products', JSON.stringify(sessionStorageBasketProducts));
+        sessionStorage.setItem('Basket-Products', JSON.stringify(allBasketProducts));
     }
 
-    const removeProduct = (id)=>{
-        let Products = sessionStorageBasketProducts.filter(el=> el.id !== id);
-        setSessionStorageBasketProducts(Products);
+    const removeProduct = (image)=>{
+        let Products = allBasketProducts.filter(el=> el.image !== image);
+        setAllBasketProducts(Products);
+        setBasketProductsCurrentLang(Products.filter(el => el.lang == currentLanguage))
         sessionStorage.setItem('Basket-Products',JSON.stringify(Products))
     }
 
@@ -84,7 +93,7 @@ export function BasketPage() {
   return (
     <div>
         {
-            sessionStorageBasketProducts != false && sessionStorageBasketProducts != null  ? <div className='NotEmptyBasket'>
+            basketProductsCurrentLang != false && basketProductsCurrentLang != null  ? <div className='NotEmptyBasket'>
 
                 <div className='Basket'>
                     <div className='Title'>
@@ -114,8 +123,8 @@ export function BasketPage() {
                     {myData && <div className=' BasketBox'>
                     <div className='BasketProducts'>
                         {
-                            sessionStorageBasketProducts.map((el, index) => <div className='BasketProduct'>
-                                <div className='Image'>
+                            basketProductsCurrentLang.map((el, index) => <div className='BasketProduct'>
+                                <div className='Image' onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)}>
                                     <img src={`https://blossom-belle-cosmetics.vercel.app${el?.image}`} alt="" />
                                 </div>
 
@@ -154,7 +163,7 @@ export function BasketPage() {
                                     <div className=' PriceQty text-[30px] mr-[2rem]'>
                                         <h3 className='h3'>{el.price * el.quantityForOrder}֏</h3>
                                     </div>
-                                    <div onClick={()=> removeProduct(el.id)}><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
+                                    <div onClick={()=> removeProduct(el.image)}><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
                                 </div>
                                 
                                 
@@ -166,7 +175,8 @@ export function BasketPage() {
                         <div><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
                         <div className='clearText' onClick={()=> {
                             sessionStorage.clear();
-                            setSessionStorageBasketProducts(null)
+                            setAllBasketProducts(null)
+                            setBasketProductsCurrentLang(null)
                             }
                             }>{basketLabel?.[0]?.basket_clear}</div>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../axios'
 import { json, useNavigate, useSearchParams } from 'react-router-dom';
-import { fetchData, getSavedDataFromLocalStorage } from './Header';
+import { fetchData, getSavedDataFromLocalStorage, AllCategories } from './Header';
 import '../css/Product/ProductById.css';
 
 export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity }) {
@@ -13,8 +13,9 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
     const [product, setProduct] = useState()
     const [productLabel, setProductLabel] = useState();
     const [currentCategory, setCurrentCategory] = useState([]);
-    let   currentProductAnotherLang;
+    let   [currentProductAnotherLang,setCurrentProductAnotherLang] = useState([]);
     const [toggle, setToggle] = useState(1);
+    const [buttonDisabled, setButtonDisabled] = useState(true);
     const [showIntrestingProducts, setShowIntrestingProducts] = useState(false);
     const [searchParams] = useSearchParams();
     const path = searchParams.get('path');
@@ -22,7 +23,7 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
     const pathName = path+'Data';
     const navigate = useNavigate();
 
-    console.log(product);
+    console.log(currentProductAnotherLang);
 
 
 
@@ -35,15 +36,21 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
       async function loadingData() {
 
         const productData = await axios.get(`/api/${path}/${id}`);
+        setProduct(productData.data)
+
+        AllCategories()
+        .then(data=> {
+            setCurrentProductAnotherLang(data[pathName].filter(el=> el.image == productData.data.image));
+        }).catch(error => {
+            console.error("An error occurred while fetching data:", error);
+        });
         // setProduct( productData.data);
 
     
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
-            setProduct(savedData[pathName].filter(el=> el.image == productData.data.image)[0]);
             setProductLabel(savedData.ProductLabelData);
             setCurrentCategory(savedData[pathName].filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-            sessionStorage.setItem('Product-Lang', JSON.stringify(currentProductAnotherLang));
         }
     
         if (currentLanguage) {
@@ -51,8 +58,7 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
                 .then(data => {
                     setProductLabel(data.ProductLabelData);
                     setCurrentCategory(data[pathName].filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-                    setProduct(data[pathName].filter(el=> el.image == productData.data.image)[0]);
-                    sessionStorage.setItem('Product-Lang', JSON.stringify(currentProductAnotherLang));
+                    setButtonDisabled(false)
                     localStorage.setItem('fetchedData', JSON.stringify(data));
                 })
                 .catch(error => {
@@ -73,7 +79,8 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
         setBasketQuantity( basketQuantity + quantity);
 
         if(sessionStorage.getItem('Basket-Products') != null){
-            product.quantityForOrder = quantity
+            currentProductAnotherLang[0].quantityForOrder = quantity;
+            currentProductAnotherLang[1].quantityForOrder = quantity;
             let sessionStorageProducts = JSON.parse(sessionStorage.getItem('Basket-Products'));
             let findProductInSesionStorage = false;
             for(let elem of sessionStorageProducts){
@@ -85,11 +92,13 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
             if(findProductInSesionStorage){
                 sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts]))
             }else{
-                sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts,product]));
+                sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts,...currentProductAnotherLang]));
             }
         }else{
-            product.quantityForOrder = quantity
-            sessionStorage.setItem('Basket-Products', JSON.stringify([product]));
+            currentProductAnotherLang[0].quantityForOrder = quantity;
+            currentProductAnotherLang[1].quantityForOrder = quantity;
+            sessionStorage.setItem('Basket-Products', JSON.stringify([...currentProductAnotherLang]));
+            console.log(JSON.parse(sessionStorage.getItem('Basket-Products')));
         }
         setShowQuantity(true);
         setQuantity(1);   
@@ -130,7 +139,7 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
                 
              </div>
              <div className='BoxBtn'>
-                 <button className='btn' onClick={handleSubmit}>{productLabel?.[0]?.btn_text}</button>
+                 <button className='btn' disabled={buttonDisabled} onClick={handleSubmit}>{productLabel?.[0]?.btn_text}</button>
              </div>
              <div className='BoxFav'>
                  <button className='Fav'>{productLabel?.[0]?.basket_text}<i className="fa-regular fa-heart ml-[.5rem]"></i></button>
