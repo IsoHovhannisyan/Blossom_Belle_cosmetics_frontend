@@ -130,33 +130,6 @@ export function Header({navbar}) {
             </div>
 
         </div>
-        
-            {/* <form action="">
-            <i className=" Search fa-solid fa-magnifying-glass"></i>
-                <input type="search" placeholder='Search' />
-            </form>
-            <div>
-                <Link to='/' className='Link mr-[5rem]'>BLOSSOM BELLE</Link>
-            </div>
-            <div>
-                <i className="fa-regular fa-heart mr-4"></i>
-                <i className="fa-regular fa-user mr-4"> </i>
-                <div onClick={()=> navigate('/basket')}>
-                    <i className="fa-solid fa-bag-shopping mr-4"></i>
-                    {showQuantity && basketQuantity}
-                </div>
-                
-            </div> */}
-            {/* <div className=' components'>
-                <Link to='/new' className='Link' >New <div className='DivLink'></div></Link>
-                <Link to='/makeup' className='Link'>Makeup</Link>
-                <Link to='/skincare' className='Link'>Skincare</Link>
-                <Link to='/brushes' className='Link'>Brushes</Link>
-                <Link to='/hair' className='Link'>Hair</Link>
-                <Link to='/gifts' className='Link'>Gifts</Link>
-                <Link to='/sale' className='Link'>Sale</Link>
-       
-            </div> */}
 
             <div className='BlossomBelle'>
 

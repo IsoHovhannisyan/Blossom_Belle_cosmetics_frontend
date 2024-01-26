@@ -205,7 +205,7 @@ export function BasketPage() {
                     </div>
                     </div>}
 
-                    {checkoutData && <Checkout basketLabel={basketLabel} />}
+                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} total={total} />}
 
 
 

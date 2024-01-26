@@ -23,7 +23,7 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
     const pathName = path+'Data';
     const navigate = useNavigate();
 
-    console.log(currentProductAnotherLang);
+    // console.log(currentProductAnotherLang);
 
 
 
@@ -36,20 +36,18 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
       async function loadingData() {
 
         const productData = await axios.get(`/api/${path}/${id}`);
-        setProduct(productData.data)
 
         AllCategories()
         .then(data=> {
             setCurrentProductAnotherLang(data[pathName].filter(el=> el.image == productData.data.image));
         }).catch(error => {
             console.error("An error occurred while fetching data:", error);
-        });
-        // setProduct( productData.data);
-
-    
+        });    
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
             setProductLabel(savedData.ProductLabelData);
+            setProduct(savedData[pathName].filter(el => el.image == productData.data.image)[0])
+            console.log(savedData[pathName].filter(el => el.image == productData.image)[0]);
             setCurrentCategory(savedData[pathName].filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
         }
     
@@ -57,6 +55,7 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
             fetchData(currentLanguage)
                 .then(data => {
                     setProductLabel(data.ProductLabelData);
+                    setProduct(data[pathName].filter(el => el.image == productData.data.image)[0])
                     setCurrentCategory(data[pathName].filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
                     setButtonDisabled(false)
                     localStorage.setItem('fetchedData', JSON.stringify(data));

@@ -258,6 +258,7 @@
     font-weight: 400;
     transition: .3s;
     cursor: pointer;
+    width: 300px;
 }
 
 .Basket .TotalAndButtons .buttons .Continue:hover{
@@ -275,6 +276,7 @@
     font-weight: 400;
     transition: .3s;
     cursor: pointer;
+    width: 300px;
 }
 
 .Basket .TotalAndButtons .btn:hover{
@@ -282,6 +284,8 @@
     transition: .3s;
 }
 
+
+/* /////////////////////////////// empty basket ////////////////////////// */
 
 
 
@@ -424,6 +428,12 @@
     background-color: white;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .Checkout_data .DataBox .Data .InputBox input{
     width: 100%;
     padding: 1rem;
@@ -463,6 +473,8 @@
     justify-content: left;
     align-items: center;
     margin-bottom: .7rem;
+    padding-bottom: 1rem;
+    border-bottom: dotted 1.5px #dddddd;
 }
 
 
@@ -474,9 +486,103 @@
 }
 
 .Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image{
-    width: 15%;
+    width: 14%;
+    height: 5rem;
+    background-color: #dddddd;
+    padding: 1rem;
+}
+
+.Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image h3{
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image img{
     width: 100%;
+    height: 100%;
+}
+
+/* ///////////////////  Order_summary ///////////////////////*/
+
+.Checkout_data .Order_summary{
+    width: 100%;
+    border-top: 1.5px solid rgb(226, 223, 223);
+    margin: 2rem 0;
+    padding: 1rem;
+    text-align: left;
+}
+
+/* .Checkout_data .Order_summary .Order_summary_title{
+    border-bottom: dotted rgb(226, 223, 223) 1px ;
+} */
+
+.Checkout_data .Order_summary .Order_summary_products .Order_summary_product {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: dotted 1px rgb(226, 223, 223);
+    margin-bottom: 1rem;
+}
+
+.Checkout_data .Order_summary .Order_summary_products .Order_summary_product .ImageAndTitle {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    gap: 2rem;
+}
+
+.Checkout_data .Order_summary .Order_summary_products .Order_summary_product .ImageAndTitle .image{
+    width: 6rem;
+    height: 8rem;
+}
+
+.Checkout_data .Order_summary .Order_summary_products .Order_summary_product .ImageAndTitle .image img{
+    width: 100%;
+    height: 100%;
+}
+
+/* ///////////////////  Checkout_data_buttons ///////////////////////*/
+
+.Checkout_data .buttons{
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    align-items: center;
+}
+
+.Checkout_data .buttons .back {
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: #e1e1e1;
+    color: black;
+    font-weight: 400;
+    transition: .3s;
+    cursor: pointer;
+    width: 300px;
+}
+
+.Checkout_data .buttons .back:hover{
+    background-color: black;
+    transition: .3s;
+    color: white;
+}
+
+.Checkout_data .buttons .btn{
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    transition: .3s;
+    cursor: pointer;
+    width: 300px;
+}
+
+.Checkout_data .buttons .btn:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
 }

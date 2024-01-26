@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Visa from "../Images/visa.png"
-export default function Checkout({basketLabel}) {
+export default function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, total}) {
 
     const [checkoutDataArr, setCheckoutDataArr] = useState(basketLabel?.[0]?.checkout_data.split(',  '));
 
@@ -43,6 +43,9 @@ export default function Checkout({basketLabel}) {
                 </div>
                 <div className='PaymentBox'>
                     <div className='Payment_image'>
+                        <h3>Cash On Delivery</h3>
+                    </div>
+                    <div className='Payment_image'>
                         <img src={Visa} alt="" />
                     </div>
                     <div className='Payment_image'>
@@ -56,6 +59,49 @@ export default function Checkout({basketLabel}) {
             </div>
             
         </div>
+        </div>
+        <div className='Order_summary'>
+            <div className='Order_summary_title'>
+                <h3>{checkoutDataArr?.[13]}</h3>
+            </div>
+            <div className='Order_summary_products'>
+                {
+                    basketProductsCurrentLang.map(el => <div className='Order_summary_product'>
+                        <div className='ImageAndTitle'>
+                            <div className='image'>
+                                <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} alt="" />
+                            </div>
+                            <div className='title'>
+                                <h3>{el.title}</h3>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>({el.quantityForOrder})</h3>
+                        </div>
+                    </div>)
+                }
+                
+            </div>
+            {/* <div>
+                <h3>{checkoutDataArr?.[14]}</h3>
+            </div> */}
+            <div className=' flex justify-between items-center'>
+                <h3 className=' font-bold'>{checkoutDataArr?.[15]}</h3>
+                <h3 className=' font-bold'>{total}</h3>
+            </div>
+        </div>
+
+        <div className='buttons'>
+                <div className='back' onClick={()=> {
+                    setCheckoutData(false);
+                    setMyData(true);
+                    setConfirmData(false)
+                }}>
+                    <button>{checkoutDataArr?.[16]}</button>
+                </div>
+                <div className='btn'>
+                    <button>{checkoutDataArr?.[17]}</button>
+                </div>
         </div>
         
     </div>
