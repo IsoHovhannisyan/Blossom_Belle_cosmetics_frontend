@@ -78,6 +78,9 @@ export function BasketPage() {
     }
 
     const refreshProducts = ()=>{
+        if(basketProductsCurrentLang.some(el => el.quantityForOrder > el.quantity)){
+            return console.log('barev');
+        }
         sessionStorage.setItem('Basket-Products', JSON.stringify(allBasketProducts));
     }
 
@@ -171,14 +174,14 @@ export function BasketPage() {
                         }
                     </div>
 
-                    <div className='ClearBasket'>
-                        <div><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
-                        <div className='clearText' onClick={()=> {
+                    <div className='ClearBasket' onClick={()=> {
                             sessionStorage.clear();
                             setAllBasketProducts(null)
                             setBasketProductsCurrentLang(null)
                             }
-                            }>{basketLabel?.[0]?.basket_clear}</div>
+                            }>
+                        <div><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
+                        <div className='clearText'>{basketLabel?.[0]?.basket_clear}</div>
                     </div>
 
                     <div className='TotalAndButtons'>

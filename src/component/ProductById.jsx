@@ -4,7 +4,7 @@ import { json, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchData, getSavedDataFromLocalStorage, AllCategories } from './Header';
 import '../css/Product/ProductById.css';
 
-export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity }) {
+export function ProductById({setBasketQuantity,setShowQuantity }) {
 
     const [quantity, setQuantity] = useState(1);
 
@@ -22,6 +22,8 @@ export function ProductById({basketQuantity,setBasketQuantity,setShowQuantity })
     const id = searchParams.get('id');
     const pathName = path+'Data';
     const navigate = useNavigate();
+
+    let basketQuantity = 1;
 
     // console.log(currentProductAnotherLang);
 

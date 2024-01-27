@@ -89,9 +89,16 @@ export function getSavedDataFromLocalStorage() {
 
 export function Header({navbar}) {
 
+    
+    const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+
     const [scrollDown, setScrollDown] = useState(false);
     const [showNavBar, setShowNavBar] = useState(false);
+    let basketProductsQuantity = JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length;
 
+    useState(()=>{
+        basketProductsQuantity = JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length;
+    },[basketProductsQuantity])
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollWindow);
@@ -119,7 +126,11 @@ export function Header({navbar}) {
                 <div className='border'></div>
                 <div className='Div' onClick={()=> navigate('/register')}>{navbar?.[0]?.log.split(', ')[1]}</div>
                 <div className='border'></div>
+                {basketProductsQuantity != null && basketProductsQuantity != '0' ? <i className=" Icone fa-solid fa-bag-shopping" onClick={()=> navigate('/basket')}><div className=''>{basketProductsQuantity}</div></i>
+                :
                 <i className=" Icone fa-solid fa-bag-shopping" onClick={()=> navigate('/basket')}></i>
+                }
+                
                 <i className=" Icone fa-regular fa-heart"></i>
             </div>
             <div className='HeaderRight'>

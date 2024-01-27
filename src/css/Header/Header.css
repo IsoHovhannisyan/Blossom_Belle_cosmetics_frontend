@@ -33,6 +33,14 @@
 .Header .HeaderTop .HeaderLeft .Icone{
     transition: .2s;
     margin-right: 1rem;
+    position: relative;
+}
+
+.Header .HeaderTop .HeaderLeft .Icone div{
+    position: absolute;
+    right: -10px;
+    bottom: -9px;
+    font-size: .7rem;
 }
 
 .Header .HeaderTop .HeaderLeft .Div{
