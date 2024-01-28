@@ -13,7 +13,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     const [myData, setMyData] = useState(sessionStorage.getItem('My_data') != null ? JSON.parse(sessionStorage.getItem('My_data')): true);
     const [checkoutData, setCheckoutData] = useState(JSON.parse(sessionStorage.getItem('Checkout_data')));
     const [confirmData, setConfirmData] = useState(JSON.parse(sessionStorage.getItem('Confirm_data')));
-    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
     const navigate = useNavigate();
     const [basketProductsCurrentLang, setBasketProductsCurrentLang] = useState(allBasketProducts != null ?allBasketProducts.filter(el => el.lang == currentLanguage): null);
     const total = basketProductsCurrentLang != null ? basketProductsCurrentLang.reduce((sum,el) => sum + el.quantityForOrder * el.price, 0): null;
@@ -52,6 +52,9 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
         if(product.quantityForOrder !== 1){
             setAllBasketProducts(allBasketProducts.map(el => {
                 if(product.image === el.image) {
+                    if(el.quantityForOrder <= el.quantity+1){
+                        setButtonDisabled(false);
+                    }
                     el.quantityForOrder -= 1;
                     return el
                 };
@@ -71,6 +74,10 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     }
 
     const ChangeBasketPage = ()=>{
+        if(basketProductsCurrentLang.some(el => el.quantityForOrder > el.quantity)){
+            setButtonDisabled(true);
+            return
+        }
         setMyData(false);
         setCheckoutData(true)
         setConfirmData(false);
@@ -194,8 +201,15 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                             setBasketProductsQuantity(0);
                             }
                             }>
-                        <div><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
-                        <div className='clearText'>{basketLabel?.[0]?.basket_clear}</div>
+                            <div className=' flex items-center'>
+                                <div><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
+                                <div className='clearText'>{basketLabel?.[0]?.basket_clear}</div>
+                            </div>
+                                
+                            <div className='ReviewBasket'>
+                                {buttonDisabled ? <div>{basketLabel?.[0]?.checkout_data?.split(',  ')[19]}</div>: <div></div> }
+                            </div>
+                        
                     </div>
 
                     <div className='TotalAndButtons'>

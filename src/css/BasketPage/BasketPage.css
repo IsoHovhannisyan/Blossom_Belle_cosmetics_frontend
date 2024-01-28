@@ -222,7 +222,23 @@
 .Basket .ClearBasket{
     padding: .5rem;
     text-align: left;
-    display: flex;
+    width: 100%;
+    height: 3rem;
+    position: relative;
+}
+
+.Basket .ClearBasket .ReviewBasket{
+    color: rgb(243, 78, 78);
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: .3rem;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 540px;
+    text-align: right;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
