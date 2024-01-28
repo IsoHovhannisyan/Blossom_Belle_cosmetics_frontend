@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 import '../css/BasketPage/BasketPage.css';
 import { useNavigate } from 'react-router-dom';
-import Checkout from '../component/Checkout';
+import {Checkout} from '../component/Checkout';
 
 export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) {
 
@@ -10,18 +10,20 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     const [allBasketProducts, setAllBasketProducts] = useState(JSON.parse(sessionStorage.getItem('Basket-Products')));
     const [basketLabel, setBasketLabel] = useState([]);
     const [productLabel, setProductLabel] = useState();
-    const [myData, setMyData] = useState(true);
-    const [checkoutData, setCheckoutData] = useState(false)
-    const [confirmData, setConfirmData] = useState(false);
+    const [myData, setMyData] = useState(sessionStorage.getItem('My_data') != null ? JSON.parse(sessionStorage.getItem('My_data')): true);
+    const [checkoutData, setCheckoutData] = useState(JSON.parse(sessionStorage.getItem('Checkout_data')));
+    const [confirmData, setConfirmData] = useState(JSON.parse(sessionStorage.getItem('Confirm_data')));
+    const [buttonDisabled, setButtonDisabled] = useState(true);
     const navigate = useNavigate();
     const [basketProductsCurrentLang, setBasketProductsCurrentLang] = useState(allBasketProducts != null ?allBasketProducts.filter(el => el.lang == currentLanguage): null);
     const total = basketProductsCurrentLang != null ? basketProductsCurrentLang.reduce((sum,el) => sum + el.quantityForOrder * el.price, 0): null;
+    const [checkoutDataArr, setCheckoutDataArr] = useState();
 
     useEffect(()=>{
         loadingData();
     },[])
 
-    console.log(basketProductsCurrentLang);
+    console.log(myData);
     
     
       async function loadingData() {
@@ -36,6 +38,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
             fetchData(currentLanguage)
                 .then(data => {
                     setBasketLabel(data.BasketLabelData);
+                    setCheckoutDataArr(data.BasketLabelData[0].checkout_data.split(',  '));
                     setProductLabel(data.ProductLabelData);
                     localStorage.setItem('fetchedData', JSON.stringify(data));
                 })
@@ -65,6 +68,15 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
             }))
         }
         return product
+    }
+
+    const ChangeBasketPage = ()=>{
+        setMyData(false);
+        setCheckoutData(true)
+        setConfirmData(false);
+        sessionStorage.setItem('My_data', JSON.stringify(false));
+        sessionStorage.setItem('Checkout_data', JSON.stringify(true));
+        sessionStorage.setItem('Confirm_data', JSON.stringify(false));
     }
 
     const plus = (product)=>{
@@ -196,23 +208,17 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                                 <button className=''>{basketLabel?.[0]?.continueshop}</button> 
                             </div>
                             <div className='btn'>
-                                <button className='' onClick={()=> {
-                                    setMyData(false);
-                                    setCheckoutData(true)
-                                    setConfirmData(false);
-                                    }
-                                    }
-                                    >{basketLabel?.[0]?.checkout}</button>
+                                <button className='' onClick={()=> ChangeBasketPage()}>
+                                    {basketLabel?.[0]?.checkout}</button>
                             </div>
                         </div>
                         
                         
                     </div>
-                    </div>}
+                    </div>
+                    }
 
-                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} total={total} />}
-
-
+                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} total={total} checkoutDataArr={checkoutDataArr} />}
 
                 </div>
                 

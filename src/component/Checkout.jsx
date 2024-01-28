@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
 import Visa from "../Images/visa.png"
-export default function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, total}) {
+export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, total, checkoutDataArr}) {
 
-    const [checkoutDataArr, setCheckoutDataArr] = useState(basketLabel?.[0]?.checkout_data.split(',  '));
+    const ChangeBasketPage = ()=>{
+        setMyData(true);
+        setCheckoutData(false)
+        setConfirmData(false);
+        sessionStorage.setItem('My_data', JSON.stringify(true));
+        sessionStorage.setItem('Checkout_data', JSON.stringify(false));
+        sessionStorage.setItem('Confirm_data', JSON.stringify(false));
+    }
 
   return (
     <div className='Checkout_data'>
@@ -92,11 +99,7 @@ export default function Checkout({basketLabel, setMyData, setCheckoutData, setCo
         </div>
 
         <div className='buttons'>
-                <div className='back' onClick={()=> {
-                    setCheckoutData(false);
-                    setMyData(true);
-                    setConfirmData(false)
-                }}>
+                <div className='back' onClick={()=> ChangeBasketPage()}>
                     <button>{checkoutDataArr?.[16]}</button>
                 </div>
                 <div className='btn'>

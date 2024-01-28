@@ -16,6 +16,9 @@ export function MakeupPage() {
 
   useEffect(()=>{
     loadingData()
+    sessionStorage.setItem('My_data', JSON.stringify(true));
+    sessionStorage.setItem('Checkout_data', JSON.stringify(false));
+    sessionStorage.setItem('Confirm_data', JSON.stringify(false));
   },[])
 
   async function loadingData(){
