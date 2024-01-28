@@ -87,15 +87,13 @@ export function getSavedDataFromLocalStorage() {
   return null;
 }
 
-export function Header({navbar}) {
+export function Header({navbar, basketProductsQuantity}) {
 
     
     const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
     const [scrollDown, setScrollDown] = useState(false);
     const [showNavBar, setShowNavBar] = useState(false);
-    let basketProductsQuantity = JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length;
-
     useState(()=>{
         basketProductsQuantity = JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length;
     },[basketProductsQuantity])

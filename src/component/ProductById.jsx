@@ -4,7 +4,7 @@ import { json, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchData, getSavedDataFromLocalStorage, AllCategories } from './Header';
 import '../css/Product/ProductById.css';
 
-export function ProductById({setBasketQuantity,setShowQuantity }) {
+export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQuantity, setBasketProductsQuantity }) {
 
     const [quantity, setQuantity] = useState(1);
 
@@ -24,11 +24,6 @@ export function ProductById({setBasketQuantity,setShowQuantity }) {
     const navigate = useNavigate();
 
     let basketQuantity = 1;
-
-    // console.log(currentProductAnotherLang);
-
-
-
 
     useEffect(()=>{
         loadingData();
@@ -93,11 +88,13 @@ export function ProductById({setBasketQuantity,setShowQuantity }) {
             if(findProductInSesionStorage){
                 sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts]))
             }else{
+                setBasketProductsQuantity(basketProductsQuantity + 1);
                 sessionStorage.setItem('Basket-Products', JSON.stringify([...sessionStorageProducts,...currentProductAnotherLang]));
             }
         }else{
             currentProductAnotherLang[0].quantityForOrder = quantity;
             currentProductAnotherLang[1].quantityForOrder = quantity;
+            setBasketProductsQuantity(1);
             sessionStorage.setItem('Basket-Products', JSON.stringify([...currentProductAnotherLang]));
             console.log(JSON.parse(sessionStorage.getItem('Basket-Products')));
         }

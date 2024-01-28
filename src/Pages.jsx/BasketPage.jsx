@@ -4,7 +4,7 @@ import '../css/BasketPage/BasketPage.css';
 import { useNavigate } from 'react-router-dom';
 import Checkout from '../component/Checkout';
 
-export function BasketPage() {
+export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) {
 
     const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
     const [allBasketProducts, setAllBasketProducts] = useState(JSON.parse(sessionStorage.getItem('Basket-Products')));
@@ -88,6 +88,7 @@ export function BasketPage() {
         let Products = allBasketProducts.filter(el=> el.image !== image);
         setAllBasketProducts(Products);
         setBasketProductsCurrentLang(Products.filter(el => el.lang == currentLanguage))
+        setBasketProductsQuantity(basketProductsQuantity - 1);
         sessionStorage.setItem('Basket-Products',JSON.stringify(Products))
     }
 
@@ -178,6 +179,7 @@ export function BasketPage() {
                             sessionStorage.clear();
                             setAllBasketProducts(null)
                             setBasketProductsCurrentLang(null)
+                            setBasketProductsQuantity(0);
                             }
                             }>
                         <div><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>

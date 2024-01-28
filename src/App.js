@@ -23,11 +23,10 @@ import { RegisterPage } from './Pages.jsx/RegisterPage'
 
 export function App() {
 
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [basketQuantity, setBasketQuantity] = useState(0);
   const [showQuantity, setShowQuantity] = useState(false);
-  const [basketProducts, setBasketProducts] = useState([]);
-
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+  const [basketProductsQuantity, setBasketProductsQuantity] = useState(JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length) || '0';
   const [navbar, setNavbar] = useState([]);
   const [footer, setFooter] = useState([]);
 
@@ -55,7 +54,7 @@ export function App() {
     <div className=''>
       <div className='HeaderBackground'></div>
         <div className='App'>
-      <Header basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} navbar={navbar} />
+      <Header navbar={navbar} basketProductsQuantity={basketProductsQuantity} />
         <Routes >
           <Route path='/login' element={<LoginPage currentLanguage={currentLanguage} />} />
           <Route path='/register' element={<RegisterPage currentLanguage={currentLanguage}  />} />
@@ -75,8 +74,8 @@ export function App() {
           <Route path='/skincare'  element={< SkincarePage/>} />
           <Route path='/brushes'  element={< BrushPage/>} />
 
-          <Route path='/basket' element={<BasketPage />} />
-          <Route path='/product' element={< ProductById basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} />}  />
+          <Route path='/basket' element={<BasketPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />} />
+          <Route path='/product' element={< ProductById basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}  />
           
 
         </Routes>
