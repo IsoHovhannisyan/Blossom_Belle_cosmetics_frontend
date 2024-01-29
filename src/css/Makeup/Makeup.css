@@ -1,26 +1,26 @@
-.Brushes{
+.Makeup{
     display: flex;
     align-items: flex-start;
 }
 
-.Brushes .BrushesNav{
+.Makeup .MakeupNav{
     width: 25%;
 
 }
 
-.Brushes .products{
+.Makeup .products{
     width: 74%;
 }
 
-.Brushes .products .box{
+.Makeup .products .box{
     display: none;
 }
 
-.Brushes .products .box.show{
+.Makeup .products .box.show{
     display: block;
 }
 
-.Products {
+.Makeup .products .Products {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -30,25 +30,118 @@
     
 }
 
-.Products .Product {
-    box-shadow: 0 0 1px;
-    border-radius: .5rem;
+.Makeup .products .Products .Product {
+    box-shadow: 0 0 5px  rgb(227, 227, 227);
+    border: solid 1px rgb(193, 193, 193);
+    border-radius: 1rem;
     position: relative;
     height: 400px;
     width: 22%;
+    /* border-color: rgb(145, 145, 145); */
+    padding: 1rem;
+    overflow: hidden;
 }
 
 
-.Products .Product .image{
+.Makeup .products .Products .Product .image{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 70%;
+    cursor: pointer;
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
 }
-.Products .Product .image img{
+.Makeup .products .Products .Product .image .img{
+    border-radius: 1rem; 
+    position: absolute;
+    transition: .5s;
+}
+
+.Makeup .products .Products .Product .image .img.active{
+    /* top: -5rem; */
+    transform: scale(1.3);
+    transition: .5s;
+}
+
+
+
+.Makeup .products .Products .Product .title{
+    text-align: center;
+    font-size: 1rem;
     width: 100%;
-    height: 100%;
-    border-radius: .5rem; 
+    color: grey;
+}
+
+.Makeup .products .Products .Product .brandName{
+    width: 100%;
+    text-align: center;
+    color: #006699;
+    font-weight: 200;
+}
+
+.Makeup .products .Products .Product .price {
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 500;
+}
+
+.Makeup .products .Products .Product .btn_text {
+    position: absolute;
+    bottom: -4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+    transition: .4s;
+    font-size: .9rem;
+    padding: .5rem 2rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    cursor: pointer;
+    height: 3.8rem;
+}
+
+.Makeup .products .Products .Product .shopping {
+    position: absolute;
+    left: 1rem;
+    bottom: -100rem;
+    font-size: 1.3rem;
+    transition: .7s;
+}
+
+.Makeup .products .Products .Product .heart {
+    position: absolute;
+    bottom: -100rem;
+    right: 1rem;
+    font-size: 1.3rem;
+    transition: .6s;
+
+}
+
+.Makeup .products .Products .Product .btn_text.active {
+    bottom: 8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+    transition: .4s;
+    font-size: .9rem;
+}
+
+.Makeup .products .Products .Product .shopping.active {
+    bottom: 2rem;
+    font-size: 1.3rem;
+    transition: .7s;
+}
+
+.Makeup .products .Products .Product .heart.active {
+    bottom: 2rem;
+    font-size: 1.3rem;
+    transition: .6s;
 }
 
