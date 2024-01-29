@@ -109,16 +109,16 @@
 
 .Makeup .products .Products .Product .shopping {
     position: absolute;
-    left: 1rem;
-    bottom: -100rem;
+    right: -100rem;
+    bottom: 1rem;
     font-size: 1.3rem;
     transition: .7s;
 }
 
 .Makeup .products .Products .Product .heart {
     position: absolute;
-    bottom: -100rem;
-    right: 1rem;
+    left: -100rem;
+    top: 1rem;
     font-size: 1.3rem;
     transition: .6s;
 
@@ -134,13 +134,13 @@
 }
 
 .Makeup .products .Products .Product .shopping.active {
-    bottom: 2rem;
+    right:2rem;
     font-size: 1.3rem;
     transition: .7s;
 }
 
 .Makeup .products .Products .Product .heart.active {
-    bottom: 2rem;
+    left: 2rem;
     font-size: 1.3rem;
     transition: .6s;
 }
