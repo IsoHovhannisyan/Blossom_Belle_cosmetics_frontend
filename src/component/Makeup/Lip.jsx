@@ -49,6 +49,7 @@ export function Lip({makeUp}) {
         key={el.id}
         >
         <div className='image'>
+          <div className='ImageBackground' id={index}></div>
           <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
         </div>
         <div className='title'>{el.title}</div>

@@ -51,7 +51,8 @@ export function Cheek({makeUp}) {
         key={el.id}
         >
         <div className='image'>
-        <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
+          <div className='ImageBackground' id={index}></div>
+          <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
         </div>
         <div className='title'>{el.title}</div>
         <div className='brandName'>Blossom Belle</div>
