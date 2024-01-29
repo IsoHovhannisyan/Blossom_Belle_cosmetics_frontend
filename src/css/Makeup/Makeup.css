@@ -52,6 +52,7 @@
     padding: 1rem;
     overflow: hidden;
     position: relative;
+    border-radius: 1rem;
 }
 
 .Makeup .products .Products .Product .image .ImageBackground{
@@ -67,11 +68,17 @@
     opacity: .5;
 }
 
+.Makeup .products .Products .Product .image .ImageBackground.active:hover {
+    opacity: .3;
+}
+
 
 .Makeup .products .Products .Product .image .img{
     border-radius: 1rem; 
     position: absolute;
+    width: 100%;
     transition: .5s;
+    height: 100%;
 }
 
 .Makeup .products .Products .Product .image .img.active{
@@ -149,6 +156,11 @@
     font-size: .9rem;
 }
 
+.Makeup .products .Products .Product .btn_text.active:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
+}
+
 .Makeup .products .Products .Product .shopping.active {
     right:2rem;
     font-size: 1.3rem;
@@ -159,5 +171,5 @@
     left: 2rem;
     font-size: 1.5rem;
     transition: .6s;
+    cursor: pointer;
 }
-
