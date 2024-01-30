@@ -7,8 +7,12 @@ import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 export function HomePage() {
 
   const [slider, setSlider]= useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const bestSellers = [...allProducts?.filter(el=> el.best_seller == 'true')];
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
+  console.log(bestSellers);
+  
 
   useEffect(()=>{
     loadingData();
@@ -23,12 +27,18 @@ export function HomePage() {
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
         setSlider(savedData.sliderData);
+        setAllProducts([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData ]);
+        // .catch(error => {
+        //   console.log(error);
+        // })
+        
     }
 
     if (currentLanguage) {
         fetchData(currentLanguage)
             .then(data => {
                 setSlider(data.sliderData);
+                setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
                 localStorage.setItem('fetchedData', JSON.stringify(data));
             })
             .catch(error => {
@@ -43,7 +53,7 @@ export function HomePage() {
       { <Slider slider={slider} />}
     <h2 className='heading'> best sellers </h2>
     <div className='bestsellers'>
-       {<BestSellers slider={slider} />}
+       {<BestSellers bestSellers={bestSellers} />}
       </div>
 
       <h2 className='heading'>Limited edition</h2>

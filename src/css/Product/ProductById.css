@@ -6,13 +6,67 @@
     height: 600px;
 }
 
-.Product .Box .Image, .Title, .Price{
+.Product .Box .Image, .Product_Text, .Price{
     width: 25%;
     height: 100%;
 }
+
 .Product .Box .Image img{
     width: 100%;
     height: 100%;
+}
+
+.Product .Box .Image{
+    position: relative;
+}
+
+.Product .Box .Image .new{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 7rem;
+    height: 7rem;
+    display: none;
+}
+.Product .Box .Image .new.active{
+    display: initial;
+}
+
+.Product .Box .Image .new.active img{
+    width: 100%;
+    height: 100%;
+}
+
+.Product .Box .Image .best{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 6rem;
+    height: 6rem;
+    display: none;
+}
+.Product .Box .Image .best.active{
+    display: initial;
+}
+
+.Product .Box .Image .best.active img{
+    width: 100%;
+    height: 100%;
+}
+
+.Product .Box .Product_Text .Product_Title{
+    font-size: 2rem;
+    border-bottom: 1px solid rgb(188, 188, 188);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 200;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.Product .Box .Product_Text .Product_Note{
+    font-family: cursive;
 }
 
 .Product .Box .Price .quantity{
@@ -21,11 +75,6 @@
     align-items: center;
 }
 
-.Product .Box .Title h2{
-    font-size: 2rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
-}
 
 .Product .Box .Price h2{
     font-size: 2.5rem;

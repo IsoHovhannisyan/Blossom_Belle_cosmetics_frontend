@@ -1,8 +1,15 @@
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { useNavigate } from 'react-router-dom';
+import New from "../../Images/new_1.png"
+import Best from '../../Images/best_seller_1.png'
+import '../../css/HomePage/BestSellers.css';
+
 
 export default function BestSellers(props) {
+
+    const navigate = useNavigate();
 
     const responsive = {
         superLargeDesktop: {
@@ -22,8 +29,39 @@ export default function BestSellers(props) {
           items: 2
         }
       };
+      const mouseMoveFunc = (index)=>{
+        if(index > 9){
+          index = String(index).split('');
+          let btn_text = document.querySelectorAll(`#\\3${index[0]} ${index[1]}`);
+          
+          for(let i = 0; i<btn_text.length; i++){
+            btn_text[i].classList.add('active')
+          }
+      }else{
+        let btn_text = document.querySelectorAll(`#\\3${index} `);
+    
+        for(let i = 0; i<btn_text.length; i++){
+          btn_text[i].classList.add('active')
+          }
+        }
+      }
+    
+      const mouseLeaveFunc = (index)=>{
+        if(index > 9){
+          index = String(index).split('');
+          let btn_text = document.querySelectorAll(`#\\3${index[0]} ${index[1]}`);
+          for(let i = 0; i<btn_text.length; i++){
+            btn_text[i].classList.remove('active')
+          }
+        }else{
+          let btn_text = document.querySelectorAll(`#\\3${index} `);
+          for(let i = 0; i<btn_text.length; i++){
+            btn_text[i].classList.remove('active')
+          }
+          }
+      }
   return (
-    <div className='w-full h-[30rem]'>
+    <div className='Best_Sellers w-full h-[30rem]'>
 
         <Carousel 
         responsive={responsive} 
@@ -42,9 +80,29 @@ export default function BestSellers(props) {
         itemClass="carousel-item-padding-40-px"
         >
             {
-                props.slider.map(el => <div className=' w-full h-full' key={el.id}>
-                    <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} alt="" className=' w-full h-full'/>
-                </div>)
+                props.bestSellers.map((el,index) => <div className='Product' 
+                onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)} 
+                onMouseMove={()=> mouseMoveFunc(index)}
+                onMouseLeave={()=> mouseLeaveFunc(index)} 
+                key={el.id}
+                >
+                <div className='image'>
+                  <div className='ImageBackground' id={index}></div>
+                  <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
+                  <div className={el.new ? 'new active': 'new'}>
+                    <img src={New} alt="" />
+                  </div>
+                  <div className={el.best_seller ? 'best active': 'best'}>
+                    <img src={Best} alt="" />
+                  </div>
+                </div>
+                <div className='title'>{el.title.length > 25 ? el.title.slice(0,25) + '...': el.title}</div>
+                <div className='brandName'>Blossom Belle</div>
+                <div className='price'>{el.price}֏</div>
+                <button className='btn_text' id={index}>{el.btn_text}</button>
+                <div className='shopping' id={index}><i className=" fa-solid fa-bag-shopping"></i></div>
+                <div className='heart' id={index}><i className=" fa-regular fa-heart"></i></div>
+              </div>)
             }
             
         </Carousel>

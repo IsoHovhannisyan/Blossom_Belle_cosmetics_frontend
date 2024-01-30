@@ -83,6 +83,7 @@ export function getSavedDataFromLocalStorage() {
   const savedData = localStorage.getItem('fetchedData');
   if (savedData) {
       return JSON.parse(savedData);
+      
   }
   return null;
 }

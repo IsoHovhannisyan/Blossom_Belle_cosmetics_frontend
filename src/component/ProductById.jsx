@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../axios'
-import { json, useNavigate, useSearchParams } from 'react-router-dom';
+import {  useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchData, getSavedDataFromLocalStorage, AllCategories } from './Header';
 import '../css/Product/ProductById.css';
+import New from "../Images/new_1.png"
+import Best from '../Images/best_seller_1.png'
 
 export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQuantity, setBasketProductsQuantity }) {
 
@@ -109,11 +111,17 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
      showIntrestingProducts && <div className='Product'>
      <div className='Box'>
          <div className='Image'>
-         <img src={`https://blossom-belle-cosmetics.vercel.app${product?.image}`} alt="" />
+            <img src={`https://blossom-belle-cosmetics.vercel.app${product?.image}`} alt="" />
+            <div className={product?.new ? 'new active': 'new'}>
+                <img src={New} alt="" />
+            </div>
+            <div className={product?.best_seller ? 'best active': 'best'}>
+                <img src={Best} alt="" />
+            </div>
          </div>
-         <div className='Title'>
-             <h2>{product?.title}</h2>
-             <h3>{productLabel?.[0]?.note}</h3>
+         <div className='Product_Text'>
+             <h2 className='Product_Title'>{product?.title}</h2>
+             <h3 className='Product_Note'>{productLabel?.[0]?.note}</h3>
          </div>
          <div className='Price'>
              <div className='BoxPrice'>
