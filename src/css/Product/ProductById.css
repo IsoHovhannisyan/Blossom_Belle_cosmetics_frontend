@@ -41,6 +41,29 @@
     margin-bottom: 1rem;
 }
 
+.Product .Box .Price .quantity .ProductMinus, .ProductPlus {
+    position: relative;
+    width: 1.8rem;
+    height: 1.8rem;
+    cursor: pointer;
+    border-radius: .5rem;
+    transition: .1s;
+}
+
+.Product .Box .Price .quantity .ProductMinus:hover, .ProductPlus:hover{
+    background-color: rgb(101, 101, 101);
+    color: white;
+    transition: .1s;
+}
+
+.Product .Box .Price .quantity i {
+    font-size: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+
 .Product .Box .Price .BoxBtn .btn{
     width: 100%;
     padding: 1rem;
@@ -48,13 +71,26 @@
     color: white;
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    transition: .3s;
+}
+
+.Product .Box .Price .BoxBtn .btn:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
 }
 
 .Product .Box .Price .BoxFav .Fav{
     width: 100%;
     padding: 1rem;
     font-size: 1.5rem;
-    background-color: rgb(226, 223, 223);
+    background-color: #e1e1e1;
+    transition: .3s;
+}
+
+.Product .Box .Price .BoxFav .Fav:hover{
+    background-color: black;
+    transition: .3s;
+    color: white;
 }
 
 .Product .DetailAndDelivery {

@@ -120,9 +120,9 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
                  <h2>{product?.price * quantity} ֏</h2>
              </div>
              <div className='quantity'>
-                 <div onClick={()=> quantity !== 1 ? setQuantity(quantity-1): setQuantity(1)} className={ quantity !== 1 ? 'cursor-pointer': ''}>-</div>
-                 <div>{quantity}</div>
-                 <div onClick={()=> setQuantity(quantity+1)} className=' cursor-pointer'>+</div>
+                 <div onClick={()=> quantity !== 1 ? setQuantity(quantity-1): setQuantity(1)} className={ quantity !== 1 ? 'ProductMinus cursor-pointer': 'ProductMinus'}><i className="fa-solid fa-minus"></i></div>
+                 <div className=' text-2xl'>{quantity}</div>
+                 <div onClick={()=> setQuantity(quantity+1)} className='ProductPlus cursor-pointer'><i className="fa-solid fa-plus"></i></div>
              </div>
              <div className='flex justify-left items-center gap-1 mb-[1rem] text-[1.2rem]'>
                 <div>

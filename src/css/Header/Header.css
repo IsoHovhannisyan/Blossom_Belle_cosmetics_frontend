@@ -19,7 +19,7 @@
     height: 3rem;
     color: rgb(181, 181, 181);
     width: 100%;
-    z-index: 2;
+    z-index: 6;
     font-size: 1.5rem;
     padding: 0 12rem;
 }
@@ -162,7 +162,7 @@
 .Header .BlossomBelle  .Blossom_text.active {
     top: 0;
     transition: .2s;
-    z-index: 4;
+    z-index: 7;
 }
 
 .Header .BlossomBelle  .Blossom_text.active .BlossomLogo{

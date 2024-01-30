@@ -1,5 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import New from "../../Images/new_1.png"
+import Best from '../../Images/best_seller_1.png'
 
 export function Lip({makeUp}) {
   let res = makeUp.filter(el=> el.category == 'lips');
@@ -51,6 +53,12 @@ export function Lip({makeUp}) {
         <div className='image'>
           <div className='ImageBackground' id={index}></div>
           <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
+          <div className={el.new ? 'new active': 'new'}>
+            <img src={New} alt="" />
+          </div>
+          <div className={el.best_seller ? 'best active': 'best'}>
+            <img src={Best} alt="" />
+          </div>
         </div>
         <div className='title'>{el.title}</div>
         <div className='brandName'>Blossom Belle</div>

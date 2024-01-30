@@ -78,6 +78,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
             setButtonDisabled(true);
             return
         }
+        sessionStorage.setItem('Basket-Products', JSON.stringify(allBasketProducts))
         setMyData(false);
         setCheckoutData(true)
         setConfirmData(false);
@@ -157,7 +158,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
 
                                 <div className=' w-[15%] flex justify-between items-center'>
                                     <div className='Quantity'>
-                                        <div className='minus' onClick={()=> minus(el)}><i className="fa-solid fa-minus"><div></div></i></div>
+                                        <div className='minus' onClick={()=> minus(el)}><i className="fa-solid fa-minus"></i></div>
                                         <div className='qty'>{el.quantityForOrder}</div>
                                         <div className='plus' onClick={()=> plus(el)}><i className="fa-solid fa-plus"></i></div>
                                         <div className={el.quantityForOrder > el.quantity ? 'ProductQtyText active': 'ProductQtyText'}>
