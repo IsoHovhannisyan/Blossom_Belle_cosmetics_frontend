@@ -70,7 +70,7 @@ export default function BestSellers(props) {
         ssr={true}
         infinite={true}
         autoPlay={props.deviceType !== "mobile" ? true : false}
-        autoPlaySpeed={2000}
+        autoPlaySpeed={1500}
         keyBoardControl={true}
         transitionDuration={500}
         containerClass="carousel-container"

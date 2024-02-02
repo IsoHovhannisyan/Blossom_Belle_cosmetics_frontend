@@ -42,6 +42,11 @@
     overflow: hidden;
 }
 
+.New .products .Products .Product.active{
+    box-shadow: 0 0 5px  #006699;
+    border: solid 1px #006699;
+}
+
 .New .products .Products .Product .image{
     display: flex;
     justify-content: center;
@@ -121,6 +126,32 @@
 }
 
 .New .products .Products .Product .price {
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 500;
+}
+
+.New .products .Products .Product .Price_discount .PriceAndPercent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.New .products .Products .Product .Price_discount .PriceAndPercent .Price_deleted {
+    text-decoration:line-through 2px;
+}
+
+.New .products .Products .Product .Price_discount .PriceAndPercent .Percent_Discount {
+    color: red;
+    font-family: cursive;
+}
+
+.New .products .Products .Product .Price_discount .Price_Discounted {
+    color: #006699;
     font-size: 1.3rem;
     position: absolute;
     bottom: 1rem;

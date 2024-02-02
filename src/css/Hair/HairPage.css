@@ -42,6 +42,11 @@
     overflow: hidden;
 }
 
+.Hair .products .Products .Product.active{
+    box-shadow: 0 0 5px  #006699;
+    border: solid 1px #006699;
+}
+
 .Hair .products .Products .Product .image{
     display: flex;
     justify-content: center;
@@ -86,7 +91,41 @@
     transition: .5s;
 }
 
+.Hair .products .Products .Product .image .new{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 5rem;
+    height: 5rem;
+    display: none;
+}
+.Hair .products .Products .Product .image .new.active{
+    display: initial;
+}
 
+.Hair .products .Products .Product .image .new.active img{
+    width: 100%;
+    height: 100%;
+}
+
+.Hair .products .Products .Product .image .best{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 4rem;
+    height: 4rem;
+    display: none;
+}
+.Hair .products .Products .Product .image .best.active{
+    display: initial;
+}
+
+.Hair .products .Products .Product .image .best.active img{
+    width: 100%;
+    height: 100%;
+}
 
 .Hair .products .Products .Product .title{
     text-align: center;
@@ -103,6 +142,32 @@
 }
 
 .Hair .products .Products .Product .price {
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 500;
+}
+
+.Hair .products .Products .Product .Price_discount .PriceAndPercent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.Hair .products .Products .Product .Price_discount .PriceAndPercent .Price_deleted {
+    text-decoration:line-through 2px;
+}
+
+.Hair .products .Products .Product .Price_discount .PriceAndPercent .Percent_Discount {
+    color: red;
+    font-family: cursive;
+}
+
+.Hair .products .Products .Product .Price_discount .Price_Discounted {
+    color: #006699;
     font-size: 1.3rem;
     position: absolute;
     bottom: 1rem;

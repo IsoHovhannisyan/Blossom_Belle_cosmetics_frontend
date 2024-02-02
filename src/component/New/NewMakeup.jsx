@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import New from "../../Images/new_1.png"
 
@@ -56,9 +55,11 @@ export  function NewMakeup({makeup}) {
             <img src={New} alt="" />
           </div>
         </div>
-        <div className='title'>{el.title}</div>
+        <div className='title'>{el.title.length > 20 ? el.title.slice(0,20) + '...': el.title}</div>
         <div className='brandName'>Blossom Belle</div>
-        <div className='price'>{el.price}֏</div>
+        {
+          el.sale ? <div className='Price_discount'><div className='PriceAndPercent'><div className='Price_deleted'>{el.price}֏</div> <div className='Percent_Discount'>{el.sale}%</div></div> <div className='Price_Discounted'>{el.price - el.price * el.sale / 100}֏</div></div>: <div className='price'>{el.price}֏</div>
+        }
         <button className='btn_text' id={index}>{el.btn_text}</button>
         <div className='shopping' id={index}><i className=" fa-solid fa-bag-shopping"></i></div>
         <div className='heart' id={index}><i className=" fa-regular fa-heart"></i></div>

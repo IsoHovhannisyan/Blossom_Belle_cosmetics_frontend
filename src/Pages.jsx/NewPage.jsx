@@ -11,6 +11,10 @@ import { NewGifts } from '../component/New/NewGifts';
 
 export function NewPage() {
   const [makeup, setMakeup] = useState([]);
+  const [skincare, setSkincare] = useState([]);
+  const [brush, setBrush] = useState([]);
+  const [hair, setHair] = useState([]);
+
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
 
   const [toggle, setToggle] = useState(1);
@@ -26,12 +30,19 @@ export function NewPage() {
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
       setMakeup(savedData.makeupData);
+      setSkincare(savedData.skincareData)
+      setBrush(savedData.brushData);
+      setHair(savedData.hairData);
+
     }
 
     if (currentLanguage) {
       fetchData(currentLanguage)
         .then(data => {
-          setMakeup(data.makeupData)
+          setMakeup(data.makeupData);
+          setSkincare(data.skincareData)
+          setBrush(data.brushData);
+          setHair(data.hairData);
           localStorage.setItem('fetchedData', JSON.stringify(data));
         })
         .catch(error => {
@@ -50,9 +61,9 @@ export function NewPage() {
       </div>
       <div className='products'>
         <div className={toggle === 1 ? "box show": 'box'}> {<NewMakeup makeup={makeup} />}</div>
-        <div className={toggle === 2 ? "box show": 'box'}> {< NewSkinCare />}</div>
-        <div className={toggle === 3 ? "box show": 'box'}> {< NewBrushes />}</div>
-        <div className={toggle === 4 ? "box show": 'box'}> {< NewHairCare />}</div>
+        <div className={toggle === 2 ? "box show": 'box'}> {< NewSkinCare skincare={skincare} />}</div>
+        <div className={toggle === 3 ? "box show": 'box'}> {< NewBrushes brush={brush} />}</div>
+        <div className={toggle === 4 ? "box show": 'box'}> {< NewHairCare hair={hair} />}</div>
         <div className={toggle === 5 ? "box show": 'box'}> {< NewGifts />}</div>
       </div>
 
