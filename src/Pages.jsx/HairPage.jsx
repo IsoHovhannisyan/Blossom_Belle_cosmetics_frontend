@@ -11,6 +11,7 @@ import '../css/Hair/HairPage.css'
 export function HairPage() {
 
   const [hair, setHair] = useState([]);
+  const [categories,setCategories] = useState([]);
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
 
   const [toggle, setToggle] = useState(1);
@@ -25,28 +26,28 @@ export function HairPage() {
   async function loadingData(){
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      setHair(savedData.hairData);
-    }
-
-    if (currentLanguage) {
-      fetchData(currentLanguage)
+      setHair(savedData.hairData.filter(el => el.lang == currentLanguage));
+      setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
+    }else{
+      fetchData()
         .then(data => {
-          setHair(data.hairData)
-          localStorage.setItem('fetchedData', JSON.stringify(data));
+          setHair(data.hairData.filter(el => el.lang == currentLanguage));
+          setCategories(data.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
         })
         .catch(error => {
           console.error("An error occurred while fetching data:", error);
         });
     }
+    
   }
 
   return (
     <div className='Hair '>
         <div className='HairNav'>
-          <div className='LinkDiv' onClick={()=> setToggle(1)}>Shampoo</div>
-          <div className='LinkDiv' onClick={()=> setToggle(2)}>Conditioner</div>
-          <div className='LinkDiv' onClick={()=> setToggle(3)}>Hair Oil</div>
-          <div className='LinkDiv' onClick={()=> setToggle(4)}>Hair Mask</div>
+          <div className='LinkDiv' onClick={()=> setToggle(1)}>{categories[17]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(2)}>{categories[18]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(3)}>{categories[19]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(4)}>{categories[20]}</div>
       </div>
 
       <div className='products'>

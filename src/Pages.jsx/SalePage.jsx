@@ -18,7 +18,11 @@ export function SalePage() {
   const [percent, setPercent] = useState(null);
   const assortments = ['makeup', 'skincare', 'brush', 'hair', 'gift'];
   const [assortment, setAssortment] = useState('');
-  let categories = new Set(allCategories?.map(el => {
+  const [category, setCategory] = useState('');
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
+
+
+  let categories = new Set(allCategories?.filter(el => el.lang == currentLanguage).map(el => {
     
     if(assortment){
       if(el.path == assortment){
@@ -29,12 +33,10 @@ export function SalePage() {
       return undefined
     }
   }));
+  
   categories.delete(undefined)
-  // const categories = ['face','eye','cheek','lips','mouisturizers','Cleansers','mask','sunscreen', 'eyeBrushes','lipBrushes','faceBrushes','cheekBrush','shampoo','conditioner','hairOils','hairMask']
 
-  console.log(categories);
-  const [category, setCategory] = useState('');
-  const Sale = allCategories?.filter(el => {
+  const Sale = allCategories?.filter(el => el.lang == currentLanguage).filter(el => {
     if(percent === null){
       if(assortment){
         if(category){
@@ -78,10 +80,6 @@ export function SalePage() {
   }
     ) 
 
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
-
-  const [toggle, setToggle] = useState(1);
-
   useEffect(()=>{
     loadingData()
     sessionStorage.setItem('My_data', JSON.stringify(true));
@@ -92,25 +90,15 @@ export function SalePage() {
   async function loadingData(){
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      // setMakeup(savedData.makeupData);
-      // setSkincare(savedData.skincareData)
-      // setBrush(savedData.brushData);
-      // setHair(savedData.hairData);
-      setNavbarForSelectors(savedData.navbarData?.[0]?.navbar.split(', '))
-      setCategoriesForSelectors(savedData.navbarData?.[0]?.categories.split(', '))
+      setNavbarForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.navbar.split(', '))
+      setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '))
       setAllCategories([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData]);
 
       setProductCategory(savedData)
 
-    }
-
-    if (currentLanguage) {
-      fetchData(currentLanguage)
+    }else{
+      fetchData()
         .then(data => {
-          // setMakeup(data.makeupData);
-          // setSkincare(data.skincareData)
-          // setBrush(data.brushData);
-          // setHair(data.hairData);
           setNavbarForSelectors(data.navbarData?.[0]?.navbar.split(', '))
           setCategoriesForSelectors(data.navbarData?.[0]?.categories.split(', '))
           setAllCategories([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData]);
@@ -165,7 +153,6 @@ export function SalePage() {
       onMouseMove={()=> mouseMoveFunc(index)}
       onMouseLeave={()=> mouseLeaveFunc(index)} 
       key={el.id}
-
       >
       <div className='image'>
         <div className='ImageBackground' id={index}></div>

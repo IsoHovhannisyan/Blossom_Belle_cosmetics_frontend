@@ -3,7 +3,7 @@ import New from "../../Images/new_1.png"
 import Best from '../../Images/best_seller_1.png'
 
 export function FaceBrushes({brush}) {
-  let res = brush.filter(el=> el.category == 'faceBrushes');
+  let res = brush.filter(el=> el.category == 'Face Brushes');
     const faceBrushes = res;
     
     const navigate = useNavigate();

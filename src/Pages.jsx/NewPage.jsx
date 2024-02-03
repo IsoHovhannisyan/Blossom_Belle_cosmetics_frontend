@@ -14,6 +14,7 @@ export function NewPage() {
   const [skincare, setSkincare] = useState([]);
   const [brush, setBrush] = useState([]);
   const [hair, setHair] = useState([]);
+  const [categories,setCategories] = useState([]);
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
 
@@ -29,21 +30,20 @@ export function NewPage() {
   async function loadingData(){
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      setMakeup(savedData.makeupData);
-      setSkincare(savedData.skincareData)
-      setBrush(savedData.brushData);
-      setHair(savedData.hairData);
+      setMakeup(savedData.makeupData.filter(el => el.lang == currentLanguage));
+      setSkincare(savedData.skincareData.filter(el => el.lang == currentLanguage))
+      setBrush(savedData.brushData.filter(el => el.lang == currentLanguage));
+      setHair(savedData.hairData.filter(el => el.lang == currentLanguage));
+      setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
 
-    }
-
-    if (currentLanguage) {
-      fetchData(currentLanguage)
+    }else{
+      fetchData()
         .then(data => {
-          setMakeup(data.makeupData);
-          setSkincare(data.skincareData)
-          setBrush(data.brushData);
-          setHair(data.hairData);
-          localStorage.setItem('fetchedData', JSON.stringify(data));
+          setMakeup(data.makeupData.filter(el => el.lang == currentLanguage));
+          setSkincare(data.skincareData.filter(el => el.lang == currentLanguage))
+          setBrush(data.brushData.filter(el => el.lang == currentLanguage));
+          setHair(data.hairData.filter(el => el.lang == currentLanguage));
+          setCategories(data.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
         })
         .catch(error => {
           console.error("An error occurred while fetching data:", error);
@@ -53,11 +53,11 @@ export function NewPage() {
   return (
     <div className='New '>
         <div className='NewNav'>
-          <div className='LinkDiv' onClick={()=> setToggle(1)}>New Makeup</div>
-          <div className='LinkDiv' onClick={()=> setToggle(2)}>New Skincare</div>
-          <div className='LinkDiv' onClick={()=> setToggle(3)}>New Brushes</div>
-          <div className='LinkDiv' onClick={()=> setToggle(4)}>New Haircare</div>
-          <div className='LinkDiv' onClick={()=> setToggle(5)}>New Gifts</div>
+          <div className='LinkDiv' onClick={()=> setToggle(1)}>{categories?.[0]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(2)}>{categories?.[1]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(3)}>{categories?.[2]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(4)}>{categories?.[3]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(5)}>{categories?.[4]}</div>
       </div>
       <div className='products'>
         <div className={toggle === 1 ? "box show": 'box'}> {<NewMakeup makeup={makeup} />}</div>

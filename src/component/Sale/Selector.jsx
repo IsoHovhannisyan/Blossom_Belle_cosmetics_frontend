@@ -10,15 +10,16 @@ export function Selector({setPercent, navbarForSelectors, categoriesForSelectors
         category: 'Select Category'
     })
 
-    let res = categoriesForSelectors?.filter((el,index)=> el.slice(0,3) != 'New');
+    // let res = categoriesForSelectors?.filter((el,index)=> el.slice(0,3) != 'New');
 
     const onSelectPercent = (percent)=>{
         setFormData({...formData, percent})
         if(percent != 'Select Percent'){
-            setAssortment('')
+            // onSelectAssortments('Select Assortments');
             setPercent(percent)
         }else{
-            setAssortment('')
+            // setAssortment('')
+            // onSelectAssortments('Select Assortments');
             setPercent(null)
         }
     }
@@ -66,7 +67,6 @@ export function Selector({setPercent, navbarForSelectors, categoriesForSelectors
             {
                 sortedCategories.map((el,index)=> <option value={el}>{el}</option>)
             }
-            <option value="" selected disabled hidden>Choose here</option>
 
         </select>
     </div>

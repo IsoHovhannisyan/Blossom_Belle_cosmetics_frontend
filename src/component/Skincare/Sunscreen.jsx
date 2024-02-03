@@ -3,7 +3,7 @@ import New from "../../Images/new_1.png"
 import Best from '../../Images/best_seller_1.png'
 
 export function Sunscreen({skincare}) {
-  let res = skincare.filter(el=> el.category == 'sunscreen');
+  let res = skincare.filter(el=> el.category == 'sunscreens');
   const sunscreen = res;
   
   const navigate = useNavigate();

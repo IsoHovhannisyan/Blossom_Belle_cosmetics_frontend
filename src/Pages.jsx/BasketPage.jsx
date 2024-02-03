@@ -30,17 +30,15 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
-            setBasketLabel(savedData.BasketLabelData);
-            setProductLabel(savedData.ProductLabelData);
-        }
-    
-        if (currentLanguage) {
-            fetchData(currentLanguage)
+            setBasketLabel(savedData.BasketLabelData.filter(el => el.lang == currentLanguage));
+            setCheckoutDataArr(savedData.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
+            setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
+        }else {
+            fetchData()
                 .then(data => {
-                    setBasketLabel(data.BasketLabelData);
-                    setCheckoutDataArr(data.BasketLabelData[0].checkout_data.split(',  '));
-                    setProductLabel(data.ProductLabelData);
-                    localStorage.setItem('fetchedData', JSON.stringify(data));
+                    setBasketLabel(data.BasketLabelData.filter(el => el.lang == currentLanguage));
+                    setCheckoutDataArr(data.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
+                    setProductLabel(data.ProductLabelData.filter(el => el.lang == currentLanguage));
                 })
                 .catch(error => {
                     console.error("An error occurred while fetching data:", error);

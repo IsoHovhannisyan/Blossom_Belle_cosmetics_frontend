@@ -6,10 +6,10 @@ import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 
 export function HomePage() {
 
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [slider, setSlider]= useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const bestSellers = [...allProducts?.filter(el=> el.best_seller == 'true')];
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+  const bestSellers = [...allProducts?.filter(el=> el.best_seller == 'true' && el.lang == currentLanguage)];
 
   console.log(bestSellers);
   
@@ -26,25 +26,22 @@ export function HomePage() {
 
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-        setSlider(savedData.sliderData);
-        setAllProducts([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData ]);
-        // .catch(error => {
-        //   console.log(error);
-        // })
-        
-    }
-
-    if (currentLanguage) {
-        fetchData(currentLanguage)
-            .then(data => {
-                setSlider(data.sliderData);
-                setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
-                localStorage.setItem('fetchedData', JSON.stringify(data));
-            })
-            .catch(error => {
-                console.error("An error occurred while fetching data:", error);
-            });
-    }
+      setSlider(savedData.sliderData.filter(el => el.lang == currentLanguage));
+      setAllProducts([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData ]);
+      // .catch(error => {
+      //   console.log(error);
+      // })
+      
+  }
+    fetchData()
+          .then(data => {
+              setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
+              setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
+          })
+          .catch(error => {
+              console.error("An error occurred while fetching data:", error);
+          });
+  
 
 }
 

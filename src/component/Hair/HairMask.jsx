@@ -3,7 +3,7 @@ import New from "../../Images/new_1.png"
 import Best from '../../Images/best_seller_1.png'
 
 export function HairMask({hair}) {
-  let res = hair.filter(el=> el.category == 'hairMask');
+  let res = hair.filter(el=> el.category == 'Hair Masks');
   const hairMask = res;
   
   const navigate = useNavigate();

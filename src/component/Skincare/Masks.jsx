@@ -3,7 +3,7 @@ import New from "../../Images/new_1.png"
 import Best from '../../Images/best_seller_1.png'
 
 export function Masks({skincare}) {
-  let res = skincare.filter(el=> el.category == 'mask');
+  let res = skincare.filter(el=> el.category == 'masks');
   const masks = res;
   const navigate = useNavigate();
   const mouseMoveFunc = (index)=>{

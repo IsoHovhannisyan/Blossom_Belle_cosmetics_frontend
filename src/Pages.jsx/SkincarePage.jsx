@@ -10,9 +10,10 @@ import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 
 export function SkincarePage() {
 
-  const [skincare, setSkincare] = useState([]);
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
+  const [skincare, setSkincare] = useState([]);
+  const [categories,setCategories] = useState([]);
   const [toggle, setToggle] = useState(1);
 
   useEffect(()=>{
@@ -25,14 +26,13 @@ export function SkincarePage() {
   async function loadingData(){
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      setSkincare(savedData.skincareData);
-    }
-
-    if (currentLanguage) {
-      fetchData(currentLanguage)
+      setSkincare(savedData.skincareData.filter(el => el.lang == currentLanguage));
+      setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
+    }else{
+      fetchData()
         .then(data => {
-          setSkincare(data.skincareData)
-          localStorage.setItem('fetchedData', JSON.stringify(data));
+          setSkincare(data.skincareData.filter(el => el.lang == currentLanguage))
+          setCategories(data.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
         })
         .catch(error => {
           console.error("An error occurred while fetching data:", error);
@@ -43,10 +43,10 @@ export function SkincarePage() {
   return (
     <div className='Skincare '>
       <div className='SkincareNav'>
-          <div className='LinkDiv' onClick={()=> setToggle(1)}>Mouisturizers</div>
-          <div className='LinkDiv' onClick={()=> setToggle(2)}> Cleansers</div>
-          <div className='LinkDiv' onClick={()=> setToggle(3)}>Masks</div>
-          <div className='LinkDiv' onClick={()=> setToggle(4)}>Sunscreen</div>
+          <div className='LinkDiv' onClick={()=> setToggle(1)}>{categories[9]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(2)}> {categories[10]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(3)}>{categories[11]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(4)}>{categories[12]}</div>
       </div>
 
       <div className='products'>

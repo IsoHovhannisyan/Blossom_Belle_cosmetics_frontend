@@ -21,19 +21,16 @@ export function RegisterPage({currentLanguage}) {
 
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      setRegisterLogin(savedData.authLabelData);
-    }
-
-    if (currentLanguage) {
-        fetchData(currentLanguage)
-            .then(data => {
-              setRegisterLogin(data.authLabelData);
-                localStorage.setItem('fetchedData', JSON.stringify(data));
-            })
-            .catch(error => {
-                console.error("An error occurred while fetching data:", error);
-            });
-    }
+        setRegisterLogin(savedData.authLabelData.filter(el => el.lang == currentLanguage));
+      }else{
+          fetchData()
+              .then(data => {
+                setRegisterLogin(data.authLabelData.filter(el => el.lang == currentLanguage));
+              })
+              .catch(error => {
+                  console.error("An error occurred while fetching data:", error);
+              });
+      }
 
 }
 

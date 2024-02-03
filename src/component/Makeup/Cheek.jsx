@@ -4,7 +4,7 @@ import Best from '../../Images/best_seller_1.png'
 
 export function Cheek({makeUp}) {
 
-  let res = makeUp.filter(el=> el.category == 'cheek');
+  let res = makeUp.filter(el=> el.category == 'cheeks');
   let cheek = res;
   const navigate = useNavigate();
 

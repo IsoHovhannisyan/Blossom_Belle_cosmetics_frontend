@@ -33,20 +33,17 @@ export function App() {
   useEffect(() => {
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      setNavbar(savedData.navbarData);
+      setNavbar(savedData.navbarData.filter(el => el.lang == currentLanguage));
       // setFooter(savedData.footer);
     }
-
-    if (currentLanguage) {
-      fetchData(currentLanguage)
+      fetchData()
         .then(data => {
-          setNavbar(data.navbarData);
-          // setFooter(data.footerData);
+          setNavbar(data.navbarData.filter(el => el.lang == currentLanguage));
+          localStorage.setItem('fetchedData', JSON.stringify(savedData));
         })
         .catch(error => {
           console.error("An error occurred while fetching data:", error);
         });
-    }
   }, [currentLanguage]);
 
 

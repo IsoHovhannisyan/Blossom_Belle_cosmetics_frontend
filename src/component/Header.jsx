@@ -34,50 +34,50 @@ export async function AllCategories(){
     }
 }
 
-export async function fetchData(language) {
+export async function fetchData() {
 
-  try {
-      const [
-          sliderData,
-          makeupData,
-          skincareData,
-          hairData,
-          brushData,
-          ProductLabelData,
-          BasketLabelData,
-          navbarData,
-          authLabelData,
-      ] = await Promise.all([
-          axios.get(`/api/slider?lang=${language}`),
-          axios.get(`/api/makeup?lang=${language}`),
-          axios.get(`/api/skincare?lang=${language}`),
-          axios.get(`/api/hair?lang=${language}`),
-          axios.get(`/api/brush?lang=${language}`),
-          axios.get(`/api/product?lang=${language}`),
-          axios.get(`/api/basket?lang=${language}`),
-          axios.get(`/api/navbar?lang=${language}`),
-          axios.get(`/api/auth?lang=${language}`)
-      ]);
-
-      const data = {
-          sliderData: sliderData.data,
-          makeupData: makeupData.data,
-          skincareData: skincareData.data,
-          hairData: hairData.data,
-          brushData: brushData.data,
-          ProductLabelData: ProductLabelData.data,
-          BasketLabelData: BasketLabelData.data,
-          navbarData: navbarData.data,
-          authLabelData: authLabelData.data
-      };
-
-      localStorage.setItem('fetchedData', JSON.stringify(data));
-      return data;
-  } catch (error) {
-      console.error("An error occurred:", error);
-      throw error;
+    try {
+        const [
+            sliderData,
+            makeupData,
+            skincareData,
+            hairData,
+            brushData,
+            ProductLabelData,
+            BasketLabelData,
+            navbarData,
+            authLabelData,
+        ] = await Promise.all([
+            axios.get(`/api/slider`),
+            axios.get(`/api/makeup`),
+            axios.get(`/api/skincare`),
+            axios.get(`/api/hair`),
+            axios.get(`/api/brush`),
+            axios.get(`/api/product`),
+            axios.get(`/api/basket`),
+            axios.get(`/api/navbar`),
+            axios.get(`/api/auth`)
+        ]);
+  
+        const data = {
+            sliderData: sliderData.data,
+            makeupData: makeupData.data,
+            skincareData: skincareData.data,
+            hairData: hairData.data,
+            brushData: brushData.data,
+            ProductLabelData: ProductLabelData.data,
+            BasketLabelData: BasketLabelData.data,
+            navbarData: navbarData.data,
+            authLabelData: authLabelData.data
+        };
+  
+        localStorage.setItem('fetchedData', JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.error("An error occurred:", error);
+        throw error;
+    }
   }
-}
 
 export function getSavedDataFromLocalStorage() {
   const savedData = localStorage.getItem('fetchedData');

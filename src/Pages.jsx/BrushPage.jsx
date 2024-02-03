@@ -9,6 +9,7 @@ import '../css/Brushes/Brushes.css';
 
 export function BrushPage() {
   const [brush, setBrush] = useState([]);
+  const [categories,setCategories] = useState([]);
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
 
   const [toggle, setToggle] = useState(1);
@@ -23,14 +24,14 @@ export function BrushPage() {
   async function loadingData(){
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-      setBrush(savedData.brushData);
+      setBrush(savedData.brushData.filter(el => el.lang == currentLanguage));
+      setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
     }
-
-    if (currentLanguage) {
-      fetchData(currentLanguage)
+    else {
+      fetchData()
         .then(data => {
-          setBrush(data.brushData)
-          localStorage.setItem('fetchedData', JSON.stringify(data));
+          setBrush(data.brushData.filter(el => el.lang == currentLanguage))
+          setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
         })
         .catch(error => {
           console.error("An error occurred while fetching data:", error);
@@ -40,10 +41,10 @@ export function BrushPage() {
   return (
     <div className='Brushes '>
       <div className='BrushesNav'>
-          <div className='LinkDiv' onClick={()=> setToggle(1)}>Eye Brushes</div>
-          <div className='LinkDiv' onClick={()=> setToggle(2)}>Lip Brushes </div>
-          <div className='LinkDiv' onClick={()=> setToggle(3)}>Face Brushes</div>
-          <div className='LinkDiv' onClick={()=> setToggle(4)}>Cheek Brushes</div>
+          <div className='LinkDiv' onClick={()=> setToggle(1)}>{categories[13]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(2)}>{categories[14]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(3)}>{categories[15]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(4)}>{categories[16]}</div>
       </div>
 
       <div className='products'>

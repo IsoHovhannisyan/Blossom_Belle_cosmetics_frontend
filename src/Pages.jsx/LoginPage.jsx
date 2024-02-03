@@ -22,14 +22,11 @@ export function LoginPage({currentLanguage}) {
 
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
-        setLoginLabel(savedData.authLabelData);
-    }
-
-    if (currentLanguage) {
-        fetchData(currentLanguage)
+        setLoginLabel(savedData.authLabelData.filter(el => el.lang == currentLanguage));
+    }else {
+        fetchData()
             .then(data => {
-                setLoginLabel(data.authLabelData);
-                localStorage.setItem('fetchedData', JSON.stringify(data));
+                setLoginLabel(data.authLabelData.filter(el => el.lang == currentLanguage));
             })
             .catch(error => {
                 console.error("An error occurred while fetching data:", error);
