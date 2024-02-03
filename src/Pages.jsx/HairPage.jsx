@@ -9,10 +9,11 @@ import '../css/Hair/HairPage.css'
 
 
 export function HairPage() {
+  // localStorage.clear();
 
   const [hair, setHair] = useState([]);
   const [categories,setCategories] = useState([]);
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
   const [toggle, setToggle] = useState(1);
 
@@ -28,16 +29,17 @@ export function HairPage() {
     if (savedData) {
       setHair(savedData.hairData.filter(el => el.lang == currentLanguage));
       setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
-    }else{
-      fetchData()
-        .then(data => {
-          setHair(data.hairData.filter(el => el.lang == currentLanguage));
-          setCategories(data.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
-        })
-        .catch(error => {
-          console.error("An error occurred while fetching data:", error);
-        });
     }
+    // else{
+    //   fetchData()
+    //     .then(data => {
+    //       setHair(data.hairData.filter(el => el.lang == currentLanguage));
+    //       setCategories(data.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
+    //     })
+    //     .catch(error => {
+    //       console.error("An error occurred while fetching data:", error);
+    //     });
+    // }
     
   }
 

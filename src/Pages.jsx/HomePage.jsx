@@ -4,7 +4,7 @@ import Slider from '../component/HomePage/Slider';
 import BestSellers from '../component/HomePage/BestSellers';
 import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 
-export function HomePage() {
+export function HomePage({show, setShow}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [slider, setSlider]= useState([]);
@@ -32,21 +32,24 @@ export function HomePage() {
       //   console.log(error);
       // })
       
-  }else{
-    fetchData()
-          .then(data => {
-              setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
-              setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
-          })
-          .catch(error => {
-              console.error("An error occurred while fetching data:", error);
-          });
   }
-  
-
+  // else{
+  //   fetchData()
+  //         .then(data => {
+  //             setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
+  //             setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
+  //         })
+  //         .then(()=>{
+  //           setShow(true)
+  //         })
+  //         .catch(error => {
+  //             console.error("An error occurred while fetching data:", error);
+  //         });
+  //       }
 }
 
   return (
+      
     <div>
       { <Slider slider={slider} />}
     <h2 className='heading'> best sellers </h2>

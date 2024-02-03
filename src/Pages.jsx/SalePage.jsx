@@ -11,6 +11,8 @@ import { Selector } from '../component/Sale/Selector';
 
 export function SalePage() {
 
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+
   const [productCategory, setProductCategory] = useState();
   const [allCategories, setAllCategories] = useState([]);
   const [navbarForSelectors, setNavbarForSelectors] = useState([]);
@@ -19,7 +21,6 @@ export function SalePage() {
   const assortments = ['makeup', 'skincare', 'brush', 'hair', 'gift'];
   const [assortment, setAssortment] = useState('');
   const [category, setCategory] = useState('');
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
 
 
   let categories = new Set(allCategories?.filter(el => el.lang == currentLanguage).map(el => {

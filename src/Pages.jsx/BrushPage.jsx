@@ -10,7 +10,7 @@ import '../css/Brushes/Brushes.css';
 export function BrushPage() {
   const [brush, setBrush] = useState([]);
   const [categories,setCategories] = useState([]);
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
   const [toggle, setToggle] = useState(1);
 

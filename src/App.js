@@ -29,33 +29,44 @@ export function App() {
   const [basketProductsQuantity, setBasketProductsQuantity] = useState(JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length) || '0';
   const [navbar, setNavbar] = useState([]);
   const [footer, setFooter] = useState([]);
+  const [show,setShow] = useState(localStorage.getItem('show') ? JSON.parse(localStorage.getItem('show')): false)
 
   useEffect(() => {
+
+    if(show == false){
+      fetchData()
+        .then(data => {
+          setNavbar(data.navbarData.filter(el => el.lang == currentLanguage));
+        })
+        .then(()=>{
+          setShow(true)
+        })
+        .catch(error => {
+          console.error("An error occurred while fetching data:", error);
+        });
+    }
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
       setNavbar(savedData.navbarData.filter(el => el.lang == currentLanguage));
       // setFooter(savedData.footer);
     }
-      fetchData()
-        .then(data => {
-          setNavbar(data.navbarData.filter(el => el.lang == currentLanguage));
-          localStorage.setItem('fetchedData', JSON.stringify(savedData));
-        })
-        .catch(error => {
-          console.error("An error occurred while fetching data:", error);
-        });
+    // else{
+    // 
+    // }
+      
   }, [currentLanguage]);
 
 
   return (
-    <div className=''>
+
+    show != false && <div className=''>
       <div className='HeaderBackground'></div>
         <div className='App'>
       <Header navbar={navbar} basketProductsQuantity={basketProductsQuantity} />
         <Routes >
           <Route path='/login' element={<LoginPage currentLanguage={currentLanguage} />} />
           <Route path='/register' element={<RegisterPage currentLanguage={currentLanguage}  />} />
-          <Route path='/'  element={<HomePage />}/>
+          <Route path='/'  element={<HomePage show={show} setShow={setShow}/>}/>
           <Route path='/new' element={<NewPage/>}>
             <Route path='/new' element={<NewMakeup />}/>
             <Route path='/new/skincare' element={<NewSkinCare/>}/>

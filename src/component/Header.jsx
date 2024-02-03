@@ -70,7 +70,8 @@ export async function fetchData() {
             navbarData: navbarData.data,
             authLabelData: authLabelData.data
         };
-  
+        
+        localStorage.setItem('show', JSON.stringify('true'));
         localStorage.setItem('fetchedData', JSON.stringify(data));
         return data;
     } catch (error) {

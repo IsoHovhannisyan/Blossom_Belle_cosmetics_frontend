@@ -16,7 +16,7 @@ export function NewPage() {
   const [hair, setHair] = useState([]);
   const [categories,setCategories] = useState([]);
 
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
   const [toggle, setToggle] = useState(1);
 

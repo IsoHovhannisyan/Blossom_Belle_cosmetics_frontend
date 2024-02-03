@@ -11,7 +11,7 @@ export function MakeupPage() {
 
   const [makeUp, setMakeup] = useState([]);
   const [categories,setCategories] = useState([]);
-  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en ';
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
   const [toggle, setToggle] = useState(1);
 
@@ -26,12 +26,13 @@ export function MakeupPage() {
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
       setMakeup(savedData.makeupData.filter(el => el.lang == currentLanguage));
-      setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
+      setCategories(savedData.navbarData?.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
     }else{
       fetchData()
         .then(data => {
           setMakeup(data.makeupData.filter(el => el.lang == currentLanguage))
           setCategories(data.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
+          console.log(data);
         })
         .catch(error => {
           console.error("An error occurred while fetching data:", error);
@@ -42,10 +43,10 @@ export function MakeupPage() {
   return (
     <div className='Makeup'>
       <div className='MakeupNav'>
-          <div className='LinkDiv' onClick={()=> setToggle(1)}>{categories[5]}</div>
-          <div className='LinkDiv' onClick={()=> setToggle(2)}>{categories[6]}</div>
-          <div className='LinkDiv' onClick={()=> setToggle(3)}>{categories[7]}</div>
-          <div className='LinkDiv' onClick={()=> setToggle(4)}>{categories[8]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(1)}>{categories?.[5]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(2)}>{categories?.[6]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(3)}>{categories?.[7]}</div>
+          <div className='LinkDiv' onClick={()=> setToggle(4)}>{categories?.[8]}</div>
       </div>
       <div className='products'>
         <div className={toggle === 1 ? "box show": 'box'}> {<Face makeUp={makeUp} />}</div>
