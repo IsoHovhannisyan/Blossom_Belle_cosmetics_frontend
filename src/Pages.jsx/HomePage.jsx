@@ -32,7 +32,7 @@ export function HomePage() {
       //   console.log(error);
       // })
       
-  }
+  }else{
     fetchData()
           .then(data => {
               setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
@@ -41,6 +41,7 @@ export function HomePage() {
           .catch(error => {
               console.error("An error occurred while fetching data:", error);
           });
+  }
   
 
 }
