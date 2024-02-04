@@ -39,6 +39,7 @@ export async function fetchData() {
     try {
         const [
             sliderData,
+            homeLabelData,
             makeupData,
             skincareData,
             hairData,
@@ -49,6 +50,7 @@ export async function fetchData() {
             authLabelData,
         ] = await Promise.all([
             axios.get(`/api/slider`),
+            axios.get(`/api/home_page_label`),
             axios.get(`/api/makeup`),
             axios.get(`/api/skincare`),
             axios.get(`/api/hair`),
@@ -61,6 +63,7 @@ export async function fetchData() {
   
         const data = {
             sliderData: sliderData.data,
+            homeLabelData: homeLabelData.data,
             makeupData: makeupData.data,
             skincareData: skincareData.data,
             hairData: hairData.data,

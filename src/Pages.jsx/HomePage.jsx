@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react';
 import Slider from '../component/HomePage/Slider';
 import BestSellers from '../component/HomePage/BestSellers';
 import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
+import NewProducts from '../component/HomePage/NewProducts';
 
 export function HomePage({show, setShow}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+  const [homePageLabel, setHomePageLabel] = useState([]);
   const [slider, setSlider]= useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const bestSellers = [...allProducts?.filter(el=> el.best_seller == 'true' && el.lang == currentLanguage)];
+  const newProducts = [...allProducts?.filter(el=> el.new == 'true' && el.lang == currentLanguage)]
+  const indexForNewProducts = bestSellers.length;
 
-  console.log(bestSellers);
+  console.log(homePageLabel);
   
 
   useEffect(()=>{
@@ -26,6 +30,7 @@ export function HomePage({show, setShow}) {
 
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
+      setHomePageLabel(savedData.homeLabelData.filter(el => el.lang == currentLanguage)[0].label.split(', '));
       setSlider(savedData.sliderData.filter(el => el.lang == currentLanguage));
       setAllProducts([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData ]);
       // .catch(error => {
@@ -33,88 +38,36 @@ export function HomePage({show, setShow}) {
       // })
       
   }
-  // else{
-  //   fetchData()
-  //         .then(data => {
-  //             setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
-  //             setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
-  //         })
-  //         .then(()=>{
-  //           setShow(true)
-  //         })
-  //         .catch(error => {
-  //             console.error("An error occurred while fetching data:", error);
-  //         });
-  //       }
+  else{
+    fetchData()
+          .then(data => {
+              setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
+              setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
+          })
+          .catch(error => {
+              console.error("An error occurred while fetching data:", error);
+          });
+        }
 }
 
   return (
       
     <div>
       { <Slider slider={slider} />}
-    <h2 className='heading'> best sellers </h2>
+      
+    <h2 className='heading'>{homePageLabel?.[0]}</h2>
+
     <div className='bestsellers'>
        {<BestSellers bestSellers={bestSellers} />}
-      </div>
+    </div>
 
-      <h2 className='heading'>Limited edition</h2>
-      {/* <div className='limitedEdition'>
-          <div className='box'>
-            <img src={img4} alt="" />
-            <p>Lorem ipsum dolor sit amet consectetur </p>
-            <i className=" hearth fa-regular fa-heart mr-4"></i>
-            <i className=" basket fa-solid fa-bag-shopping mr-4"></i>
-            <div>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-regular fa-star"></i>
-            </div>
-            <span className=' text-lg'>$20.00</span>
-          </div>
-          <div className='box'>
-            <img src={img4} alt="" />
-            <p>Lorem ipsum dolor sit amet consectetur </p>
-            <i className=" hearth fa-regular fa-heart mr-4"></i>
-            <i className=" basket fa-solid fa-bag-shopping mr-4"></i>
-            <div>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-regular fa-star"></i>
-            </div>
-            <span className=' text-lg'>$20.00</span>
-          </div>
-          <div className='box'>
-            <img src={img4} alt="" />
-            <p>Lorem ipsum dolor sit amet consectetur </p>
-            <i className=" hearth fa-regular fa-heart mr-4"></i>
-            <i className=" basket fa-solid fa-bag-shopping mr-4"></i>
-            <div>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-regular fa-star"></i>
-            </div>
-            <span className=' text-lg'>$20.00</span>
-          </div>
-      </div>
+    <h2 className='heading'>{homePageLabel?.[1]}</h2>
 
-      <h2 className='h2'>your skin</h2>
-      <div className='yourskin'>
-        <div className='image'>
-        <img src={img4} alt="" />
-        </div> 
-        <div className='content'>
-          <h3>Lorem ipsum dolor</h3>
-          <h4>Lorem ipsum dolor</h4>
-          <p>Lorem ipsum dolor</p>
-          </div> 
+    <div className='newproducts'>
+       {<NewProducts newProducts={newProducts} indexForNewProducts={indexForNewProducts} />}
+    </div>
 
-      </div> */}
+    <h2 className='heading'>{homePageLabel?.[2]}</h2>
     </div>
   )
 }

@@ -27,8 +27,6 @@ export function SalePage() {
   const assortments = ['makeup', 'skincare', 'brush', 'hair', 'gift'];
   const [assortment, setAssortment] = useState('');
   const [category, setCategory] = useState('');
-
-
   let categories = new Set(allCategories?.filter(el => el.lang == currentLanguage).map(el => {
     
     if(assortment){
@@ -56,7 +54,6 @@ export function SalePage() {
       }else{
         return el.sale != percent
       }
-      
     }
     if(percent == 25){
       if(assortment){
@@ -99,7 +96,7 @@ export function SalePage() {
     if (savedData) {
       setNavbarForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.navbar.split(', '))
       setNavbarSaleForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
-      setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '))
+      setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', ').filter(el => el.slice(0,3) != 'New' && el.slice(0,3) != 'Նոր'))
       setAllCategories([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData]);
 
       setProductCategory(savedData)

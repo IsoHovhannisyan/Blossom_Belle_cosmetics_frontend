@@ -94,13 +94,22 @@ export function App() {
         </Routes>
       <Footer/>
     </div>
-    </div>: <div className=' w-full h-[100vh] flex justify-center items-center'><FadeLoader
-        color='#006699'
-        loading={loading}
-        size={100}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
+    </div>: <div className='FetchingProducts'>
+      <div>
+        <div className='FetchingProducts_text'>
+            <h2>Blossom Belle</h2>
+            <h3>Cosmetics</h3>
+        </div>
+        <div className='FetchingProducts_Loader'>
+          <FadeLoader
+            color='#006699'
+            loading={loading}
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      </div>
       </div>
   )
 }

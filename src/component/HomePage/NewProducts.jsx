@@ -1,24 +1,21 @@
-
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useNavigate } from 'react-router-dom';
 import New from "../../Images/new_1.png"
 import Best from '../../Images/best_seller_1.png'
-import '../../css/HomePage/BestSellers.css';
+import '../../css/HomePage/NewProducts.css';
 
-
-export default function BestSellers(props) {
-
+export default function NewProducts(props) {
     const navigate = useNavigate();
 
     const responsive = {
         superLargeDesktop: {
           breakpoint: { max: 4000, min: 3000 },
-          items: 4
+          items: 6
         },
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
-          items: 4
+          items: 6
         },
         tablet: {
           breakpoint: { max: 1024, min: 464 },
@@ -30,6 +27,7 @@ export default function BestSellers(props) {
         }
       };
       const mouseMoveFunc = (index)=>{
+        console.log(index);
         if(index > 999){
             index = String(index).split('');
             let btn_text = document.querySelectorAll(`#\\3${index[0]} ${index[1]}${index[2]}${index[3]}`);
@@ -93,7 +91,7 @@ export default function BestSellers(props) {
           }
       }
   return (
-    <div className='Best_Sellers w-full h-[30rem]'>
+    <div className='New_Products w-full h-[30rem]'>
 
         <Carousel 
         responsive={responsive} 
@@ -112,15 +110,15 @@ export default function BestSellers(props) {
         itemClass="carousel-item-padding-40-px"
         >
             {
-                props.bestSellers.map((el,index) => <div className='Product' 
+                props.newProducts.map((el,index) => <div className='Product' 
                 onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)} 
-                onMouseMove={()=> mouseMoveFunc(index)}
-                onMouseLeave={()=> mouseLeaveFunc(index)} 
+                onMouseMove={()=> mouseMoveFunc(index + props.indexForNewProducts)}
+                onMouseLeave={()=> mouseLeaveFunc(index + props.indexForNewProducts)} 
                 key={el.id}
                 >
                 <div className='image'>
                   <div className='ImageBackground' id={index}></div>
-                  <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
+                  <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index + props.indexForNewProducts} className='img' alt="" />
                   <div className={el.new ? 'new active': 'new'}>
                     <img src={New} alt="" />
                   </div>
@@ -131,9 +129,9 @@ export default function BestSellers(props) {
                 <div className='title'>{el.title.length > 25 ? el.title.slice(0,25) + '...': el.title}</div>
                 <div className='brandName'>Blossom Belle</div>
                 <div className='price'>{el.price}֏</div>
-                <button className='btn_text' id={index}>{el.btn_text}</button>
-                <div className='shopping' id={index}><i className=" fa-solid fa-bag-shopping"></i></div>
-                <div className='heart' id={index}><i className=" fa-regular fa-heart"></i></div>
+                <button className='btn_text' id={index + props.indexForNewProducts}>{el.btn_text}</button>
+                <div className='shopping' id={index + props.indexForNewProducts}><i className=" fa-solid fa-bag-shopping"></i></div>
+                <div className='heart' id={index + props.indexForNewProducts}><i className=" fa-regular fa-heart"></i></div>
               </div>)
             }
             
@@ -141,3 +139,4 @@ export default function BestSellers(props) {
     </div>
   )
 }
+

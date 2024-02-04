@@ -4,11 +4,15 @@ export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors
 
     const sortedNavbar = navbarForSelectors?.filter((el,index) => index != 0 && index != navbarForSelectors.length-1);
     const sortedCategories = [...categories];
-    const Select = document.getElementById('SaleProduct');
+    let obj ={}
 
-    console.log(Select);
+    const handleCategories = ['face','eye','cheeks','lips','mouisturizers','Cleansers','masks','sunscreens', 'Eye Brushes', 'Lip Brushes', 'Face Brushes', 'Cheek Brushes','shampoos', 'conditioners','Hair Oils', 'Hair Masks'];
+    let handleCategoriesforSearch = handleCategories?.map((el,index) => {
+        return obj[el] = categoriesForSelectors[index];
+    })
 
-    // let res = categoriesForSelectors?.filter((el,index)=> el.slice(0,3) != 'New');
+    console.log(obj);
+
 
     const onSelectPercent = (percent)=>{
         setFormData({...formData, percent})
@@ -64,7 +68,7 @@ export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors
         <select className=' Selector bg-black text-white' value={formData.type} onChange={(e)=> onSelectCategory(e.target.value)}>
             <option value='Select Type'>{navbarSaleForSelectors[4]}</option>
             {
-                sortedCategories.map((el,index)=> <option value={el}>{el}</option>)
+                sortedCategories.map((el,index)=> <option value={el}>{obj[el]}</option>)
             }
         </select>
 

@@ -1,5 +1,3 @@
-
-
 /* .Best_Sellers {
     width: 100%;
     display: flex;
@@ -10,12 +8,12 @@
     
 } */
 
-.Best_Sellers .Product {
+.New_Products .Product {
     /* box-shadow: 0 0 5px  rgb(227, 227, 227); */
     /* border: solid 1px rgb(193, 193, 193); */
     /* border-radius: 1rem; */
     position: relative;
-    height: 300px;
+    height: 320px;
     width: 100%;
     /* border-color: rgb(145, 145, 145); */
     padding: 1rem;
@@ -23,21 +21,21 @@
     /* background-color: rgb(239, 236, 236); */
 }
 
-.Best_Sellers .Product .image{
+.New_Products .Product .image{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 70%;
+    height: 63%;
     cursor: pointer;
-    padding: 1rem;
+    /* padding: 1rem; */
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
     box-shadow: 0 0 1px;
 }
 
-.Best_Sellers .Product .image .ImageBackground{
+.New_Products .Product .image .ImageBackground{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -46,16 +44,16 @@
     opacity: 0;
 }
 
-.Best_Sellers .Product .image .ImageBackground.active {
+.New_Products .Product .image .ImageBackground.active {
     opacity: .5;
 }
 
-.Best_Sellers .Product .image .ImageBackground.active:hover {
+.New_Products .Product .image .ImageBackground.active:hover {
     opacity: .3;
 }
 
 
-.Best_Sellers .Product .image .img{
+.New_Products .Product .image .img{
     border-radius: 1rem; 
     position: absolute;
     width: 100%;
@@ -63,29 +61,11 @@
     height: 100%;
 }
 
-.Best_Sellers .Product .image .img.active{
+.New_Products .Product .image .img.active{
     transform: scale(1.3);
     transition: .5s;
 }
-.Best_Sellers .Product .image .new{
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 5;
-    width: 5rem;
-    height: 5rem;
-    display: none;
-}
-.Best_Sellers .Product .image .new.active{
-    display: initial;
-}
-
-.Best_Sellers .Product .image .new.active img{
-    width: 100%;
-    height: 100%;
-}
-
-.Best_Sellers .Product .image .best{
+.New_Products .Product .image .new{
     position: absolute;
     top: 0;
     right: 0;
@@ -94,32 +74,50 @@
     height: 4rem;
     display: none;
 }
-.Best_Sellers .Product .image .best.active{
+.New_Products .Product .image .new.active{
     display: initial;
 }
 
-.Best_Sellers .Product .image .best.active img{
+.New_Products .Product .image .new.active img{
+    width: 100%;
+    height: 100%;
+}
+
+.New_Products .Product .image .best{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 4rem;
+    height: 4rem;
+    display: none;
+}
+.New_Products .Product .image .best.active{
+    display: initial;
+}
+
+.New_Products .Product .image .best.active img{
     width: 100%;
     height: 100%;
 }
 
 
 
-.Best_Sellers .Product .title{
+.New_Products .Product .title{
     text-align: center;
     font-size: 1rem;
     width: 100%;
     color: grey;
 }
 
-.Best_Sellers .Product .brandName{
+.New_Products .Product .brandName{
     width: 100%;
     text-align: center;
     color: #006699;
     font-weight: 200;
 }
 
-.Best_Sellers .Product .price {
+.New_Products .Product .price {
     font-size: 1.3rem;
     position: absolute;
     bottom: 1rem;
@@ -128,7 +126,7 @@
     font-weight: 500;
 }
 
-.Best_Sellers .Product .btn_text {
+.New_Products .Product .btn_text {
     position: absolute;
     bottom: -4rem;
     left: 50%;
@@ -146,7 +144,7 @@
     border-radius: .3rem;
 }
 
-.Best_Sellers .Product .shopping {
+.New_Products .Product .shopping {
     position: absolute;
     right: -100rem;
     bottom: 1rem;
@@ -154,7 +152,7 @@
     transition: .7s;
 }
 
-.Best_Sellers .Product .heart {
+.New_Products .Product .heart {
     position: absolute;
     left: -100rem;
     top: 1rem;
@@ -164,26 +162,26 @@
 
 }
 
-.Best_Sellers .Product .btn_text.active {
+.New_Products .Product .btn_text.active {
     bottom: 8rem;
     left: 50%;
     transform: translateX(-50%);
-    transition: .4s;
     font-size: 1rem;
+    transition: .4s;
 }
 
-.Best_Sellers .Product .btn_text.active:hover{
+.New_Products .Product .btn_text.active:hover{
     background-color: rgb(55, 55, 55);
     transition: .3s;
 }
 
-.Best_Sellers .Product .shopping.active {
+.New_Products .Product .shopping.active {
     right:2rem;
     font-size: 1.3rem;
     transition: .7s;
 }
 
-.Best_Sellers .Product .heart.active {
+.New_Products .Product .heart.active {
     left: 2rem;
     font-size: 1.5rem;
     transition: .6s;
