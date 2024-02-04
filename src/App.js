@@ -31,7 +31,7 @@ export function App() {
   const [basketProductsQuantity, setBasketProductsQuantity] = useState(JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length) || '0';
   const [navbar, setNavbar] = useState([]);
   const [footer, setFooter] = useState([]);
-  const [show,setShow] = useState(localStorage.getItem('show') ? JSON.parse(localStorage.getItem('show')): false)
+  const [show,setShow] = useState(sessionStorage.getItem('show') ? JSON.parse(sessionStorage.getItem('show')): false)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

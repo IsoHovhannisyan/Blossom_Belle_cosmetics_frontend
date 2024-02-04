@@ -71,7 +71,7 @@ export async function fetchData() {
             authLabelData: authLabelData.data
         };
         
-        localStorage.setItem('show', JSON.stringify('true'));
+        sessionStorage.setItem('show', JSON.stringify('true'));
         localStorage.setItem('fetchedData', JSON.stringify(data));
         return data;
     } catch (error) {
