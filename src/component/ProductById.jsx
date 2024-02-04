@@ -5,6 +5,7 @@ import { fetchData, getSavedDataFromLocalStorage, AllCategories } from './Header
 import '../css/Product/ProductById.css';
 import New from "../Images/new_1.png"
 import Best from '../Images/best_seller_1.png'
+import FadeLoader from "react-spinners/FadeLoader";
 
 export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQuantity, setBasketProductsQuantity }) {
 
@@ -15,10 +16,11 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
     const [product, setProduct] = useState()
     const [productLabel, setProductLabel] = useState();
     const [currentCategory, setCurrentCategory] = useState([]);
-    let   [currentProductAnotherLang,setCurrentProductAnotherLang] = useState([]);
+    const [currentProductAnotherLang,setCurrentProductAnotherLang] = useState([]);
     const [toggle, setToggle] = useState(1);
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [showIntrestingProducts, setShowIntrestingProducts] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [searchParams] = useSearchParams();
     const path = searchParams.get('path');
     const id = searchParams.get('id');
@@ -34,27 +36,22 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
     
       async function loadingData() {
 
-        const productData = await axios.get(`/api/${path}/${id}`);
-
-        AllCategories()
-        .then(data=> {
-            setCurrentProductAnotherLang(data[pathName].filter(el=> el.image == productData.data.image));
-        }).catch(error => {
-            console.error("An error occurred while fetching data:", error);
-        });    
+        const productData = await axios.get(`/api/${path}/${id}`);   
         const savedData = getSavedDataFromLocalStorage();
         if (savedData) {
-            setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
             setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
             setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
             setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+            setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
+            setLoading(false);
             setButtonDisabled(false)
         }else {
             fetchData()
                 .then(data => {
-                    setProductLabel(data.ProductLabelData.filter(el => el.lang == currentLanguage));
-                    setProduct(data[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
-                    setCurrentCategory(data[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+                    setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
+                    setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
+                    setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+                    setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
                     setButtonDisabled(false)
                 })
                 .catch(error => {
@@ -106,7 +103,7 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
 
 
   return (
-     showIntrestingProducts && <div className='Product'>
+     showIntrestingProducts ? <div className='Product'>
      <div className='Box'>
          <div className='Image'>
             <img src={`https://blossom-belle-cosmetics.vercel.app${product?.image}`} alt="" />
@@ -173,6 +170,14 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
                  <div>{el?.price}֏</div>
              </div>)}
      </div>
- </div>
+ </div>:
+    <div className=' w-full h-[80vh] flex justify-center items-center'><FadeLoader
+        color='#006699'
+        loading={loading}
+        size={100}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+        />
+    </div>
   )
 }

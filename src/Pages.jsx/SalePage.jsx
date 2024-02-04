@@ -16,7 +16,13 @@ export function SalePage() {
   const [productCategory, setProductCategory] = useState();
   const [allCategories, setAllCategories] = useState([]);
   const [navbarForSelectors, setNavbarForSelectors] = useState([]);
+  const [navbarSaleForSelectors,setNavbarSaleForSelectors] = useState([]);
   const [categoriesForSelectors, setCategoriesForSelectors] = useState([])
+  const [formData, setFormData] = useState({
+    percent: 'Select Percentage',
+    category: 'Select Category',
+    type: 'Select Type'
+})
   const [percent, setPercent] = useState(null);
   const assortments = ['makeup', 'skincare', 'brush', 'hair', 'gift'];
   const [assortment, setAssortment] = useState('');
@@ -92,6 +98,7 @@ export function SalePage() {
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
       setNavbarForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.navbar.split(', '))
+      setNavbarSaleForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
       setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '))
       setAllCategories([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData]);
 
@@ -101,6 +108,7 @@ export function SalePage() {
       fetchData()
         .then(data => {
           setNavbarForSelectors(data.navbarData?.[0]?.navbar.split(', '))
+          setNavbarSaleForSelectors(data.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
           setCategoriesForSelectors(data.navbarData?.[0]?.categories.split(', '))
           setAllCategories([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData]);
           setProductCategory(data)
@@ -144,9 +152,21 @@ export function SalePage() {
       }
       }
   }
+
+  const onClearFilter = ()=>{
+    setFormData({
+        percent: 'Select Percentage',
+        category: 'Select Category',
+        type: 'Select Type'
+    })
+    setPercent(null);
+    setAssortment(null)
+    setCategory(null)
+
+}
   return <div>
 
-    <Selector setPercent={setPercent} assortments={assortments} navbarForSelectors={navbarForSelectors} categoriesForSelectors={categoriesForSelectors} setAssortment={setAssortment} categories={categories} setCategory={setCategory}/>
+    <Selector setPercent={setPercent} assortments={assortments} navbarSaleForSelectors={navbarSaleForSelectors} navbarForSelectors={navbarForSelectors} categoriesForSelectors={categoriesForSelectors} setAssortment={setAssortment} categories={categories} setCategory={setCategory} formData={formData} setFormData={setFormData}/>
     <div className='Sale '>
 
       {Sale?.length > 0 ? Sale?.map((el,index) => <div className={el.sale ? 'Product active' : 'Product' } 
@@ -173,7 +193,28 @@ export function SalePage() {
       <button className='btn_text' id={index}>{el.btn_text}</button>
       <div className='shopping' id={index}><i className=" fa-solid fa-bag-shopping"></i></div>
       <div className='heart' id={index}><i className=" fa-regular fa-heart"></i></div>
-      </div>): <div>dzer voronacy chka </div> }
+      </div>): <div className='SaleEmpty'>
+                <div className='SaleBox'>
+                    <div className='QtyBox'>
+                        <div className='Quantity'>
+                            <h2>0</h2>
+                        </div>
+                    </div>
+                    
+                    <div className='Text'>
+                        <h3>{navbarSaleForSelectors[0]}</h3>
+                    </div>
+                    <div className='BtnBox'>
+                        <div className='Btn' onClick={()=> onClearFilter()} >
+                            <button>{navbarSaleForSelectors[1]}</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+               
+               
+            </div>}
 
       </div>
       </div>

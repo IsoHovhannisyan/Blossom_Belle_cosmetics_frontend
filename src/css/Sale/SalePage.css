@@ -234,7 +234,80 @@
 }
 
 .Selectors .Selector {
-    padding: .5rem;
-    width: 200px;
+    padding: .3rem;
+    width: 210px;
     border-radius: .5rem;
+}
+
+.Selectors .Selector .Option {
+   border-radius: .5rem;
+}
+
+
+
+/* //////////////////////// empty Sale ///////////*/
+
+
+.SaleEmpty{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SaleEmpty .SaleBox{
+    width: 90%;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.SaleEmpty .SaleBox .Title {
+    border-top: solid rgb(226, 223, 223) 2px;
+    padding: 1.5rem;
+    width: 100%;
+    font-size: 2rem;
+    border-bottom: solid rgb(226, 223, 223) 2px;
+    font-weight: 600;
+}
+.SaleEmpty .SaleBox .QtyBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem;
+}
+.SaleEmpty .SaleBox .QtyBox .Quantity{
+    border: solid gray 2px;
+    border-radius: 50%;
+    padding: .6rem 1.2rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.SaleEmpty .SaleBox .Text {
+    padding: 1rem;
+    color: gray;
+    font-weight: 400;
+}
+
+.SaleEmpty .SaleBox .BtnBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SaleEmpty .SaleBox .BtnBox .Btn {
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.SaleEmpty .SaleBox .BtnBox .Btn:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
 }

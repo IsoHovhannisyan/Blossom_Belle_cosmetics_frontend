@@ -187,7 +187,7 @@
     align-items: center;
     margin: 2rem 0;
     padding: 2rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     border-top: 1px solid rgb(181, 181, 181) ;
     border-bottom: 1px solid rgb(181, 181, 181) ;
 }
@@ -202,7 +202,7 @@
     position: relative;
     text-transform: uppercase;
     font-weight: 600;
-    letter-spacing: .2rem;
+    letter-spacing: .1rem;
     transition: .3s;
 }
 

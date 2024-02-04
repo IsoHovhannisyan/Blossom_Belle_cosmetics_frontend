@@ -1,34 +1,29 @@
 import React, { useState } from 'react'
 
-export function Selector({setPercent, navbarForSelectors, categoriesForSelectors, setAssortment ,assortments, categories,setCategory}) {
+export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors, categoriesForSelectors, setAssortment ,assortments, categories,setCategory, formData,setFormData}) {
 
     const sortedNavbar = navbarForSelectors?.filter((el,index) => index != 0 && index != navbarForSelectors.length-1);
     const sortedCategories = [...categories];
-    const [formData, setFormData] = useState({
-        percent: 'Select Percent',
-        assortments: 'Select Assortments',
-        category: 'Select Category'
-    })
+    const Select = document.getElementById('SaleProduct');
+
+    console.log(Select);
 
     // let res = categoriesForSelectors?.filter((el,index)=> el.slice(0,3) != 'New');
 
     const onSelectPercent = (percent)=>{
         setFormData({...formData, percent})
         if(percent != 'Select Percent'){
-            // onSelectAssortments('Select Assortments');
             setPercent(percent)
         }else{
-            // setAssortment('')
-            // onSelectAssortments('Select Assortments');
             setPercent(null)
         }
     }
 
-    const onSelectAssortments = (assortments)=>{
-        setFormData({...formData, assortments})
-        if(assortments != 'Select Assortments'){
+    const onSelectAssortments = (category)=>{
+        setFormData({...formData, category})
+        if(category != 'Select Category'){
             setCategory('')
-            setAssortment(assortments)
+            setAssortment(category)
         }else{
             setCategory('')
             setAssortment(null)
@@ -36,39 +31,55 @@ export function Selector({setPercent, navbarForSelectors, categoriesForSelectors
     }
 
     
-    const onSelectCategory = (category)=>{
-        setFormData({...formData, category})
-        if(category != 'Select Category'){
-            setCategory(category)
+    const onSelectCategory = (type)=>{
+        setFormData({...formData, type})
+        if(type != 'Select Type'){
+            setCategory(type)
         }else{
             setCategory(null)
         }
     }
-    // console.log(sortedCategories);
+
+    const onSelectAssortment = (category)=>{
+        setFormData({...formData, category})
+    }
+
 
   return (
     <div className='Selectors'>
         <select className=' Selector bg-black text-white' value={formData.percent} onChange={(e)=> onSelectPercent(e.target.value)}>
-            <option value='Select Percent'>Select Percent</option>
+            <option value='Select Percentage'>{navbarSaleForSelectors[2]}</option>
             <option value="25">25%</option>
             <option value="50">50%</option>
         </select>
 
-        <select className=' Selector bg-black text-white' value={formData.assortments} onChange={(e)=> onSelectAssortments(e.target.value)}>
-            <option value='Select Assortments'>Select Assortments</option>
+        <select className=' Selector bg-black text-white' value={formData.assortments} id='SaleProduct' onChange={(e)=> onSelectAssortments(e.target.value)}>
+            <option value='Select Category'>{navbarSaleForSelectors[3]}</option>
             {
-                sortedNavbar?.map((el,index)=> <option value={assortments[index]}>{el}</option>)
+                sortedNavbar?.map((el,index)=> <option className='Option' value={assortments[index]}>{el}</option>)
             }
 
         </select>
 
-        <select className=' Selector bg-black text-white' value={formData.category} onChange={(e)=> onSelectCategory(e.target.value)}>
-            <option value='Select Category'>Select Category</option>
+        <select className=' Selector bg-black text-white' value={formData.type} onChange={(e)=> onSelectCategory(e.target.value)}>
+            <option value='Select Type'>{navbarSaleForSelectors[4]}</option>
             {
                 sortedCategories.map((el,index)=> <option value={el}>{el}</option>)
             }
-
         </select>
+
+        {/* <div className='Selector'>
+            
+            <div onClick={(e)=> console.log(e.target.id)} id={formData.category}> {formData.category}</div>
+
+            <ul>
+                {
+                    sortedNavbar?.map(el => <li onClick={(e)=> onSelectAssortment(e.target.id)} id={el}>{el}</li>)
+                }
+                
+            </ul>
+        </div> */}
+        
     </div>
         
   )

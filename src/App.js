@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,CSSProperties } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Header } from './component/Header'
 import { Footer } from './component/Footer'
@@ -20,8 +20,10 @@ import { BasketPage } from './Pages.jsx/BasketPage'
 import { fetchData, getSavedDataFromLocalStorage } from './component/Header';
 import { LoginPage } from './Pages.jsx/LoginPage'
 import { RegisterPage } from './Pages.jsx/RegisterPage'
+import FadeLoader from "react-spinners/FadeLoader";
 
 export function App() {
+
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [basketQuantity, setBasketQuantity] = useState(0);
@@ -30,21 +32,24 @@ export function App() {
   const [navbar, setNavbar] = useState([]);
   const [footer, setFooter] = useState([]);
   const [show,setShow] = useState(localStorage.getItem('show') ? JSON.parse(localStorage.getItem('show')): false)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    if(show == false){
-      fetchData()
-        .then(data => {
-          setNavbar(data.navbarData.filter(el => el.lang == currentLanguage));
-        })
-        .then(()=>{
-          setShow(true)
-        })
-        .catch(error => {
-          console.error("An error occurred while fetching data:", error);
-        });
-    }
+    
+      if(show == false){
+        fetchData()
+          .then(data => {
+            setNavbar(data.navbarData.filter(el => el.lang == currentLanguage));
+          })
+          .then(()=>{
+            setLoading(false);
+            setShow(true)
+          })
+          .catch(error => {
+            console.error("An error occurred while fetching data:", error);
+          });
+      }
+    
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
       setNavbar(savedData.navbarData.filter(el => el.lang == currentLanguage));
@@ -59,7 +64,7 @@ export function App() {
 
   return (
 
-    show != false && <div className=''>
+    show != false ?  <div className=''>
       <div className='HeaderBackground'></div>
         <div className='App'>
       <Header navbar={navbar} basketProductsQuantity={basketProductsQuantity} />
@@ -89,7 +94,14 @@ export function App() {
         </Routes>
       <Footer/>
     </div>
-    </div>
+    </div>: <div className=' w-full h-[100vh] flex justify-center items-center'><FadeLoader
+        color='#006699'
+        loading={loading}
+        size={100}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+      </div>
   )
 }
 
