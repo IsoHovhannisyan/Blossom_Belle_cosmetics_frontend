@@ -53,7 +53,7 @@ export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors
             <option value="50">50%</option>
         </select>
 
-        <select className=' Selector bg-black text-white' value={formData.assortments} id='SaleProduct' onChange={(e)=> onSelectAssortments(e.target.value)}>
+        <select className=' Selector bg-black text-white' value={formData.category} id='SaleProduct' onChange={(e)=> onSelectAssortments(e.target.value)}>
             <option value='Select Category'>{navbarSaleForSelectors[3]}</option>
             {
                 sortedNavbar?.map((el,index)=> <option className='Option' value={assortments[index]}>{el}</option>)
