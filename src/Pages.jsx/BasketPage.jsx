@@ -15,7 +15,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     const [checkoutData, setCheckoutData] = useState(JSON.parse(sessionStorage.getItem('Checkout_data')));
     const [confirmData, setConfirmData] = useState(JSON.parse(sessionStorage.getItem('Confirm_data')));
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const [toggle, setToggle] = useState(1);
+    const [toggle, setToggle] = useState(sessionStorage.getItem('Toggle') ? JSON.parse(sessionStorage.getItem('Toggle')): 1);
     const navigate = useNavigate();
     const [basketProductsCurrentLang, setBasketProductsCurrentLang] = useState(allBasketProducts != null ?allBasketProducts.filter(el => el.lang == currentLanguage): null);
     const total = basketProductsCurrentLang != null ? basketProductsCurrentLang.reduce((sum,el) => {

@@ -229,36 +229,16 @@
 
 
 
-
-.IntrestingProducts {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    border-bottom: 1px solid rgb(216, 214, 214);
-    padding-bottom: 2rem;
-    
-}
-
-.IntrestingProducts .Product {
-    box-shadow: 0 0 1px;
-    border-radius: .5rem;
+.Products .Product.sale {
+    box-shadow: 0 0 5px  rgb(227, 227, 227);
+    border: solid 1px rgb(193, 193, 193);
+    border-radius: 1rem;
     position: relative;
-    height: 400px;
-    width: 22%;
-}
+    height: 300px;
+    width: 18%;
+    padding: 1rem;
+    overflow: hidden;
+  }
 
 
-.IntrestingProducts .Product .image{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 70%;
-}
-.IntrestingProducts .Product .image img{
-    width: 100%;
-    height: 100%;
-    border-radius: .5rem; 
-}
 

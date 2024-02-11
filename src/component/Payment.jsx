@@ -36,19 +36,21 @@ export function Payment({toggle, payment}) {
                 <button className='btn'>{payment?.[4]}</button>
         </div> */}
 
-        <form action="" className='Payment_Cart_Form'>
+        <form action="" className='Payment_Cart_Form' onSubmit={()=>{
+            sessionStorage.setItem('Toggle', JSON.stringify(1));
+        }}>
             <p>{payment?.[1]}*</p>
             <div className='Cart_Numbers'>
                 <input type="number" placeholder='1236 2314 1538 9765' />
             </div>
-            <div className=' flex justify-between items-center w-[100%]'>
-                <div>
+            <div className=' flex justify-between items-center w-full'>
+                <div className=' w-[45%]'>
                     <p>{payment?.[2]}*</p>
                     <div className='Cart_Date'>
-                        <input type="date" placeholder='' />
+                        <input type="date" />
                     </div>
                 </div>
-                <div>
+                <div className=' w-[45%]'>
                     <p>{payment?.[3]}*</p>
                     <div className='Cart_Password'>
                         <input type="password" placeholder='***' />

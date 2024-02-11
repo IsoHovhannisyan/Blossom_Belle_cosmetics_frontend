@@ -51,6 +51,7 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
         sessionStorage.setItem('My_data', JSON.stringify(false));
         sessionStorage.setItem('Checkout_data', JSON.stringify(false));
         sessionStorage.setItem('Confirm_data', JSON.stringify(true));
+        sessionStorage.setItem('Toggle', JSON.stringify(toggle));
     }
 
   return (

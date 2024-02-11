@@ -715,7 +715,7 @@ input[type=number]::-webkit-outer-spin-button{
 }
 
 .Payment_Cart .Payment_Cart_Form{
-    width: 50%;
+    width: 40%;
 }
 
 .Payment_Cart .Payment_Cart_Form input{
@@ -746,6 +746,10 @@ input[type=number]::-webkit-outer-spin-button{
     width: 100%;
     border: solid 1px #B4B4B4;
     padding: .8rem;
+}
+
+.Payment_Cart .Payment_Cart_Form .Cart_Date input{
+    width: 100%;
 }
 
 .Payment_Cart .Payment_Cart_Form .Cart_Password{
