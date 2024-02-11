@@ -81,11 +81,11 @@
     border-bottom: 1px solid  #e1e1e1;
     padding-bottom: 1rem;
     padding-top: .5rem;
-    height: 15rem;
+    height: 10rem;
 }
 
 .NotEmptyBasket .Basket .BasketBox .BasketProducts .BasketProduct .Image {
-    width: 15%;
+    width: 10rem;
     height: 100%;
     border: solid 1px #e1e1e1;
     cursor: pointer; 
@@ -96,8 +96,15 @@
     height: 100%;
 }
 
-.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Title{
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Basket_Product_Title{
     width: 30%;
+    /* border-top: 1px solid #e1e1e1 ;
+    border-bottom: 1px solid #e1e1e1 ; */
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    letter-spacing: .1rem;
 }
 
 .NotEmptyBasket .Basket .BasketProducts .BasketProduct .Quantity{
@@ -111,7 +118,7 @@
 }
 
 .NotEmptyBasket .Basket .BasketProducts .BasketProduct .Quantity .qty{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -188,9 +195,16 @@
     position: relative;
 }
 
-.NotEmptyBasket .Basket .BasketProducts .BasketProduct .PriceQty{
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Price_One_Product{
     padding: 2rem;
     position: relative;
+    font-size: 1.2rem;
+}
+
+.NotEmptyBasket .Basket .BasketProducts .BasketProduct .Price_Few_Products{
+    padding: 2rem;
+    position: relative;
+    font-size: 1.2rem;
 }
 
 .NotEmptyBasket .Basket .BasketProducts .BasketProduct .h3{
@@ -257,6 +271,9 @@
     transition: .2s;
 }
 
+.Basket .TotalAndButtons .Total{
+    font-size: 1.2rem;
+}
 
 .Basket .TotalAndButtons .buttons{
     display: flex;
@@ -266,7 +283,7 @@
 }
 
 .Basket .TotalAndButtons .buttons .Continue {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: .5rem 0;
     padding: 1rem 3rem;
     background-color: #e1e1e1;
@@ -284,7 +301,7 @@
 }
 
 .Basket .TotalAndButtons .buttons .btn{
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: .5rem 0;
     padding: 1rem 3rem;
     background-color: black;
@@ -502,14 +519,26 @@ input[type=number]::-webkit-outer-spin-button{
 }
 
 .Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image{
-    width: 14%;
-    height: 5rem;
-    background-color: #dddddd;
+    width: 15%;
+    height: 5.1rem;
+    background-color: white;
     padding: 1rem;
+    border: 2px solid #e1e1e1;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image:hover{
+    background-color: #e1e1e1;
+    transition: .3s;
+}
+
+.Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image.active{
+    background-color: #e1e1e1;
 }
 
 .Checkout_data .DataBox .Payment_method .PaymentBox .Payment_image h3{
-    font-size: 1rem;
+    font-size: .85rem;
     font-weight: 600;
 }
 
@@ -518,7 +547,17 @@ input[type=number]::-webkit-outer-spin-button{
     height: 100%;
 }
 
+
+
+
+
+
 /* ///////////////////  Order_summary ///////////////////////*/
+
+
+
+
+
 
 .Checkout_data .Order_summary{
     width: 100%;
@@ -602,3 +641,254 @@ input[type=number]::-webkit-outer-spin-button{
     background-color: rgb(55, 55, 55);
     transition: .3s;
 }
+
+
+
+
+
+/* ////////////////////////////////////// payment Delivery///////////////////////////////// */
+
+
+.Payment_Delivery{
+    width: 100%;
+    margin: 2rem;
+}
+
+.Payment_Delivery .Check_Box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Payment_Delivery .Check_Box .Check_Box_I{
+    padding: .7rem 1rem;
+    border: solid 3px green;
+    border-radius: 50%;
+    color: green;
+    font-size: 1.5rem;
+}
+
+.Payment_Delivery .Payment_Delivery_Text{
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.Payment_Delivery .Payment_Delivery_Btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Payment_Delivery .Payment_Delivery_Btn button{
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    transition: .3s;
+    cursor: pointer;
+    width: 300px;
+    text-transform: uppercase;
+}
+
+.Payment_Delivery .Payment_Delivery_Btn button:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
+}
+
+
+
+/* /////////////////////////////////////////////////////// payment with cart////////////////////////////////////////// */
+
+
+
+.Payment_Cart{
+    margin: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Payment_Cart .Payment_Cart_Form{
+    width: 50%;
+}
+
+.Payment_Cart .Payment_Cart_Form input{
+    font-size: 1.2rem;
+}
+
+.Payment_Cart .Payment_Cart_Form input::placeholder{
+    font-size: 1.2rem;
+}
+
+
+.Payment_Cart .Payment_Cart_Form p{
+    text-align: left;
+    margin: .5rem;
+}
+
+.Payment_Cart .Payment_Cart_Form .Cart_Numbers{
+    width: 100%;
+    border: solid 1px #B4B4B4;
+    padding: .8rem;
+}
+
+.Payment_Cart .Payment_Cart_Form .Cart_Numbers input{
+    width: 100%;
+}
+
+.Payment_Cart .Payment_Cart_Form .Cart_Date {
+    width: 100%;
+    border: solid 1px #B4B4B4;
+    padding: .8rem;
+}
+
+.Payment_Cart .Payment_Cart_Form .Cart_Password{
+    width: 100%;
+    border: solid 1px #B4B4B4;
+    padding: .8rem;
+}
+
+.Payment_Cart .Payment_Cart_Form .Cart_Password input{
+    width: 100%;
+}
+
+.Payment_Cart .Payment_Cart_Form .Payment_Cart_Btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+}
+
+.Payment_Cart .Payment_Cart_Form .Payment_Cart_Btn input{
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    transition: .3s;
+    cursor: pointer;
+    width: 300px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+
+
+/* .Payment_Inputs {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.Payment_Inputs .InputBox{
+    position: relative;
+    width: 48%;
+    margin-bottom: 1rem;
+}
+
+.Payment_Inputs .CommentBox{
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.Payment_Inputs .CommentBox textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #a0a0a0;
+    color: black;
+    border-radius: 5px;
+    transition: .3s;
+    font-size: 1.2rem;
+    min-height: 150px;
+    resize: none;
+}
+
+.Payment_Inputs .CommentBox span{
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+    pointer-events: none;
+    transition: .3s;
+    color: #a0a0a0;
+    font-size: 1.2rem;
+    z-index: 50;
+}
+
+.Payment_Inputs .CommentBox textarea:valid ~ span,
+.Payment_Inputs .CommentBox textarea:focus ~ span{
+    color: black;
+    transform: translateX(10px) translateY(-50%);
+    padding: 0 10px;
+    font-size: .8rem;
+    background-color: white;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.Payment_Inputs .InputBox input{
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #a0a0a0;
+    color: black;
+    border-radius: 5px;
+    transition: .3s;
+    font-size: 1.2rem;
+}
+
+.Payment_Inputs .InputBox span{
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+    pointer-events: none;
+    transition: .3s;
+    color: #a0a0a0;
+    font-size: 1rem;
+}
+
+.Payment_Inputs .InputBox input:valid ~ span,
+.Payment_Inputs .InputBox input:focus ~ span{
+    color: black;
+    transform: translateX(10px) translateY(-50%);
+    padding: 0 10px;
+    font-size: .8rem;
+    background-color: white;
+}
+
+.Payment_Inputs .InputBox input:valid,
+.Payment_Inputs .InputBox input:focus{
+    border: 2px solid black;
+}
+.btn{
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    transition: .3s;
+    cursor: pointer;
+    width: 300px;
+}
+
+.btn:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
+} */

@@ -3,12 +3,15 @@
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    height: 600px;
+    height: 500px;
+    margin-top: 1rem;
+    margin-bottom: 2rem ;
 }
 
 .Product .Box .Image, .Product_Text, .Price{
-    width: 25%;
+    width: 30%;
     height: 100%;
+    /* background-color: #8a8a8a; */
 }
 
 .Product .Box .Image img{
@@ -56,17 +59,52 @@
     height: 100%;
 }
 
+.Product .Box .Product_Text {
+}
 .Product .Box .Product_Text .Product_Title{
-    font-size: 2rem;
+    font-size: 1.7rem;
     border-bottom: 1px solid rgb(188, 188, 188);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: 200;
+    font-weight: 400;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
 }
 
 .Product .Box .Product_Text .Product_Note{
     font-family: cursive;
+    font-size: .9rem;
+}
+
+.Product .Box .Price{
+    padding-left: 3.5rem;
+}
+
+.Product .Box .Price .BoxPrice .Price_Div{
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.Product .Box .Price .BoxPrice .Price_Div .Real_Price_deleted{
+    text-decoration: line-through 2px;
+}
+
+.Product .Box .Price .BoxPrice .Price_Div .Number_of_Percent{
+    color: red;
+}
+
+.Product .Box .Price .BoxPrice .Price_Div .Price_Discounted{
+    color: #006699;
+}
+
+.Product .Box .Price .BoxPrice h2{
+    font-size: 1.8rem;
+    letter-spacing: .1rem;
+    border-bottom: 1px solid rgb(188, 188, 188);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
 }
 
 .Product .Box .Price .quantity{
@@ -75,13 +113,6 @@
     align-items: center;
 }
 
-
-.Product .Box .Price h2{
-    font-size: 2.5rem;
-    border-bottom: 1px solid rgb(188, 188, 188);
-    padding-bottom: .5rem;
-    margin-bottom: 1rem;
-}
 
 .Product .Box .Price .quantity{
     width: 100%;
@@ -99,10 +130,25 @@
     transition: .1s;
 }
 
+.Product .Box .Price .quantity .Number_Quantity{
+    font-size: 1.5rem;
+}
+
 .Product .Box .Price .quantity .ProductMinus:hover, .ProductPlus:hover{
     background-color: rgb(101, 101, 101);
     color: white;
     transition: .1s;
+}
+
+.Product .Box .Price .Product_Stock{
+    font-size: 1rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: .3rem;
+    color: #8a8a8a;
+    font-weight: 200;
+    margin-bottom: 1rem;
 }
 
 .Product .Box .Price .quantity i {
@@ -118,7 +164,7 @@
     padding: 1rem;
     background-color: black;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin-bottom: 1rem;
     transition: .3s;
 }
@@ -131,7 +177,7 @@
 .Product .Box .Price .BoxFav .Fav{
     width: 100%;
     padding: 1rem;
-    font-size: 1.5rem;
+    font-size: 1rem;
     background-color: #e1e1e1;
     transition: .3s;
 }
@@ -143,7 +189,7 @@
 }
 
 .Product .DetailAndDelivery {
-    width: 90%;
+    width: 100%;
     border: solid 1px rgb(226, 223, 223);
     margin-bottom: 3rem;
 }

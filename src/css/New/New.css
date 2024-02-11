@@ -1,22 +1,2 @@
-.New{
-    display: flex;
-    align-items: flex-start;
-}
 
-.New .NewNav{
-    width: 25%;
-
-}
-
-.New .products{
-    width: 74%;
-}
-
-.New .products .box{
-    display: none;
-}
-
-.New .products .box.show{
-    display: block;
-}
 

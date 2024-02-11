@@ -4,6 +4,7 @@ import Slider from '../component/HomePage/Slider';
 import BestSellers from '../component/HomePage/BestSellers';
 import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 import NewProducts from '../component/HomePage/NewProducts';
+import '../css/HomePage/HomePage.css'
 
 export function HomePage({show, setShow}) {
 
@@ -51,23 +52,29 @@ export function HomePage({show, setShow}) {
 }
 
   return (
+    <div className='HomePage'>
+      <div>
+      <div>
+          { <Slider slider={slider} />}
       
-    <div>
-      { <Slider slider={slider} />}
-      
-    <h2 className='heading'>{homePageLabel?.[0]}</h2>
+          <h2 className='heading'>{homePageLabel?.[0]}</h2>
 
-    <div className='bestsellers'>
-       {<BestSellers bestSellers={bestSellers} />}
-    </div>
+          <div className='bestsellers'>
+            {<BestSellers bestSellers={bestSellers} />}
+          </div>
 
-    <h2 className='heading'>{homePageLabel?.[1]}</h2>
+          <h2 className='heading'>{homePageLabel?.[1]}</h2>
 
-    <div className='newproducts'>
-       {<NewProducts newProducts={newProducts} indexForNewProducts={indexForNewProducts} />}
-    </div>
+          <div className='newproducts'>
+            {<NewProducts newProducts={newProducts} indexForNewProducts={indexForNewProducts} />}
+          </div>
 
-    <h2 className='heading'>{homePageLabel?.[2]}</h2>
+          <h2 className='heading'>{homePageLabel?.[2]}</h2>
+        </div>
+      </div>
+        <div>
+          
+        </div>
     </div>
   )
 }

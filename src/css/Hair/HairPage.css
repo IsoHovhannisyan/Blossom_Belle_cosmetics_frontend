@@ -1,22 +1,2 @@
-.Hair{
-    display: flex;
-    align-items: flex-start;
-}
 
-.Hair .HairNav{
-    width: 25%;
-
-}
-
-.Hair .products{
-    width: 74%;
-}
-
-.Hair .products .box{
-    display: none;
-}
-
-.Hair .products .box.show{
-    display: block;
-}
 

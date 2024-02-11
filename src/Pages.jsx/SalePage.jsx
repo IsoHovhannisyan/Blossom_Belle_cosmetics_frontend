@@ -6,6 +6,9 @@ import New from "../Images/new_1.png";
 import Best from '../Images/best_seller_1.png';
 import '../css/Sale/SalePage.css';
 import { Selector } from '../component/Sale/Selector';
+import axios from '../axios';
+
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 
@@ -18,6 +21,7 @@ export function SalePage() {
   const [navbarForSelectors, setNavbarForSelectors] = useState([]);
   const [navbarSaleForSelectors,setNavbarSaleForSelectors] = useState([]);
   const [categoriesForSelectors, setCategoriesForSelectors] = useState([])
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     percent: 'Select Percentage',
     category: 'Select Category',
@@ -92,29 +96,50 @@ export function SalePage() {
   },[])
 
   async function loadingData(){
-    const savedData = getSavedDataFromLocalStorage();
-    if (savedData) {
-      setNavbarForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.navbar.split(', '))
-      setNavbarSaleForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
-      setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', ').filter(el => el.slice(0,3) != 'New' && el.slice(0,3) != 'Նոր'))
-      setAllCategories([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData]);
+    // const savedData = getSavedDataFromLocalStorage();
+    // if (savedData) {
+    //   setNavbarForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.navbar.split(', '))
+    //   setNavbarSaleForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
+    //   setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', ').filter(el => el.slice(0,3) != 'New' && el.slice(0,3) != 'Նոր'))
+    //   setAllCategories([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData]);
 
-      setProductCategory(savedData)
+    // }else{
+    //   fetchData()
+    //     .then(data => {
+    //       setNavbarForSelectors(data.navbarData?.[0]?.navbar.split(', '))
+    //       setNavbarSaleForSelectors(data.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
+    //       setCategoriesForSelectors(data.navbarData?.[0]?.categories.split(', '))
+    //       setAllCategories([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData]);
+    //       localStorage.setItem('fetchedData', JSON.stringify(data));
+    //     })
+    //     .catch(error => {
+    //       console.error("An error occurred while fetching data:", error);
+    //     });
+    // }
 
-    }else{
-      fetchData()
-        .then(data => {
-          setNavbarForSelectors(data.navbarData?.[0]?.navbar.split(', '))
-          setNavbarSaleForSelectors(data.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
-          setCategoriesForSelectors(data.navbarData?.[0]?.categories.split(', '))
-          setAllCategories([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData]);
-          setProductCategory(data)
-          localStorage.setItem('fetchedData', JSON.stringify(data));
-        })
-        .catch(error => {
-          console.error("An error occurred while fetching data:", error);
-        });
-    }
+    try{
+      const [
+        navbarData,
+        makeupData,
+        skincareData,
+        brushData,
+        hairData
+      ] = await Promise.all([
+        axios.get(`/api/navbar?lang=${currentLanguage}`),
+        axios.get(`/api/makeup?lang=${currentLanguage}`),
+        axios.get(`/api/skincare?lang=${currentLanguage}`),
+        axios.get(`/api/brush?lang=${currentLanguage}`),
+        axios.get(`/api/hair?lang=${currentLanguage}`),
+      ])
+      setNavbarForSelectors(navbarData.data?.[0]?.navbar.split(', '))
+      setNavbarSaleForSelectors(navbarData.data.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
+      setCategoriesForSelectors(navbarData.data?.[0]?.categories.split(', '))
+      setAllCategories([...makeupData.data,...skincareData.data,...brushData.data,...hairData.data]);
+      setLoading(false)
+    }catch (error) {
+      console.error("An error occurred:", error);
+      throw error;
+  }
   }
   const navigate = useNavigate();
 
@@ -161,7 +186,7 @@ export function SalePage() {
     setCategory(null)
 
 }
-  return <div>
+  return !loading ?<div>
 
     <Selector setPercent={setPercent} assortments={assortments} navbarSaleForSelectors={navbarSaleForSelectors} navbarForSelectors={navbarForSelectors} categoriesForSelectors={categoriesForSelectors} setAssortment={setAssortment} categories={categories} setCategory={setCategory} formData={formData} setFormData={setFormData}/>
     <div className='Sale '>
@@ -214,5 +239,14 @@ export function SalePage() {
             </div>}
 
       </div>
+      </div>:
+      <div className='FadeLoader'>
+      <FadeLoader
+            color='#006699'
+            loading={loading}
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
       </div>
 }

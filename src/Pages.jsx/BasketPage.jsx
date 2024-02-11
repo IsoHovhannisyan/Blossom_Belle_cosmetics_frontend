@@ -3,6 +3,7 @@ import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 import '../css/BasketPage/BasketPage.css';
 import { useNavigate } from 'react-router-dom';
 import {Checkout} from '../component/Checkout';
+import { Payment } from '../component/Payment';
 
 export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) {
 
@@ -14,17 +15,24 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     const [checkoutData, setCheckoutData] = useState(JSON.parse(sessionStorage.getItem('Checkout_data')));
     const [confirmData, setConfirmData] = useState(JSON.parse(sessionStorage.getItem('Confirm_data')));
     const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [toggle, setToggle] = useState(1);
     const navigate = useNavigate();
     const [basketProductsCurrentLang, setBasketProductsCurrentLang] = useState(allBasketProducts != null ?allBasketProducts.filter(el => el.lang == currentLanguage): null);
-    const total = basketProductsCurrentLang != null ? basketProductsCurrentLang.reduce((sum,el) => sum + el.quantityForOrder * el.price, 0): null;
+    const total = basketProductsCurrentLang != null ? basketProductsCurrentLang.reduce((sum,el) => {
+        if(el.sale != null){
+            return sum + (el.quantityForOrder * (el.price - el.price * el.sale / 100))
+        }else{
+            return sum + el.quantityForOrder * el.price
+        }
+        
+    
+    }, 0): null;
     const [checkoutDataArr, setCheckoutDataArr] = useState();
+
 
     useEffect(()=>{
         loadingData();
-    },[])
-
-    console.log(myData);
-    
+    },[]) 
     
       async function loadingData() {
     
@@ -150,8 +158,8 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                                     <img src={`https://blossom-belle-cosmetics.vercel.app${el?.image}`} alt="" />
                                 </div>
 
-                                <div className='Title '>
-                                    <h3 className=' text-[1.5rem]'>{el.title}</h3>
+                                <div className='Basket_Product_Title'>
+                                    <h3 className=''>{el.title}</h3>
                                 </div>
 
                                 <div className=' w-[15%] flex justify-between items-center'>
@@ -178,13 +186,19 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                                     </div>
                                      
                                 </div>
-                                <div className=' text-[30px]'>
+                                {el.sale != null ? <div className='Price_One_Product'>
+                                    <h3 className=''>{el.price - el.price * el.sale / 100}֏</h3>
+                                </div>:
+                                <div className='Price_One_Product'>
                                     <h3 className=''>{el.price}֏</h3>
-                                </div>
+                                </div>}
                                 <div className=' flex justify-center items-center'>
-                                    <div className=' PriceQty text-[30px] mr-[2rem]'>
+                                    {el.sale != null ? <div className='Price_Few_Products '>
+                                        <h3 className='h3'>{(el.price - el.price * el.sale / 100)* el.quantityForOrder}֏</h3>
+                                    </div>:
+                                    <div className='Price_Few_Products '>
                                         <h3 className='h3'>{el.price * el.quantityForOrder}֏</h3>
-                                    </div>
+                                    </div> }
                                     <div onClick={()=> removeProduct(el.image)}><i className="fa-solid fa-xmark text-red-600 text-[25px] cursor-pointer"></i></div>
                                 </div>
                                 
@@ -231,7 +245,9 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                     </div>
                     }
 
-                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} total={total} checkoutDataArr={checkoutDataArr} />}
+                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} total={total} checkoutDataArr={checkoutDataArr} toggle={toggle} setToggle={setToggle} allBasketProducts={allBasketProducts} />}
+
+                    {confirmData && <Payment toggle={toggle} payment={basketLabel?.[0]?.payment?.split(', ')}/> }
 
                 </div>
                 
@@ -251,7 +267,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                         <h3>{basketLabel?.[0]?.empty_text}</h3>
                     </div>
                     <div className='BtnBox'>
-                        <div className='Btn' onClick={()=> navigate('/')} >
+                        <div className='Btn' onClick={() => navigate('/')} >
                             <button>{basketLabel?.[0]?.btn_text}</button>
                         </div>
                     </div>

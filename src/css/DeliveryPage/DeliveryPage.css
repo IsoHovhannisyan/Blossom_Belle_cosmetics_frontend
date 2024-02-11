@@ -1,0 +1,19 @@
+.Delivery_Page .Delivery_Page_Heading{
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem;
+    font-family: cursive;
+}
+
+.Delivery_Page .Delivery_Page_Note{
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: .7rem;
+    font-family: cursive;
+}
+
+.Delivery_Page .Delivery_Page_Text{
+    font-size: 1.1rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(150, 150, 150);
+}

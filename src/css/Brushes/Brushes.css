@@ -1,22 +1,2 @@
-.Brushes{
-    display: flex;
-    align-items: flex-start;
-}
 
-.Brushes .BrushesNav{
-    width: 25%;
-
-}
-
-.Brushes .products{
-    width: 74%;
-}
-
-.Brushes .products .box{
-    display: none;
-}
-
-.Brushes .products .box.show{
-    display: block;
-}
 

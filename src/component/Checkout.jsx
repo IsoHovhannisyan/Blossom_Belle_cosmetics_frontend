@@ -1,14 +1,56 @@
 import React, { useState } from 'react'
 import Visa from "../Images/visa.png"
-export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, total, checkoutDataArr}) {
+import axios from '../axios';
+export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, total, checkoutDataArr, toggle, setToggle, allBasketProducts}) {
 
-    const ChangeBasketPage = ()=>{
+    const BackBasketPage = ()=>{
         setMyData(true);
         setCheckoutData(false)
         setConfirmData(false);
         sessionStorage.setItem('My_data', JSON.stringify(true));
         sessionStorage.setItem('Checkout_data', JSON.stringify(false));
         sessionStorage.setItem('Confirm_data', JSON.stringify(false));
+    }
+
+    const ChangeBasketPage = async()=>{
+        // if(toggle === 1){
+        //     try{
+        //         for(let i = 0; i< allBasketProducts.length; i++){
+        //             let res = await axios.get(`/api/${allBasketProducts[0].path}/${allBasketProducts[0].id}`);
+        //             console.log(res);
+        //             const headers = {
+        //                 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWQ3YTE0MjFkMTNjNmEzMTEyOWE4YyIsImlhdCI6MTcwNzUxNjg4MywiZXhwIjoxNzEwMTA4ODgzfQ.wM1HtMiRRuXMOm7hGjwxNX28yRGjB8_1p-FMr8ix5QA`,
+        //               };
+        //             const data = {
+        //                 best_seller: allBasketProducts[i].best_seller,
+        //                 btn_text: allBasketProducts[i].btn_text,
+        //                 category: allBasketProducts[i].category,
+        //                 descr: allBasketProducts[i].descr,
+        //                 image: allBasketProducts[i].image,
+        //                 lang: allBasketProducts[i].lang,
+        //                 new: allBasketProducts[i].new,
+        //                 path: allBasketProducts[i].path,
+        //                 price: allBasketProducts[i].price,
+        //                 quantity: allBasketProducts[i].quantity - allBasketProducts[i].quantityForOrder,
+        //                 sale: allBasketProducts[i].sale,
+        //                 title: allBasketProducts[i].title
+        //             }
+        //             await axios.put(`/api/${allBasketProducts[i].path}/edit/${allBasketProducts[i].id}`, data, { headers })
+        //             // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWQ3YTE0MjFkMTNjNmEzMTEyOWE4YyIsImlhdCI6MTcwNzUxNjg4MywiZXhwIjoxNzEwMTA4ODgzfQ.wM1HtMiRRuXMOm7hGjwxNX28yRGjB8_1p-FMr8ix5QA
+        //         };
+        //     }catch (error) {
+        //         console.log(error);
+        //         // throw error;
+        //     }
+        //     // let res = await axios.get(`/api/${allBasketProducts[0].path}/${allBasketProducts[0].id}`)
+        //     // console.log(res);
+        // }
+        setMyData(false);
+        setCheckoutData(false)
+        setConfirmData(true);
+        sessionStorage.setItem('My_data', JSON.stringify(false));
+        sessionStorage.setItem('Checkout_data', JSON.stringify(false));
+        sessionStorage.setItem('Confirm_data', JSON.stringify(true));
     }
 
   return (
@@ -49,16 +91,10 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
                     <h2 className='Payment_title'>{checkoutDataArr?.[9]}</h2>
                 </div>
                 <div className='PaymentBox'>
-                    <div className='Payment_image'>
+                    <div className={toggle === 1 ? 'Payment_image active': 'Payment_image'} onClick={()=>setToggle(1)}>
                         <h3>Cash On Delivery</h3>
                     </div>
-                    <div className='Payment_image'>
-                        <img src={Visa} alt="" />
-                    </div>
-                    <div className='Payment_image'>
-                        <img src={Visa} alt="" />
-                    </div>
-                    <div className='Payment_image'>
+                    <div className={toggle === 2 ? 'Payment_image active': 'Payment_image'} onClick={()=>setToggle(2)}>
                         <img src={Visa} alt="" />
                     </div>
                 </div>
@@ -99,10 +135,10 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
         </div>
 
         <div className='buttons'>
-                <div className='back' onClick={()=> ChangeBasketPage()}>
+                <div className='back' onClick={()=> BackBasketPage()}>
                     <button>{checkoutDataArr?.[16]}</button>
                 </div>
-                <div className='btn'>
+                <div className='btn' onClick={()=> ChangeBasketPage()}>
                     <button>{checkoutDataArr?.[17]}</button>
                 </div>
         </div>

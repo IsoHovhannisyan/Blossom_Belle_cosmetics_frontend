@@ -1,0 +1,88 @@
+.Footer_border{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1.5px solid rgb(200, 200, 200);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-width: 1200px;
+    
+}
+
+.Footer{
+    background-color: white;
+    margin-top: 2rem;
+    max-width: 1700px;
+    min-width: 1200px;
+    padding: 1rem 3rem;
+}
+
+.Footer .Footer_Links {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.Footer .Footer_Links .LinkBox .LinkHeading {
+    color: #006699;
+    transition: .3s;
+}
+
+.Footer .Footer_Links .LinkBox .Footer_link{
+    padding: .5rem 0;
+}
+
+.Footer .Footer_Links .LinkBox a {
+    color: rgb(140, 140, 140);
+    transition: .3s;
+}
+
+.Footer .Footer_Links .LinkBox a:hover{
+    color: rgb(200, 200, 200);
+    transition: .3s;
+}
+
+.Footer .Footer_Links .LinkBox .LinkHeading:hover {
+    color: rgb(200, 200, 200);
+    transition: .3s;
+}
+
+
+
+.Footer .Footer_Phone .Phone_box{
+    border: solid 2px black;
+    padding: .3rem .5rem;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.Footer .Footer_Phone .Phone_box:hover{
+    background-color: black;
+    color: white;
+    transition: .3s;
+}
+
+.Footer .Footer_Phone p{
+    color: rgb(200, 200, 200) ;
+}
+
+.Footer .Developed_By{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    color: rgb(200, 200, 200);
+    letter-spacing: .1rem;
+    margin-top: 2rem;
+}
+
+.Footer .Developed_By .Footer_Blossom{
+    padding-right: .5rem;
+    border-right: solid 2px rgb(200, 200, 200);
+}
+
+/* .Footer_Phone .Phone_box i{
+    color: black;
+} */

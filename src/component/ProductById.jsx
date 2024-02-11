@@ -35,30 +35,47 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
     
     
       async function loadingData() {
+        // const savedData = getSavedDataFromLocalStorage();
+        // if (savedData) {
+        //     setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
+        //     setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
+        //     setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+        //     setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
+        //     setLoading(false);
+        //     setButtonDisabled(false)
+        // }else {
+        //     fetchData()
+        //         .then(data => {
+        //             setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
+        //             setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
+        //             setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+        //             setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
+        //             setButtonDisabled(false)
+        //         })
+        //         .catch(error => {
+        //             console.error("An error occurred while fetching data:", error);
+        //         });
+        // }
 
-        const productData = await axios.get(`/api/${path}/${id}`);   
-        const savedData = getSavedDataFromLocalStorage();
-        if (savedData) {
-            setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
-            setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
-            setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-            setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
+        try{
+            const [
+                productLabelData,
+                productData,
+                productsData
+            ] = await Promise.all([
+                axios.get(`/api/product`),
+                axios.get(`/api/${path}/${id}`),   
+                axios.get(`/api/${path}`),
+            ])
+            setProductLabel(productLabelData.data.filter(el => el.lang == currentLanguage));
+            setProduct(productsData.data.filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
+            setCurrentCategory(productsData.data.filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
+            setCurrentProductAnotherLang(productsData.data.filter(el=> el.image == productData.data.image));
             setLoading(false);
             setButtonDisabled(false)
-        }else {
-            fetchData()
-                .then(data => {
-                    setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
-                    setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
-                    setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-                    setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
-                    setButtonDisabled(false)
-                })
-                .catch(error => {
-                    console.error("An error occurred while fetching data:", error);
-                });
+        }catch(error){
+            console.error("An error occurred while fetching data:", error);
         }
-
         setShowIntrestingProducts(true);
     }
 
@@ -119,15 +136,20 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
              <h3 className='Product_Note'>{productLabel?.[0]?.note}</h3>
          </div>
          <div className='Price'>
-             <div className='BoxPrice'>
-                 <h2>{product?.price * quantity} ֏</h2>
-             </div>
+            {product?.sale != null ? <div className='BoxPrice'>
+                 <div className='Price_Div'><div className='Real_Price_deleted'>{product?.price}֏</div><div className='Price_Discounted'>{(product?.price - product?.price * product?.sale / 100)* quantity}֏</div> <div className='Number_of_Percent'>{product?.sale}%</div> </div>
+             </div>:
+            <div className='BoxPrice'>
+                <h2>{product?.price * quantity} ֏</h2>
+            </div>
+             }
+             
              <div className='quantity'>
                  <div onClick={()=> quantity !== 1 ? setQuantity(quantity-1): setQuantity(1)} className={ quantity !== 1 ? 'ProductMinus cursor-pointer': 'ProductMinus'}><i className="fa-solid fa-minus"></i></div>
-                 <div className=' text-2xl'>{quantity}</div>
+                 <div className='Number_Quantity'>{quantity}</div>
                  <div onClick={()=> setQuantity(quantity+1)} className='ProductPlus cursor-pointer'><i className="fa-solid fa-plus"></i></div>
              </div>
-             <div className='flex justify-left items-center gap-1 mb-[1rem] text-[1.2rem]'>
+             <div className='Product_Stock'>
                 <div>
                     {productLabel?.[0]?.product_qty_text.split(', ')[0]}
                 </div>

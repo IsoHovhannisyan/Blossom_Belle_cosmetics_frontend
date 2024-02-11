@@ -20,7 +20,14 @@ import { BasketPage } from './Pages.jsx/BasketPage'
 import { fetchData, getSavedDataFromLocalStorage } from './component/Header';
 import { LoginPage } from './Pages.jsx/LoginPage'
 import { RegisterPage } from './Pages.jsx/RegisterPage'
+import { HelpPage } from './Pages.jsx/HelpPage'
+import { ContactPage } from './Pages.jsx/ContactPage'
+import { AboutUsPage } from './Pages.jsx/AboutUsPage'
+
+
 import FadeLoader from "react-spinners/FadeLoader";
+import axios from './axios'
+import DeliveryPage from './Pages.jsx/DeliveryPage'
 
 export function App() {
 
@@ -34,7 +41,7 @@ export function App() {
   const [show,setShow] = useState(sessionStorage.getItem('show') ? JSON.parse(sessionStorage.getItem('show')): false)
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(async() => {
     
       if(show == false){
         fetchData()
@@ -55,9 +62,20 @@ export function App() {
       setNavbar(savedData.navbarData.filter(el => el.lang == currentLanguage));
       // setFooter(savedData.footer);
     }
-    // else{
-    // 
-    // }
+    try{
+      const [
+        navbarData,
+        footerData
+      ] = await Promise.all([
+        axios.get(`/api/navbar?lang=${currentLanguage}`),
+        axios.get(`/api/footer?lang=${currentLanguage}`),
+      ])
+      setFooter(footerData.data);
+      console.log(footerData.data);
+    }catch (error) {
+      console.error("An error occurred:", error);
+      throw error;
+  }
       
   }, [currentLanguage]);
 
@@ -66,7 +84,8 @@ export function App() {
 
     show != false ?  <div className=''>
       <div className='HeaderBackground'></div>
-        <div className='App'>
+      <div className=' flex justify-center items-center'>
+      <div className='App'>
       <Header navbar={navbar} basketProductsQuantity={basketProductsQuantity} />
         <Routes >
           <Route path='/login' element={<LoginPage currentLanguage={currentLanguage} />} />
@@ -89,11 +108,15 @@ export function App() {
 
           <Route path='/basket' element={<BasketPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />} />
           <Route path='/product' element={< ProductById basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}  />
-          
 
+          <Route path='/aboutus' element={<AboutUsPage About_Us={footer?.[0]?.about_us?.split('///')}/>} />
+          <Route path='/delivery' element={<DeliveryPage Delivery_Heading={footer?.[0]?.delivery_heading?.split(', ')} Delivery={footer?.[0]?.delivery?.split('///')} />}/>
+          <Route path='/help' element={< HelpPage helpHeading={footer?.[0]?.help_heading?.split(', ')} help={footer?.[0]?.help?.split('///')}/>} />
+          
         </Routes>
       <Footer/>
     </div>
+      </div>
     </div>: <div className='FetchingProducts'>
       <div>
         <div className='FetchingProducts_text'>

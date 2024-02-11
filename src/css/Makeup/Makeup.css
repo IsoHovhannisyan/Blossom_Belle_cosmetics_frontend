@@ -1,24 +1,3 @@
-.Makeup{
-    display: flex;
-    align-items: flex-start;
-}
-
-.Makeup .MakeupNav{
-    width: 25%;
-
-}
-
-.Makeup .products{
-    width: 74%;
-}
-
-.Makeup .products .box{
-    display: none;
-}
-
-.Makeup .products .box.show{
-    display: block;
-}
 
 
 
