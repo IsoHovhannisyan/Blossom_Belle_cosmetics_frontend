@@ -121,18 +121,20 @@ export function SalePage() {
         makeupData,
         skincareData,
         brushData,
-        hairData
+        hairData,
+        giftData
       ] = await Promise.all([
         axios.get(`/api/navbar?lang=${currentLanguage}`),
         axios.get(`/api/makeup?lang=${currentLanguage}`),
         axios.get(`/api/skincare?lang=${currentLanguage}`),
         axios.get(`/api/brush?lang=${currentLanguage}`),
         axios.get(`/api/hair?lang=${currentLanguage}`),
+        axios.get(`/api/gift?lang=${currentLanguage}`),
       ])
       setNavbarForSelectors(navbarData.data?.[0]?.navbar.split(', '))
       setNavbarSaleForSelectors(navbarData.data.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
       setCategoriesForSelectors(navbarData.data?.[0]?.categories.split(', '))
-      setAllCategories([...makeupData.data,...skincareData.data,...brushData.data,...hairData.data]);
+      setAllCategories([...makeupData.data,...skincareData.data,...brushData.data,...hairData.data, ...giftData.data]);
       setLoading(false)
     }catch (error) {
       console.error("An error occurred:", error);

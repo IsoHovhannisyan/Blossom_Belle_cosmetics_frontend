@@ -16,6 +16,7 @@ export function NewPage() {
   const [skincare, setSkincare] = useState([]);
   const [brush, setBrush] = useState([]);
   const [hair, setHair] = useState([]);
+  const [gift, setGift] = useState([]);
   const [categories,setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,18 +59,21 @@ export function NewPage() {
           skincareData,
           brushData,
           hairData,
+          giftData,
           navbarData
         ] = await Promise.all([
           axios.get(`/api/makeup?lang=${currentLanguage}`),
           axios.get(`/api/skincare?lang=${currentLanguage}`),
           axios.get(`/api/brush?lang=${currentLanguage}`),
           axios.get(`/api/hair?lang=${currentLanguage}`),
+          axios.get(`/api/gift?lang=${currentLanguage}`),
           axios.get(`/api/navbar?lang=${currentLanguage}`),
         ])
         setMakeup(makeupData.data);
         setSkincare(skincareData.data)
         setBrush(brushData.data)
         setHair(hairData.data)
+        setGift(giftData.data)
         setCategories(navbarData.data[0].categories.split(', '));
         setLoading(false);
       }catch (error) {
@@ -93,7 +97,7 @@ export function NewPage() {
         <div className={toggle === 2 ? "box show": 'box'}> {< NewSkinCare skincare={skincare} />}</div>
         <div className={toggle === 3 ? "box show": 'box'}> {< NewBrushes brush={brush} />}</div>
         <div className={toggle === 4 ? "box show": 'box'}> {< NewHairCare hair={hair} />}</div>
-        <div className={toggle === 5 ? "box show": 'box'}> {< NewGifts />}</div>
+        <div className={toggle === 5 ? "box show": 'box'}> {< NewGifts gift={gift} />}</div>
       </div>
     </div>:
     <div className='FadeLoader'>

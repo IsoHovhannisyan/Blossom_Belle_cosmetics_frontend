@@ -48,6 +48,7 @@ export function App() {
         fetchData()
           .then(data => {
             setNavbar(data.navbarData.filter(el => el.lang == currentLanguage));
+            setFooter(data.footerData.filter(el => el.lang == currentLanguage));
           })
           .then(()=>{
             setLoading(false);
@@ -61,21 +62,12 @@ export function App() {
     const savedData = getSavedDataFromLocalStorage();
     if (savedData) {
       setNavbar(savedData.navbarData.filter(el => el.lang == currentLanguage));
+      console.log(savedData.footerData.filter(el => el.lang == currentLanguage));
+      setFooter(savedData.footerData.filter(el => el.lang == currentLanguage));
+      setLoading(false);
+      setShow(true)
       // setFooter(savedData.footer);
     }
-    try{
-      const [
-        navbarData,
-        footerData
-      ] = await Promise.all([
-        axios.get(`/api/navbar?lang=${currentLanguage}`),
-        axios.get(`/api/footer?lang=${currentLanguage}`),
-      ])
-      setFooter(footerData.data);
-    }catch (error) {
-      console.error("An error occurred:", error);
-      throw error;
-  }
       
   }, [currentLanguage]);
 
@@ -112,7 +104,7 @@ export function App() {
           <Route path='/admin/edit/product'  element={< AdminEditProductPage />}/>
           
         </Routes>
-      <Footer/>
+      <Footer footer={footer} />
     </div>
       </div>
     </div>: <div className='FetchingProducts'>

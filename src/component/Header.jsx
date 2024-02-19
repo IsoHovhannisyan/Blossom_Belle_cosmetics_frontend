@@ -38,40 +38,16 @@ export async function fetchData() {
 
     try {
         const [
-            sliderData,
-            homeLabelData,
-            makeupData,
-            skincareData,
-            hairData,
-            brushData,
-            ProductLabelData,
-            BasketLabelData,
             navbarData,
-            authLabelData,
+            footerData,
         ] = await Promise.all([
-            axios.get(`/api/slider`),
-            axios.get(`/api/home_page_label`),
-            axios.get(`/api/makeup`),
-            axios.get(`/api/skincare`),
-            axios.get(`/api/hair`),
-            axios.get(`/api/brush`),
-            axios.get(`/api/product`),
-            axios.get(`/api/basket`),
             axios.get(`/api/navbar`),
-            axios.get(`/api/auth`)
+            axios.get(`/api/footer`),
         ]);
   
         const data = {
-            sliderData: sliderData.data,
-            homeLabelData: homeLabelData.data,
-            makeupData: makeupData.data,
-            skincareData: skincareData.data,
-            hairData: hairData.data,
-            brushData: brushData.data,
-            ProductLabelData: ProductLabelData.data,
-            BasketLabelData: BasketLabelData.data,
             navbarData: navbarData.data,
-            authLabelData: authLabelData.data
+            footerData: footerData.data
         };
         
         sessionStorage.setItem('show', JSON.stringify('true'));
