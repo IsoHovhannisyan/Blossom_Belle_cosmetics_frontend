@@ -38,8 +38,6 @@ export function SalePage() {
         console.log(el.category);
         return el.category
       }  
-    }else{
-      return undefined
     }
   }));
   

@@ -26,22 +26,6 @@ export function BrushPage() {
   },[])
 
   async function loadingData(){
-    // const savedData = getSavedDataFromLocalStorage();
-    // if (savedData) {
-    //   setBrush(savedData.brushData.filter(el => el.lang == currentLanguage));
-    //   setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
-    // }
-    // else {
-    //   fetchData()
-    //     .then(data => {
-    //       setBrush(data.brushData.filter(el => el.lang == currentLanguage))
-    //       setCategories(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', '));
-    //     })
-    //     .catch(error => {
-    //       console.error("An error occurred while fetching data:", error);
-    //     });
-    // }
-
     try{
       const [
         brushData,

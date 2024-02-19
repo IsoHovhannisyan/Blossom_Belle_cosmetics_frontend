@@ -23,11 +23,12 @@ import { RegisterPage } from './Pages.jsx/RegisterPage'
 import { HelpPage } from './Pages.jsx/HelpPage'
 import { ContactPage } from './Pages.jsx/ContactPage'
 import { AboutUsPage } from './Pages.jsx/AboutUsPage'
-
-
-import FadeLoader from "react-spinners/FadeLoader";
-import axios from './axios'
 import DeliveryPage from './Pages.jsx/DeliveryPage'
+import { AdminLoginPage } from './Admin/AdminLoginPage'
+import { AdminAddProductsPage } from './Admin/AdminAddProductsPage'
+import { AdminEditProductPage} from './Admin/AdminEditProductPage'
+import axios from './axios'
+import FadeLoader from "react-spinners/FadeLoader"
 
 export function App() {
 
@@ -71,7 +72,6 @@ export function App() {
         axios.get(`/api/footer?lang=${currentLanguage}`),
       ])
       setFooter(footerData.data);
-      console.log(footerData.data);
     }catch (error) {
       console.error("An error occurred:", error);
       throw error;
@@ -91,13 +91,7 @@ export function App() {
           <Route path='/login' element={<LoginPage currentLanguage={currentLanguage} />} />
           <Route path='/register' element={<RegisterPage currentLanguage={currentLanguage}  />} />
           <Route path='/'  element={<HomePage show={show} setShow={setShow}/>}/>
-          <Route path='/new' element={<NewPage/>}>
-            <Route path='/new' element={<NewMakeup />}/>
-            <Route path='/new/skincare' element={<NewSkinCare/>}/>
-            <Route path='/new/brashes' element={<NewBrushes/>}/>
-            <Route path='/new/haircare' element={<NewHairCare/>}/>
-            <Route path='/new/gifts' element={<NewGifts/>}/>
-          </Route>
+          <Route path='/new' element={<NewPage/>} />
           <Route path='/makeup'  element={<MakeupPage />} />
           <Route path='/hair'  element={< HairPage />} />
 
@@ -112,6 +106,10 @@ export function App() {
           <Route path='/aboutus' element={<AboutUsPage About_Us={footer?.[0]?.about_us?.split('///')}/>} />
           <Route path='/delivery' element={<DeliveryPage Delivery_Heading={footer?.[0]?.delivery_heading?.split(', ')} Delivery={footer?.[0]?.delivery?.split('///')} />}/>
           <Route path='/help' element={< HelpPage helpHeading={footer?.[0]?.help_heading?.split(', ')} help={footer?.[0]?.help?.split('///')}/>} />
+          
+          <Route path='/admin'  element={< AdminLoginPage />}/>
+          <Route path='/admin/add/product' element={<AdminAddProductsPage />} />
+          <Route path='/admin/edit/product'  element={< AdminEditProductPage />}/>
           
         </Routes>
       <Footer/>

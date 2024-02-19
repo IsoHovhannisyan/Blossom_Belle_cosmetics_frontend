@@ -5,6 +5,8 @@ import { fetchData, getSavedDataFromLocalStorage } from '../component/Header';
 
 export function RegisterPage({currentLanguage}) {
   const [registerLogin,setRegisterLogin] = useState([]);
+  const Email_regEx = /^[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})[ ]?:.*$/;
+  console.log(Email_regEx.test('isohovhannisyan.2001@mail.ru'));
     let registerLabelArr = registerLogin?.[0]?.register.split(',  ');
     // console.log(loginLabel);
 
@@ -41,10 +43,6 @@ export function RegisterPage({currentLanguage}) {
         <h2 className='Login_title'>{registerLabelArr?.[0]}</h2>
         <h3 className='Login_text'>{registerLabelArr?.[1]}</h3>
     </div>
-        <div>
-
-        </div>
-
         <form className='Authorization'>
             <div className='InputBox'>
                 <input type="text" required='required' /> <span>{registerLabelArr?.[2]}</span>

@@ -1,0 +1,116 @@
+.AdminAllProducts{
+    width: 100%;
+    overflow-y: scroll;
+    height: 500px;
+    text-align: center;
+    border-top: 1px solid black;
+}
+
+table{
+    width: 100%;
+}
+
+table thead tr th{
+    border: solid 1px black;
+    position: sticky;
+    top: -2px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 100;
+    padding: .5rem;
+    text-transform: uppercase;
+}
+
+table tbody tr {
+    border: solid 1px black;
+}
+
+table tbody tr td{
+    border: solid 1px black;
+}
+
+table tbody tr td .Admin_Products_btn{
+    width: 60px;
+    padding: .4rem;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: .3s;
+    margin-right: .4rem;
+    font-size: .8rem;
+}
+
+table tbody tr td .Admin_Products_btn:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
+}
+
+
+
+
+
+
+/* /////////////////////////// ADD PRODUCT ///////////////////////// */
+
+.AddProduct .General{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.AddProduct .General .GeneralSelect {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 2rem;
+}
+
+.AddProduct .General .GeneralSelect select{
+    background-color: black;
+    color: white;
+    padding: .3rem;
+}
+
+.AddProduct .General .GeneralInput{
+    width: 40%;
+    margin: 1rem;
+}
+
+.AddProduct .General .GeneralInput p{
+    font-size: 1.1rem;
+    padding: .3rem 0;
+}
+
+.AddProduct .General .GeneralInput input{
+    width: 100%;
+    border: solid 1px black;
+}
+
+.AddProduct .Separately{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.AddProduct .Separately .DescrBox{
+    width: 48%;
+}
+
+.AddProduct .Separately .DescrBox p{
+    font-size: 1.3rem;
+    padding: .5rem 0;
+}
+
+.AddProduct .Separately .DescrBox textarea{
+    width: 100%;
+    padding: 1rem;
+    border: .5px solid black;
+    resize: none;
+}
+
+

@@ -117,7 +117,7 @@ export default function NewProducts(props) {
                 key={el.id}
                 >
                 <div className='image'>
-                  <div className='ImageBackground' id={index}></div>
+                  <div className='ImageBackground' id={index + props.indexForNewProducts}></div>
                   <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index + props.indexForNewProducts} className='img' alt="" />
                   <div className={el.new ? 'new active': 'new'}>
                     <img src={New} alt="" />
