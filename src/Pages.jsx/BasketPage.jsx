@@ -4,6 +4,8 @@ import '../css/BasketPage/BasketPage.css';
 import { useNavigate } from 'react-router-dom';
 import {Checkout} from '../component/Checkout';
 import { Payment } from '../component/Payment';
+import FadeLoader from "react-spinners/FadeLoader";
+import axios from '../axios';
 
 export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) {
 
@@ -28,6 +30,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     
     }, 0): null;
     const [checkoutDataArr, setCheckoutDataArr] = useState();
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(()=>{
@@ -36,21 +39,37 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     
       async function loadingData() {
     
-        const savedData = getSavedDataFromLocalStorage();
-        if (savedData) {
-            setBasketLabel(savedData.BasketLabelData.filter(el => el.lang == currentLanguage));
-            setCheckoutDataArr(savedData.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
-            setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
-        }else {
-            fetchData()
-                .then(data => {
-                    setBasketLabel(data.BasketLabelData.filter(el => el.lang == currentLanguage));
-                    setCheckoutDataArr(data.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
-                    setProductLabel(data.ProductLabelData.filter(el => el.lang == currentLanguage));
-                })
-                .catch(error => {
-                    console.error("An error occurred while fetching data:", error);
-                });
+        // const savedData = getSavedDataFromLocalStorage();
+        // if (savedData) {
+        //     setBasketLabel(savedData.BasketLabelData.filter(el => el.lang == currentLanguage));
+        //     setCheckoutDataArr(savedData.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
+        //     setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
+        // }else {
+        //     fetchData()
+        //         .then(data => {
+        //             setBasketLabel(data.BasketLabelData.filter(el => el.lang == currentLanguage));
+        //             setCheckoutDataArr(data.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
+        //             setProductLabel(data.ProductLabelData.filter(el => el.lang == currentLanguage));
+        //         })
+        //         .catch(error => {
+        //             console.error("An error occurred while fetching data:", error);
+        //         });
+        // }
+        try{
+            const [
+                basketLabelData,
+                productLabelData
+            ] = await Promise.all([
+              axios.get(`/api/basket?lang=${currentLanguage}`),
+              axios.get(`/api/product?lang=${currentLanguage}`),
+            ])
+            setBasketLabel(basketLabelData.data);
+            setCheckoutDataArr(basketLabelData.data[0].checkout_data.split(',  '));
+            setProductLabel(productLabelData.data);
+            setLoading(false)
+          }catch (error) {
+            console.error("An error occurred:", error);
+            throw error;
         }
     }
 
@@ -123,7 +142,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
   return (
     <div>
         {
-            basketProductsCurrentLang != false && basketProductsCurrentLang != null  ? <div className='NotEmptyBasket'>
+            basketProductsCurrentLang != false && basketProductsCurrentLang != null  ? !loading ? <div className='NotEmptyBasket'>
 
                 <div className='Basket'>
                     <div className='Title'>
@@ -251,7 +270,16 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
 
                 </div>
                 
+            </div>:<div className='FadeLoader'>
+                <FadeLoader
+                    color='#006699'
+                    loading={loading}
+                    size={100}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                    />
             </div>:
+            !loading ?
             <div className='BasketEmpty'>
                 <div className='Basket'>
                     <div className='Title'>
@@ -273,10 +301,16 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                     </div>
                     
                 </div>
-                
-               
-               
+            </div>:<div className='FadeLoader'>
+                <FadeLoader
+                    color='#006699'
+                    loading={loading}
+                    size={100}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                    />
             </div>
+
         }
     </div>
   )
