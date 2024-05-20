@@ -6,15 +6,17 @@ import New from "../Images/new_1.png";
 import Best from '../Images/best_seller_1.png';
 import '../css/Sale/SalePage.css';
 import { Selector } from '../component/Sale/Selector';
+import useAuth from '../Auth/useAuth';
 import axios from '../axios';
 
 import FadeLoader from "react-spinners/FadeLoader";
 
 
 
-export function SalePage() {
+export function SalePage({basketProductsQuantity, setBasketProductsQuantity}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+
 
   const [productCategory, setProductCategory] = useState();
   const [allCategories, setAllCategories] = useState([]);
@@ -84,7 +86,98 @@ export function SalePage() {
       }
     }     
   }
-    ) 
+    )
+  const isLoggedIn = useAuth();
+
+  const [userId, setUserId] = useState(sessionStorage.getItem('user_id') ? JSON.parse(sessionStorage.getItem('user_id')) : '');
+  const [activeHearts, setActiveHearts] = useState(new Set());
+  const [favorites, setFavorites] = useState('');
+
+  useEffect(() => {
+    const storedActiveHearts = JSON.parse(localStorage.getItem('activeHearts'));
+    if (storedActiveHearts) {
+      setActiveHearts(new Set(storedActiveHearts));
+    }
+    const fetchFavorites = async () => {
+      try {
+        if (isLoggedIn) {
+          const response = await axios.get(`/api/user/${userId}/favorites`);
+          const { favorites } = response.data;
+          setFavorites(favorites);
+          setActiveHearts(new Set(favorites.split(',')));
+          localStorage.setItem('activeHearts', JSON.stringify(favorites)); // Store favorites as string
+        }
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+      }
+    };
+
+    fetchFavorites();
+  }, [isLoggedIn, userId]);
+
+  const handleHeartClick = async (image) => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+  
+    const updatedActiveHearts = new Set(activeHearts);
+    if (updatedActiveHearts.has(image)) {
+      updatedActiveHearts.delete(image);
+    } else {
+      updatedActiveHearts.add(image);
+    }
+    setActiveHearts(updatedActiveHearts);
+    
+    // Convert updated active hearts set to array
+    const updatedFavoritesArray = Array.from(updatedActiveHearts);
+    
+    // Update the user favorites string by joining the array
+    const updatedFavoritesString = updatedFavoritesArray.join(',');
+    setFavorites(updatedFavoritesString);
+    localStorage.setItem('activeHearts', JSON.stringify(updatedFavoritesArray));
+  
+    try {
+      await axios.put(`/api/user/${userId}/favorites`, {
+        favorites: updatedFavoritesString,
+      });
+      console.log('Favorites updated successfully');
+    } catch (error) {
+      console.error('Error updating favorites:', error);
+    }
+  };
+
+  const handleShoppingClick = async (el) => {
+    const modelName = el.path;
+    const image = el.image;
+    let existingProducts = JSON.parse(sessionStorage.getItem('Basket-Products')) || [];
+
+    try {
+        const matchingProducts = existingProducts.filter(product => product.image === image);
+
+        if (matchingProducts.length > 0) {
+            // Update quantity for all matching products
+            matchingProducts.forEach(product => {
+                product.quantityForOrder += 1;
+            });
+        } else {
+            // Fetch products data from the server
+            const productsData = await axios.get(`/api/user/findProductByImage?modelName=${modelName}&image=${image}`);
+            const newProducts = productsData.data.map(product => ({ ...product, quantityForOrder: 1 }));
+            existingProducts.push(...newProducts);
+
+            // Update basket products quantity
+            setBasketProductsQuantity(basketProductsQuantity + newProducts.length);
+        }
+
+        // Update sessionStorage with the updated products
+        sessionStorage.setItem('Basket-Products', JSON.stringify(existingProducts));
+    } catch (error) {
+        // Handle errors
+        console.error('Error handling shopping click:', error);
+        // Optionally, you can provide user feedback about the error.
+    }
+};
 
   useEffect(()=>{
     loadingData()
@@ -94,26 +187,6 @@ export function SalePage() {
   },[])
 
   async function loadingData(){
-    // const savedData = getSavedDataFromLocalStorage();
-    // if (savedData) {
-    //   setNavbarForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.navbar.split(', '))
-    //   setNavbarSaleForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
-    //   setCategoriesForSelectors(savedData.navbarData.filter(el => el.lang == currentLanguage)[0].categories.split(', ').filter(el => el.slice(0,3) != 'New' && el.slice(0,3) != 'Նոր'))
-    //   setAllCategories([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData]);
-
-    // }else{
-    //   fetchData()
-    //     .then(data => {
-    //       setNavbarForSelectors(data.navbarData?.[0]?.navbar.split(', '))
-    //       setNavbarSaleForSelectors(data.navbarData.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
-    //       setCategoriesForSelectors(data.navbarData?.[0]?.categories.split(', '))
-    //       setAllCategories([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData]);
-    //       localStorage.setItem('fetchedData', JSON.stringify(data));
-    //     })
-    //     .catch(error => {
-    //       console.error("An error occurred while fetching data:", error);
-    //     });
-    // }
 
     try{
       const [
@@ -133,7 +206,7 @@ export function SalePage() {
       ])
       setNavbarForSelectors(navbarData.data?.[0]?.navbar.split(', '))
       setNavbarSaleForSelectors(navbarData.data.filter(el => el.lang == currentLanguage)[0]?.sale.split(', '))
-      setCategoriesForSelectors(navbarData.data?.[0]?.categories.split(', '))
+      setCategoriesForSelectors(navbarData.data?.[0]?.categories.split(', ').filter(el=>  el.slice(0,3) !== "New" && el.slice(0,3) !== "Նոր") )
       setAllCategories([...makeupData.data,...skincareData.data,...brushData.data,...hairData.data, ...giftData.data]);
       setLoading(false)
     }catch (error) {
@@ -192,12 +265,11 @@ export function SalePage() {
     <div className='Sale '>
 
       {Sale?.length > 0 ? Sale?.map((el,index) => <div className={el.sale ? 'Product active' : 'Product' } 
-      onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)} 
       onMouseMove={()=> mouseMoveFunc(index)}
       onMouseLeave={()=> mouseLeaveFunc(index)} 
       key={el.id}
       >
-      <div className='image'>
+      <div className='image' onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)} >
         <div className='ImageBackground' id={index}></div>
         <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
         <div className={el.new ? 'new active': 'new'}>
@@ -212,9 +284,15 @@ export function SalePage() {
         {
           el.sale ? <div className='Price_discount'><div className='PriceAndPercent'><div className='Price_deleted'>{el.price}֏</div> <div className='Percent_Discount'>{el.sale}%</div></div> <div className='Price_Discounted'>{el.price - el.price * el.sale / 100}֏</div></div>: <div className='price'>{el.price}֏</div>
         }
-      <button className='btn_text' id={index}>{el.btn_text}</button>
-      <div className='shopping' id={index}><i className=" fa-solid fa-bag-shopping"></i></div>
-      <div className='heart' id={index}><i className=" fa-regular fa-heart"></i></div>
+      <button className='btn_text' id={index} onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)}>
+            {el.btn_text}
+          </button>
+          <div className='shopping' id={index}>
+            <i className=' fa-solid fa-bag-shopping' onClick={()=> handleShoppingClick(el)}></i>
+          </div>
+          <div className='heart' id={index} onClick={() => handleHeartClick(el.image)}>
+            <i className={activeHearts.has(el.image) ? ' active fa-solid fa-heart' : 'fa-regular fa-heart'}></i>
+          </div>
       </div>): <div className='SaleEmpty'>
                 <div className='SaleBox'>
                     <div className='QtyBox'>

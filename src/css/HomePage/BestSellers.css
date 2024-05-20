@@ -152,6 +152,7 @@
     bottom: 1rem;
     font-size: 1.3rem;
     transition: .7s;
+    cursor: pointer;
 }
 
 .Best_Sellers .Product .heart {
@@ -181,6 +182,7 @@
     right:2rem;
     font-size: 1.3rem;
     transition: .7s;
+    cursor: pointer;
 }
 
 .Best_Sellers .Product .heart.active {

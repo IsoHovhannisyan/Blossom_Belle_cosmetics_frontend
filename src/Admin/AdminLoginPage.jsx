@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axios';
 import '../css/Admin/AdminLoginPage.css';
@@ -7,18 +7,30 @@ export function AdminLoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate('');
+    const [errorMessage, setErrorMessage] = useState('')
+
+    useEffect(()=> {
+        if(sessionStorage.getItem('token'))
+        navigate('/admin/add/product')
+    }, [])
 
     const performLogin = async (email, password) => {
         try {
-            const response = await axios.post('http://localhost:8000/api/user/login', { email, password });
+            const response = await axios.post('/api/user/login', { email, password });
+
+
+            if(response.data.role != 'admin'){
+                setErrorMessage("Admin with such Email is not found");
+                return
+            }
 
             if (response.status === 200) {
                 const token = response.data.token;
                 sessionStorage.setItem('token', token);
-                navigate('/admin/add/product');
+                navigate('/manager/add/product');
                 console.log(response.status);
             }
-        } catch {
+        } catch(err) {
             alert('Login failed. Please try again.');
         }
     };
@@ -30,16 +42,17 @@ export function AdminLoginPage() {
 
     return (
         <div className="Admin">
-            <div className='Login_title'>Admin Login</div>
+            <div className='Login_title'>Manager Login</div>
             <div className="login-container">
                 <form onSubmit={handleLogin} className='Authorization'>
 
                     <div className='InputBox'>
                         <input 
-                        type="email" 
+                         
                         required='required' 
                         onChange={(e) => setEmail(e.target.value)} /> <span>Email</span>
                     </div>
+                    {errorMessage && <p className="error">{errorMessage}</p>}
 
                     <div className='InputBox'>
                         <input 

@@ -6,6 +6,7 @@ import '../css/Product/ProductById.css';
 import New from "../Images/new_1.png"
 import Best from '../Images/best_seller_1.png'
 import FadeLoader from "react-spinners/FadeLoader";
+import useAuth from '../Auth/useAuth';
 
 export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQuantity, setBasketProductsQuantity }) {
 
@@ -27,35 +28,104 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
     const pathName = path+'Data';
     const navigate = useNavigate();
 
-    let basketQuantity = 1;
-
     useEffect(()=>{
         loadingData();
     },[])
+
+    const isLoggedIn = useAuth();
+
+  const [userId, setUserId] = useState(sessionStorage.getItem('user_id') ? JSON.parse(sessionStorage.getItem('user_id')) : '');
+  const [activeHearts, setActiveHearts] = useState(new Set());
+  const [favorites, setFavorites] = useState('');
+
+  useEffect(() => {
+    const storedActiveHearts = JSON.parse(localStorage.getItem('activeHearts'));
+    if (storedActiveHearts) {
+      setActiveHearts(new Set(storedActiveHearts));
+    }
+    const fetchFavorites = async () => {
+      try {
+        if (isLoggedIn) {
+          const response = await axios.get(`/api/user/${userId}/favorites`);
+          const { favorites } = response.data;
+          setFavorites(favorites);
+          setActiveHearts(new Set(favorites.split(',')));
+          localStorage.setItem('activeHearts', JSON.stringify(favorites)); // Store favorites as string
+        }
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+      }
+    };
+
+    fetchFavorites();
+  }, [isLoggedIn, userId]);
+
+  const handleHeartClick = async (image) => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+  
+    const updatedActiveHearts = new Set(activeHearts);
+    if (updatedActiveHearts.has(image)) {
+      updatedActiveHearts.delete(image);
+    } else {
+      updatedActiveHearts.add(image);
+    }
+    setActiveHearts(updatedActiveHearts);
+    
+    // Convert updated active hearts set to array
+    const updatedFavoritesArray = Array.from(updatedActiveHearts);
+    
+    // Update the user favorites string by joining the array
+    const updatedFavoritesString = updatedFavoritesArray.join(',');
+    setFavorites(updatedFavoritesString);
+    localStorage.setItem('activeHearts', JSON.stringify(updatedFavoritesArray));
+  
+    try {
+      await axios.put(`/api/user/${userId}/favorites`, {
+        favorites: updatedFavoritesString,
+      });
+      console.log('Favorites updated successfully');
+    } catch (error) {
+      console.error('Error updating favorites:', error);
+    }
+  };
+
+  const handleShoppingClick = async (el) => {
+    const modelName = el.path;
+    const image = el.image;
+    let existingProducts = JSON.parse(sessionStorage.getItem('Basket-Products')) || [];
+
+    try {
+        const matchingProducts = existingProducts.filter(product => product.image === image);
+
+        if (matchingProducts.length > 0) {
+            // Update quantity for all matching products
+            matchingProducts.forEach(product => {
+                product.quantityForOrder += 1;
+            });
+        } else {
+            // Fetch products data from the server
+            const productsData = await axios.get(`/api/user/findProductByImage?modelName=${modelName}&image=${image}`);
+            const newProducts = productsData.data.map(product => ({ ...product, quantityForOrder: 1 }));
+            existingProducts.push(...newProducts);
+
+            // Update basket products quantity
+            setBasketProductsQuantity(basketProductsQuantity + newProducts.length);
+        }
+
+        // Update sessionStorage with the updated products
+        sessionStorage.setItem('Basket-Products', JSON.stringify(existingProducts));
+    } catch (error) {
+        // Handle errors
+        console.error('Error handling shopping click:', error);
+        // Optionally, you can provide user feedback about the error.
+    }
+  };
     
     
       async function loadingData() {
-        // const savedData = getSavedDataFromLocalStorage();
-        // if (savedData) {
-        //     setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
-        //     setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
-        //     setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-        //     setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
-        //     setLoading(false);
-        //     setButtonDisabled(false)
-        // }else {
-        //     fetchData()
-        //         .then(data => {
-        //             setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
-        //             setProduct(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el => el.image == productData.data.image)[0])
-        //             setCurrentCategory(savedData[pathName].filter(el => el.lang == currentLanguage).filter(el=> el.category === productData.data.category && el.id !== productData.data.id).slice(0,4));
-        //             setCurrentProductAnotherLang(savedData[pathName].filter(el=> el.image == productData.data.image));
-        //             setButtonDisabled(false)
-        //         })
-        //         .catch(error => {
-        //             console.error("An error occurred while fetching data:", error);
-        //         });
-        // }
 
         try{
             const [
@@ -86,8 +156,6 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        setBasketQuantity( basketQuantity + quantity);
-
         if(sessionStorage.getItem('Basket-Products') != null){
             currentProductAnotherLang[0].quantityForOrder = quantity;
             currentProductAnotherLang[1].quantityForOrder = quantity;
@@ -148,14 +216,12 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
           }
       }
 
-    // setProduct(sessionStorage.getItem('Product-Lang') != null && JSON.parse(sessionStorage.getItem('Product-Lang'))[0]);
-
 
   return (
      showIntrestingProducts ? <div className='Product'>
      <div className='Box'>
          <div className='Image'>
-            <img src={`https://blossom-belle-cosmetics.vercel.app${product?.image}`} alt="" />
+            <img src={`http://localhost:8000/${product?.image}`} alt="" />
             <div className={product?.new ? 'new active': 'new'}>
                 <img src={New} alt="" />
             </div>
@@ -196,8 +262,8 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
              <div className='BoxBtn'>
                  <button className='btn' disabled={buttonDisabled} onClick={handleSubmit}>{productLabel?.[0]?.btn_text}</button>
              </div>
-             <div className='BoxFav'>
-                 <button className='Fav'>{productLabel?.[0]?.basket_text}<i className="fa-regular fa-heart ml-[.5rem]"></i></button>
+             <div className='BoxFav' onClick={() => handleHeartClick(product?.image)}>
+                 <button className={activeHearts.has(product.image) ? ' Fav active ' : 'Fav'} >{productLabel?.[0]?.basket_text}<i className={activeHearts.has(product.image) ? 'fa-solid fa-heart ml-[.5rem] ' : 'fa-regular fa-heart ml-[.5rem]'}></i></button>
              </div>
              
 
@@ -218,12 +284,11 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
      <div className='Products'>
       {
         currentCategory.map((el,index) => <div className={el.sale ? 'Product sale active' : 'Product sale' }  
-        onClick={()=>refreshPage(el?.path, el?.id)} 
         onMouseMove={()=> mouseMoveFunc(index)}
         onMouseLeave={()=> mouseLeaveFunc(index)} 
         key={el.id}
         >
-        <div className='image'>
+        <div className='image' onClick={()=>refreshPage(el?.path, el?.id)} >
           <div className='ImageBackground' id={index}></div>
           <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
           <div className={el.new ? 'new active': 'new'}>
@@ -238,9 +303,15 @@ export function ProductById({setBasketQuantity,setShowQuantity, basketProductsQu
         {
           el.sale ? <div className='Price_discount'><div className='PriceAndPercent'><div className='Price_deleted'>{el.price}֏</div> <div className='Percent_Discount'>{el.sale}%</div></div> <div className='Price_Discounted'>{el.price - el.price * el.sale / 100}֏</div></div>: <div className='price'>{el.price}֏</div>
         }
-        <button className='btn_text' id={index}>{el.btn_text}</button>
-        <div className='shopping' id={index}><i className=" fa-solid fa-bag-shopping"></i></div>
-        <div className='heart' id={index}><i className=" fa-regular fa-heart"></i></div>
+        <button className='btn_text' id={index} onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)}>
+            {el.btn_text}
+          </button>
+          <div className='shopping' id={index}>
+            <i className=' fa-solid fa-bag-shopping' onClick={()=> handleShoppingClick(el)}></i>
+          </div>
+          <div className='heart' id={index} onClick={() => handleHeartClick(el.image)}>
+            <i className={activeHearts.has(el.image) ? ' active fa-solid fa-heart' : 'fa-regular fa-heart'}></i>
+          </div>
       </div>)
       }
     </div>

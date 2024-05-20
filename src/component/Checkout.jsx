@@ -1,7 +1,21 @@
 import React, { useState } from 'react'
 import Visa from "../Images/visa.png"
+import Master from "../Images/MasterCard_Logo.svg.png";
+import Arca from "../Images/Arca.png";
 import axios from '../axios';
-export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, total, checkoutDataArr, toggle, setToggle, allBasketProducts}) {
+export function Checkout({ setMyData, setCheckoutData, setConfirmData, basketProductsCurrentLang, setBasketProductsQuantity, total, checkoutDataArr, toggle, setToggle}) {
+
+    const [nameError, setNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
+    const [emailError, setEmailError] = useState(""); 
+    const [phoneError, setPhoneError] = useState(""); 
+    const [streetError, setStreetError] = useState("");
+    const [regionError, setRegionError] = useState("");
+    
+    const Name_regEx = /^[a-zA-Z]{3,}$/;
+    const LastName_regEx = /^[a-zA-Z]{3,}$/;
+    const Email_regEx = /^[a-zA-Z0-9._%+-]+@(?:mail\.ru|gmail\.com|yahoo\.com|outlook\.com|aol\.com|icloud\.com|protonmail\.com|yandex\.com|zoho\.com|gmx\.com|hotmail\.com|live\.com)$/;
+    const Phone_regEx = /^(?:\+374|0)\d{8}$/;
 
     const BackBasketPage = ()=>{
         setMyData(true);
@@ -11,6 +25,7 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
         sessionStorage.setItem('Checkout_data', JSON.stringify(false));
         sessionStorage.setItem('Confirm_data', JSON.stringify(false));
     }
+
 
     const ChangeBasketPage = async()=>{
         // if(toggle === 1){
@@ -45,6 +60,117 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
         //     // let res = await axios.get(`/api/${allBasketProducts[0].path}/${allBasketProducts[0].id}`)
         //     // console.log(res);
         // }
+
+        const nameInput = document.querySelector('input[name="firstName"]');
+        const lastNameInput = document.querySelector('input[name="lastName"]');
+        const emailInput = document.querySelector('input[name="email"]');
+        const phoneInput = document.querySelector('input[name="phone"]');
+        const streetInput = document.querySelector('input[name="street"]');
+        const regionInput = document.querySelector('input[name="region"]');
+
+        const name = nameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const street = streetInput.value.trim();
+        const region = regionInput.value.trim();
+
+        let hasError = false;
+
+        if(!email){
+            setEmailError(checkoutDataArr?.[24])
+        }else{
+            if (!email.match(Email_regEx)) {
+                setEmailError(checkoutDataArr?.[20]);
+                hasError = true;
+            } else {
+                setEmailError("");
+            }
+        }
+
+        if(!name){
+            setNameError(checkoutDataArr?.[24])
+        }else{
+            if (!name.match(Name_regEx)) {
+                setNameError(checkoutDataArr?.[21]);
+                hasError = true;
+            } else {
+                setNameError("");
+            }
+        }
+
+        if(!lastName){
+            setLastNameError(checkoutDataArr?.[24])
+        }else{
+            if (!lastName.match(LastName_regEx)) {
+                setLastNameError(checkoutDataArr?.[22]);
+                hasError = true;
+            } else {
+                setLastNameError("");
+            }
+        }
+
+        if (!street) {
+            setStreetError(checkoutDataArr?.[24]);
+            hasError = true;
+        } else {
+            setPhoneError("");
+        }
+
+        if (!region) {
+            setRegionError(checkoutDataArr?.[24]);
+            hasError = true;
+        } else {
+            setPhoneError("");
+        }
+
+        if(!phone){
+            setPhoneError(checkoutDataArr?.[24]);
+        }else{
+            if (!phone.match(Phone_regEx)) {
+                setPhoneError(checkoutDataArr?.[23]);
+                hasError = true;
+            } else {
+                setPhoneError("");
+            }
+        }
+
+        if(hasError){
+            window.scroll({
+                top: 350,
+                left: 0,
+                behavior: 'smooth' // You can use 'smooth' for smooth scrolling or 'auto' for instant scrolling
+              });
+            return 
+        }
+
+        if(toggle === 1){
+            let path = [];
+            let arr = basketProductsCurrentLang.map(el => {
+                path.push(el.path);
+                return {
+                    image: el.image,
+                    quantity: el.quantity - el.quantityForOrder
+                }
+            });
+            try{
+                const response = await axios.post('/api/purchases/add', { 
+                    products: basketProductsCurrentLang 
+                });
+
+                for(let i = 0; i<arr.length; i++){
+                    await axios.put(`/api/${path[i]}/editforuser`, arr[i])
+                }
+
+                
+            }catch(err){
+                console.log(err.response);
+            }
+
+            sessionStorage.clear();
+            setBasketProductsQuantity(0);
+        }
+
         setMyData(false);
         setCheckoutData(false)
         setConfirmData(true);
@@ -52,6 +178,7 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
         sessionStorage.setItem('Checkout_data', JSON.stringify(false));
         sessionStorage.setItem('Confirm_data', JSON.stringify(true));
         sessionStorage.setItem('Toggle', JSON.stringify(toggle));
+
     }
 
   return (
@@ -64,27 +191,33 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
             </div>
             <div className='Data'>
                 <div className='InputBox'>
-                    <input type="text" required='required' /> <span>{checkoutDataArr?.[2]}*</span>
+                    <input type="text" name="email" required='required' /> <span>{checkoutDataArr?.[2]}</span>
+                    {emailError && <p className="error">{emailError}</p>}
+                </div>  
+                <div className='InputBox'>
+                    <input type="text" name="firstName" required='required' /> <span>{checkoutDataArr?.[3]}</span>
+                    {nameError && <p className="error">{nameError}</p>}
                 </div>
                 <div className='InputBox'>
-                    <input type="text" required='required' /> <span>{checkoutDataArr?.[3]}</span>
+                    <input type="text" name="lastName" required='required' /> <span>{checkoutDataArr?.[4]}</span>
+                    {lastNameError && <p className="error">{lastNameError}</p>}
                 </div>
                 <div className='InputBox'>
-                    <input type="text" required='required' /> <span>{checkoutDataArr?.[4]}</span>
+                    <input type="text" name="street" required='required' /> <span>{checkoutDataArr?.[5]}</span>
+                    {streetError && <p className="error">{streetError}</p>}
                 </div>
                 <div className='InputBox'>
-                    <input type="text" required='required' /> <span>{checkoutDataArr?.[5]}</span>
+                    <input type="text" name="region" required='required' /> <span>{checkoutDataArr?.[6]}</span>
+                    {regionError && <p className="error">{regionError}</p>}
                 </div>
                 <div className='InputBox'>
-                    <input type="text" required='required' /> <span>{checkoutDataArr?.[6]}</span>
+                    <input type="text" name='phone' required='required' /> <span>{checkoutDataArr?.[7]}</span>
+                    {phoneError && <p className="error">{phoneError}</p>}
                 </div>
-                <div className='InputBox'>
-                    <input type="number" required='required' /> <span>{checkoutDataArr?.[7]}</span>
-                </div>
-                <div className='CommentBox'>
+                {/*   */}
                     {/* <input type="number" required='required' className='Comment' /> <span>{checkoutDataArr?.[8]}</span> */}
-                    <textarea required='required'></textarea> <span>{checkoutDataArr?.[8]}</span>
-                </div>
+                    {/* <textarea required='required'></textarea> <span>{checkoutDataArr?.[8]}</span>
+                </div> */}
             </div>
 
             <div className='Payment_method'>
@@ -97,6 +230,12 @@ export function Checkout({basketLabel, setMyData, setCheckoutData, setConfirmDat
                     </div>
                     <div className={toggle === 2 ? 'Payment_image active': 'Payment_image'} onClick={()=>setToggle(2)}>
                         <img src={Visa} alt="" />
+                    </div>
+                    <div className={toggle === 2 ? 'Payment_image active': 'Payment_image'} onClick={()=>setToggle(2)}>
+                        <img src={Master} alt="" />
+                    </div>
+                    <div className={toggle === 2 ? 'Payment_image active': 'Payment_image'} onClick={()=>setToggle(2)}>
+                        <img src={Arca} alt="" />
                     </div>
                 </div>
                 

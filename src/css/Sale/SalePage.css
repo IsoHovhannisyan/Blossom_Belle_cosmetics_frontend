@@ -181,6 +181,7 @@
     bottom: 1rem;
     font-size: 1.3rem;
     transition: .7s;
+    cursor: pointer;
 }
 
 .Sale .Product .heart {
@@ -211,6 +212,7 @@
     right:2rem;
     font-size: 1.3rem;
     transition: .7s;
+    cursor: pointer;
 }
 
 .Sale .Product .heart.active {
@@ -219,6 +221,10 @@
     transition: .6s;
     cursor: pointer;
 }
+
+.Products .Product .Price_discount .PriceAndPercent .Price_deleted {
+    text-decoration:line-through 2px;
+  }
 
 
 
@@ -310,4 +316,10 @@
 .SaleEmpty .SaleBox .BtnBox .Btn:hover{
     background-color: rgb(55, 55, 55);
     transition: .3s;
+}
+
+@media (max-width: 1550px){
+    .Sale .Product{
+        width: 23%;
+    }
 }

@@ -29,6 +29,7 @@ import { AdminAddProductsPage } from './Admin/AdminAddProductsPage'
 import { AdminEditProductPage} from './Admin/AdminEditProductPage'
 import axios from './axios'
 import FadeLoader from "react-spinners/FadeLoader"
+import FavoritesPage from './Pages.jsx/FavoritesPage'
 
 export function App() {
 
@@ -42,6 +43,11 @@ export function App() {
   const [show,setShow] = useState(sessionStorage.getItem('show') ? JSON.parse(sessionStorage.getItem('show')): false)
   const [loading, setLoading] = useState(true);
 
+  useEffect(()=>{
+    setBasketProductsQuantity(JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length || '0');
+  },[basketProductsQuantity])
+
+  
   useEffect(async() => {
     
       if(show == false){
@@ -67,6 +73,7 @@ export function App() {
       setLoading(false);
       setShow(true)
       // setFooter(savedData.footer);
+      
     }
       
   }, [currentLanguage]);
@@ -82,25 +89,26 @@ export function App() {
         <Routes >
           <Route path='/login' element={<LoginPage currentLanguage={currentLanguage} />} />
           <Route path='/register' element={<RegisterPage currentLanguage={currentLanguage}  />} />
-          <Route path='/'  element={<HomePage show={show} setShow={setShow}/>}/>
-          <Route path='/new' element={<NewPage/>} />
-          <Route path='/makeup'  element={<MakeupPage />} />
-          <Route path='/hair'  element={< HairPage />} />
+          <Route path='/'  element={<HomePage show={show} setShow={setShow} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>}/>
+          <Route path='/new' element={<NewPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>} />
+          <Route path='/makeup'  element={<MakeupPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>} />
+          <Route path='/hair'  element={< HairPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />} />
 
-          <Route path='/gifts'  element={< GiftsPage />}/>
-          <Route path='/sale'  element={< SalePage />}/>
-          <Route path='/skincare'  element={< SkincarePage/>} />
-          <Route path='/brushes'  element={< BrushPage/>} />
+          <Route path='/gifts'  element={< GiftsPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}/>
+          <Route path='/sale'  element={< SalePage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}/>
+          <Route path='/skincare'  element={< SkincarePage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>} />
+          <Route path='/brushes'  element={< BrushPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>} />
 
+          <Route path='/favorites' element={<FavoritesPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />} />
           <Route path='/basket' element={<BasketPage basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />} />
-          <Route path='/product' element={< ProductById basketQuantity={basketQuantity} setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} showQuantity={showQuantity} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}  />
+          <Route path='/product' element={< ProductById setBasketQuantity={setBasketQuantity} setShowQuantity={setShowQuantity} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}  />
 
           <Route path='/aboutus' element={<AboutUsPage About_Us={footer?.[0]?.about_us?.split('///')}/>} />
           <Route path='/delivery' element={<DeliveryPage Delivery_Heading={footer?.[0]?.delivery_heading?.split(', ')} Delivery={footer?.[0]?.delivery?.split('///')} />}/>
           <Route path='/help' element={< HelpPage helpHeading={footer?.[0]?.help_heading?.split(', ')} help={footer?.[0]?.help?.split('///')}/>} />
           
-          <Route path='/admin'  element={< AdminLoginPage />}/>
-          <Route path='/admin/add/product' element={<AdminAddProductsPage />} />
+          <Route path='/manager'  element={< AdminLoginPage />}/>
+          <Route path='/manager/add/product' element={<AdminAddProductsPage />} />
           <Route path='/admin/edit/product'  element={< AdminEditProductPage />}/>
           
         </Routes>

@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../../Auth/useAuth';
+import axios from '../../axios';
 
 export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors, categoriesForSelectors, setAssortment ,assortments, categories,setCategory, formData,setFormData}) {
 
@@ -8,7 +11,7 @@ export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors
 
     const handleCategories = ['face','eye','cheeks','lips','mouisturizers','Cleansers','masks','sunscreens', 'Eye Brushes', 'Lip Brushes', 'Face Brushes', 'Cheek Brushes','shampoos', 'conditioners','Hair Oils', 'Hair Masks'];
     let handleCategoriesforSearch = handleCategories?.map((el,index) => {
-        return obj[el] = categoriesForSelectors[index];
+            return obj[el] = categoriesForSelectors[index];
     })
 
     console.log(obj);
@@ -71,18 +74,6 @@ export function Selector({setPercent, navbarForSelectors, navbarSaleForSelectors
                 sortedCategories.map((el,index)=> <option value={el}>{obj[el]}</option>)
             }
         </select>
-
-        {/* <div className='Selector'>
-            
-            <div onClick={(e)=> console.log(e.target.id)} id={formData.category}> {formData.category}</div>
-
-            <ul>
-                {
-                    sortedNavbar?.map(el => <li onClick={(e)=> onSelectAssortment(e.target.id)} id={el}>{el}</li>)
-                }
-                
-            </ul>
-        </div> */}
         
     </div>
         

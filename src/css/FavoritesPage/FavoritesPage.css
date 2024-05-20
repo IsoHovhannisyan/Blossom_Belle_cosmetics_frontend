@@ -1,0 +1,15 @@
+.Favorites .Title {
+    border-top: solid rgb(226, 223, 223) 2px;
+    padding: 1.5rem;
+    width: 100%;
+    font-size: 1.8rem;
+    letter-spacing: .3rem;
+    border-bottom: solid rgb(226, 223, 223) 2px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.Favorites .Products .Product {
+    width: 18.7%;
+}

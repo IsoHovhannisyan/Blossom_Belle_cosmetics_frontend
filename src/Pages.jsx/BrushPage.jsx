@@ -9,7 +9,7 @@ import '../css/Brushes/Brushes.css';
 import axios from '../axios';
 
 
-export function BrushPage() {
+export function BrushPage({basketProductsQuantity, setBasketProductsQuantity}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [brush, setBrush] = useState([]);
@@ -54,10 +54,10 @@ export function BrushPage() {
       </div>
 
       <div className='Products_Box'>
-        <div className={toggle === 1 ? "box show": 'box'}> {< EyeBrushes brush={brush}/>}</div>
-        <div className={toggle === 2 ? "box show": 'box'}> {< LipBrushes brush={brush} />}</div>
-        <div className={toggle === 3 ? "box show": 'box'}> {< FaceBrushes brush={brush} />}</div>
-        <div className={toggle === 4 ? "box show": 'box'}> {< CheekBrushes brush={brush} />}</div>
+        <div className={toggle === 1 ? "box show": 'box'}> {< EyeBrushes brush={brush} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>}</div>
+        <div className={toggle === 2 ? "box show": 'box'}> {< LipBrushes brush={brush} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 3 ? "box show": 'box'}> {< FaceBrushes brush={brush} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 4 ? "box show": 'box'}> {< CheekBrushes brush={brush} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
       </div>
     </div>:
     <div className='FadeLoader'>

@@ -38,23 +38,6 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
     },[]) 
     
       async function loadingData() {
-    
-        // const savedData = getSavedDataFromLocalStorage();
-        // if (savedData) {
-        //     setBasketLabel(savedData.BasketLabelData.filter(el => el.lang == currentLanguage));
-        //     setCheckoutDataArr(savedData.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
-        //     setProductLabel(savedData.ProductLabelData.filter(el => el.lang == currentLanguage));
-        // }else {
-        //     fetchData()
-        //         .then(data => {
-        //             setBasketLabel(data.BasketLabelData.filter(el => el.lang == currentLanguage));
-        //             setCheckoutDataArr(data.BasketLabelData.filter(el => el.lang == currentLanguage)[0].checkout_data.split(',  '));
-        //             setProductLabel(data.ProductLabelData.filter(el => el.lang == currentLanguage));
-        //         })
-        //         .catch(error => {
-        //             console.error("An error occurred while fetching data:", error);
-        //         });
-        // }
         try{
             const [
                 basketLabelData,
@@ -264,9 +247,9 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                     </div>
                     }
 
-                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} total={total} checkoutDataArr={checkoutDataArr} toggle={toggle} setToggle={setToggle} allBasketProducts={allBasketProducts} />}
+                    {checkoutData && <Checkout basketLabel={basketLabel} setMyData={setMyData} setCheckoutData={setCheckoutData} setConfirmData={setConfirmData} basketProductsCurrentLang={basketProductsCurrentLang} setBasketProductsQuantity={setBasketProductsQuantity} total={total} checkoutDataArr={checkoutDataArr} toggle={toggle} setToggle={setToggle} allBasketProducts={allBasketProducts} />}
 
-                    {confirmData && <Payment toggle={toggle} payment={basketLabel?.[0]?.payment?.split(', ')}/> }
+                    {confirmData && <Payment toggle={toggle} payment={basketLabel?.[0]?.payment?.split(', ')} basketProductsCurrentLang={basketProductsCurrentLang} setBasketProductsQuantity={setBasketProductsQuantity}/> }
 
                 </div>
                 

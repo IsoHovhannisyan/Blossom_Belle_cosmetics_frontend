@@ -71,7 +71,7 @@ export default function Slider(props) {
         >
             {
                 props.slider.map(el => <div className=' image' key={el.id}>
-                    <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} alt="" />
+                    <img src={`http://localhost:8000/${el.image}`} alt="" />
                 </div>)
             }
             

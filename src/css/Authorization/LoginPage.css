@@ -104,6 +104,7 @@
     width: 35%;
     left: 0;
 }
+  
 
 /* .Login .LoginBox .Authorization .Register_text a{
     width: 20%;
@@ -122,6 +123,68 @@
     font-family: cursive;
     color: #a0a0a0;
 }
+
+
+
+
+
+
+/* /////////////////////////////// changed password //////////////////////////////*/
+
+
+.Changed_Password{
+    width: 90%;
+    margin: 2rem;
+}
+
+.Changed_Password .Check_Box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Changed_Password .Check_Box .Check_Box_I{
+    padding: .7rem 1rem;
+    border: solid 3px green;
+    border-radius: 50%;
+    color: green;
+    font-size: 1.5rem;
+}
+
+.Changed_Password .Changed_Password_Text{
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.Changed_Password .Changed_Password_Btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Changed_Password .Changed_Password_Btn button{
+    font-size: 1.2rem;
+    margin: .5rem 0;
+    padding: 1rem 3rem;
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    transition: .3s;
+    cursor: pointer;
+    width: 300px;
+    text-transform: uppercase;
+}
+
+.Payment_Delivery .Changed_Password_Btn button:hover{
+    background-color: rgb(55, 55, 55);
+    transition: .3s;
+}
+
+
+
 
 @media (max-width: 1600px) {
     .Login .InputBox input{

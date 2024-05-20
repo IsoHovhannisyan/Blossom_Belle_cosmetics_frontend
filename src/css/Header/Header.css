@@ -155,10 +155,6 @@
     border-radius: 2rem;
 }
 
-
-
-
-
 .Header .BlossomBelle  .Blossom_text.active {
     top: 0;
     transition: .2s;
@@ -244,4 +240,69 @@
 } */
 
 
-
+/* Media queries for screens up to 1450px wide */
+/* Media queries for screens up to 1450px wide */
+@media (max-width: 1450px) {
+    .Header {
+      padding: 2rem; /* Adjusted padding for smaller screens */
+    }
+  
+    .Header .HeaderTop {
+      padding: 0 8rem; /* Adjusted padding for smaller screens */
+    }
+  
+    .Header .HeaderTop .HeaderLeft,
+    .Header .HeaderTop .HeaderRight {
+      font-size: 1.3rem; /* Decreased font size for header elements */
+    }
+  
+    .Header .BlossomBelle .AboutDelivery {
+      margin-top: 3rem; /* Adjusted margin for smaller screens */
+    }
+  
+    .Header .BlossomBelle .Blossom_text {
+      top: 5rem; /* Adjusted top position for smaller screens */
+      font-size: 1.3rem; /* Decreased font size for the Blossom text */
+    }
+  
+    .Header .BlossomBelle .Blossom_text.active {
+      top: 0; /* Position active Blossom text at the very top */
+      min-height: 2.5rem; /* Minimum height for active Blossom text */
+    }
+  
+    .Header .BlossomBelle .Blossom_text .BlossomLogo {
+      height: 4rem; /* Adjusted height for the Blossom logo */
+      width: 14rem; /* Adjusted width for the Blossom logo */
+    }
+  
+    .Header .BlossomBelle .Blossom_text.active .BlossomLogo {
+      height: 3rem; /* Adjusted height for active Blossom logo */
+      width: 11rem; /* Adjusted width for active Blossom logo */
+    }
+  
+    .HeaderNavbar {
+      margin: 1rem 0; /* Adjusted margin for smaller screens */
+      padding: 1rem 2rem; /* Adjusted padding for smaller screens */
+    }
+  
+    .HeaderNavbar .Link {
+      margin-left: 1rem; /* Adjusted margin for the header links */
+      font-size: 1.1rem; /* Decreased font size for header links */
+    }
+  
+    .Header .BlossomBelle .AboutDelivery {
+      margin-top: 3rem; /* Keep AboutDelivery in its position */
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  

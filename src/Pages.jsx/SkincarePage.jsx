@@ -10,7 +10,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import axios from '../axios';
 
 
-export function SkincarePage() {
+export function SkincarePage( {basketProductsQuantity, setBasketProductsQuantity}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
@@ -71,10 +71,10 @@ export function SkincarePage() {
       </div>
 
       <div className='Products_Box'>
-        <div className={toggle === 1 ? "box show": 'box'}> {< Mouisturizers skincare={skincare}/>}</div>
-        <div className={toggle === 2 ? "box show": 'box'}> {<Cleansers skincare={skincare}/>}</div>
-        <div className={toggle === 3 ? "box show": 'box'}> {<Masks skincare={skincare} />}</div>
-        <div className={toggle === 4 ? "box show": 'box'}> {<Sunscreen skincare={skincare} />}</div>
+        <div className={toggle === 1 ? "box show": 'box'}> {< Mouisturizers skincare={skincare} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>}</div>
+        <div className={toggle === 2 ? "box show": 'box'}> {<Cleansers skincare={skincare} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>}</div>
+        <div className={toggle === 3 ? "box show": 'box'}> {<Masks skincare={skincare} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 4 ? "box show": 'box'}> {<Sunscreen skincare={skincare} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
       </div>
     </div>:
     <div className='FadeLoader'>

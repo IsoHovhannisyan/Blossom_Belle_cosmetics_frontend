@@ -37,8 +37,8 @@ body{
 
 .App{
   width: 1700px;
-  min-width: 1000px;
-  padding: 0 5rem 5rem 5rem;
+  /* min-width: 1000px; */
+  padding: 0 1% 5rem 1%;
 }
 
 
@@ -59,6 +59,17 @@ body{
     text-align: center;
     font-weight: 500;
  }
+
+
+ /* ////////////////////////////////////////// INPUT ERROR /////////////////////////////*/
+
+
+ .error {
+  color: red;
+  margin-top: .3rem;
+  margin-bottom: 1rem;
+}
+
 
 
  /* ///////////////////////////////////////// fetching Products ////////////////////////////// */
@@ -131,15 +142,17 @@ body{
 }
 
 .Products_Div .Products_Categories{
-  width: 24%;
+  min-width: 350px;
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: 5rem;
 }
 
 .Products_Div .Products_Categories .Products_Categories_Box .LinkDiv{
   transition: .3s;
   cursor: pointer;
-  letter-spacing: .2rem;
+  letter-spacing: .15rem;
 }
 
 .Products_Div .Products_Categories .Products_Categories_Box .LinkDiv:hover{
@@ -379,6 +392,7 @@ body{
   right:2rem;
   font-size: 1.3rem;
   transition: .7s;
+  cursor: pointer;
 }
 
 .Products .Product .heart.active {
@@ -388,77 +402,198 @@ body{
   cursor: pointer;
 }
 
-/* //////////////////////////////////// bestSellerrs ////////////////////////////// */
-
-
-/* .bestsellers .image{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  gap: 1rem;
+.Products .Product .heart.active .active{
+  color: red;
+  transition: .3s;
 }
 
-.bestsellers .img3{
-  width: 30%;
-  position: relative;
-}
-.bestsellers .image .img3 img{
-  width: 100%;
-} */
-
-/* //////////////////////////////// limited Edition////////////////////////// */
-
-/* .limitedEdition {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+@media (max-width: 1740px){
+  .App{
+    width: 1600px;
+  }
 }
 
-.limitedEdition .box{
-  position: relative;
+@media (max-width: 1640px){
+  .App{
+    width: 1500px;
+  }
 }
 
-.limitedEdition .box img{
-  width: 100%;
-} */
-
-
-/* /////////////////////////////// your skin //////////////////////////////// */
-
-
-/* .yourskin {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 10px gray;
-  border-radius: .5rem;
+@media (max-width: 1540px){
+  .App{
+    width: 95%;
+  }
 }
 
-.yourskin .image {
-  width: 50%;
+
+@media (max-width: 1440px){
+  .App{
+    padding: 0 .5% 5rem .5%;
+  }
+
+  .Products{
+    gap: 10px;
+    border-bottom: none;
+  }
+
+  .Products .Product{
+    height: 290px;
+  }
+
+  .Products .Product .image .new{
+
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .Products .Product .image .best{
+
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .Products .Product .image{
+    height: 150px;
+  }
+  .Products .Product .title{
+    font-size: .9rem;
+  }
 }
 
-.yourskin .image img{
-  width: 100%;
-  border-radius: .5rem;
+@media (max-width: 1250px){
+
+  .Products .Product{
+    height: 310px;
+    width: 31%;
+    padding: 1.5rem;
+  }
+  .Products .Product .image{
+    height: 170px;
+  }
+  .Products .Product .title{
+    font-size: 1rem;
+  }
 }
 
-.yourskin .content {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  border-radius: .5rem;
-
+@media (max-width: 1150px){
+  .Products .Product{
+    height: 300px;
+    width: 31%;
+    padding: 1.2rem;
+  }
 }
 
-.yourskin .content h3{
-  font-size: 2.5rem;
+@media (max-width: 1060px){
+  .App{
+    width: 900px;
+  }
+  .Products .Product{
+    height: 300px;
+    width: 48%;
+    /* padding: 2rem; */
+  }
+
+  .Products .Product .Price_discount .PriceAndPercent .Price_deleted {
+    font-size: .9rem;
+  }
+  
+  .Products .Product .Price_discount .PriceAndPercent .Percent_Discount {
+    font-size: .9rem;
+  }
 }
 
-.yourskin .content h4{
-  font-size: 1.5rem;
-} */
+@media (max-width: 960px) {
+  .Products .Product {
+    width: 48%; /* Adjusted width for better layout on smaller screens */
+  }
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 768px) {
+  .Products .Product {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Softer box shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff; /* Keep the background color white */
+  }
+
+  .Products .Product:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Slightly lifted on hover */
+  }
+
+  .Products .Product .image {
+    height: 180px; /* Decreased image height */
+    object-fit: cover;
+    border-radius: 0.8rem; /* Slightly rounded corners */
+  }
+
+  .Products .Product .brandName {
+    font-size: 0.9rem; /* Decreased brand name font size */
+  }
+
+  .Products .Product .price,
+  .Products .Product .Price_discount .Price_Discounted,
+  .Products .Product .btn_text,
+  .Products .Product .shopping,
+  .Products .Product .heart {
+    font-size: 0.9rem; /* Adjusted font size for various elements */
+  }
+}
+
+@media (max-width: 576px) {
+  .Products_Div {
+    flex-direction: column; /* Stack products categories and products vertically */
+    align-items: center; /* Center-align items horizontally */
+  }
+
+  .Products_Div .Products_Categories {
+    position: static; /* Remove sticky position for categories */
+    margin-bottom: 2rem; /* Add space between categories and products */
+    display: flex; /* Ensure categories are displayed as flex items */
+    justify-content: center; /* Center-align categories horizontally */
+    width: 100%; /* Ensure categories take up full width */
+    overflow-x: auto; /* Add horizontal scroll when categories overflow */
+    white-space: nowrap; /* Prevent categories from wrapping */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS devices */
+  }
+
+  .Products_Div .Products_Categories .Products_Categories_Box {
+    flex-shrink: 0; /* Prevent categories from shrinking */
+    margin-right: 10px; /* Add space between categories */
+  }
+
+  .Products .Product {
+    width: 100%; /* Adjusted width for better layout on smaller screens */
+  }
+
+  .Products .Product .image {
+    height: 150px; /* Decreased image height */
+    max-width: 100%; /* Ensure images don't exceed container width */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 0.8rem; /* Slightly rounded corners */
+  }
+
+  .Products .Product .title {
+    font-size: 1rem; /* Increased title font size */
+    margin-bottom: 0.5rem; /* Adjusted bottom margin */
+  }
+
+  .Products .Product .brandName {
+    font-size: 0.9rem; /* Increased brand name font size */
+  }
+
+  .Products .Product .price,
+  .Products .Product .Price_discount .Price_Discounted,
+  .Products .Product .btn_text,
+  .Products .Product .shopping,
+  .Products .Product .heart {
+    font-size: 0.9rem; /* Adjusted font size for better readability on smaller screens */
+  }
+}
+
+
+
+
+
+
+
+

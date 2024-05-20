@@ -1,47 +1,58 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import New from '../../Images/new_1.png';
-import Best from '../../Images/best_seller_1.png';
-import useAuth from '../../Auth/useAuth';
-import axios from '../../axios';
+import New from '../Images/new_1.png';
+import Best from '../Images/best_seller_1.png';
+import useAuth from '../Auth/useAuth';
+import axios from '../axios';
+import "../css/FavoritesPage/FavoritesPage.css";
+import FadeLoader from "react-spinners/FadeLoader";
 
-export function NewGifts({gift, basketProductsQuantity, setBasketProductsQuantity}) {
-  const Gift = gift.filter(el=> el.new == 'true');
+export default function FavoritesPage({ basketProductsQuantity, setBasketProductsQuantity }) {
+  const [loading, setLoading] = useState(true);
+  const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+  const [fav, setFav] = useState([]);
+  const [favLabel,setFavLabel] = useState([]);
+  console.log(favLabel);
+
   const isLoggedIn = useAuth();
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState(sessionStorage.getItem('user_id') ? JSON.parse(sessionStorage.getItem('user_id')) : '');
   const [activeHearts, setActiveHearts] = useState(new Set());
-  const [favorites, setFavorites] = useState('');
 
   useEffect(() => {
-    const storedActiveHearts = JSON.parse(localStorage.getItem('activeHearts'));
-    if (storedActiveHearts) {
-      setActiveHearts(new Set(storedActiveHearts));
+    let res = sessionStorage.getItem('user_token');
+    if (!res) {
+      navigate('/login');
+      return;
     }
-    const fetchFavorites = async () => {
-      try {
-        if (isLoggedIn) {
-          const response = await axios.get(`/api/user/${userId}/favorites`);
-          const { favorites } = response.data;
-          setFavorites(favorites);
-          setActiveHearts(new Set(favorites.split(',')));
-          localStorage.setItem('activeHearts', JSON.stringify(favorites)); // Store favorites as string
-        }
-      } catch (error) {
-        console.error('Error fetching favorites:', error);
-      }
-    };
-
-    fetchFavorites();
+    fetchFavorites()
   }, [isLoggedIn, userId]);
+
+  const fetchFavorites = async () => {
+    setLoading(true);
+    try {
+        const [authLabelData] = await Promise.all([
+          axios.get(`/api/auth?lang=${currentLanguage}`),
+        ])
+        const response = await axios.get(`/api/user/${userId}/favorites`);
+        const { favorites } = response.data;
+        setActiveHearts(new Set(favorites.split(',')));
+        processFavoritesString(favorites.split(',')).then(data=> {
+          setLoading(false);
+        });
+        setFavLabel(authLabelData.data?.[0]?.votes.split(',  '));
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+    }
+  };
 
   const handleHeartClick = async (image) => {
     if (!isLoggedIn) {
       navigate('/login');
       return;
     }
-  
+
     const updatedActiveHearts = new Set(activeHearts);
     if (updatedActiveHearts.has(image)) {
       updatedActiveHearts.delete(image);
@@ -49,20 +60,16 @@ export function NewGifts({gift, basketProductsQuantity, setBasketProductsQuantit
       updatedActiveHearts.add(image);
     }
     setActiveHearts(updatedActiveHearts);
-    
-    // Convert updated active hearts set to array
+
     const updatedFavoritesArray = Array.from(updatedActiveHearts);
-    
-    // Update the user favorites string by joining the array
     const updatedFavoritesString = updatedFavoritesArray.join(',');
-    setFavorites(updatedFavoritesString);
-    localStorage.setItem('activeHearts', JSON.stringify(updatedFavoritesArray));
-  
+
     try {
       await axios.put(`/api/user/${userId}/favorites`, {
         favorites: updatedFavoritesString,
       });
       console.log('Favorites updated successfully');
+      processFavoritesString(updatedFavoritesArray); // Process updated favorites and update the fav state
     } catch (error) {
       console.error('Error updating favorites:', error);
     }
@@ -100,7 +107,42 @@ export function NewGifts({gift, basketProductsQuantity, setBasketProductsQuantit
     }
 };
   
-  
+
+  const processFavoritesString = async (favoritesArray) => {
+    const keywords = ['makeup', 'gift', 'brush', 'hair', 'skincare'];
+    let tempFav = [];
+
+    if (favoritesArray) {
+      for (const filePath of favoritesArray) {
+        const containsKeyword = keywords.some(keyword => filePath.includes(keyword));
+        if (containsKeyword) {
+          let endpoint = '';
+          if (filePath.includes('makeup')) {
+            endpoint = '/api/makeup/';
+          } else if (filePath.includes('gift')) {
+            endpoint = '/api/gift/';
+          } else if (filePath.includes('brush')) {
+            endpoint = '/api/brush/';
+          } else if (filePath.includes('hair')) {
+            endpoint = '/api/hair/';
+          } else if (filePath.includes('skincare')) {
+            endpoint = '/api/skincare/';
+          }
+
+          try {
+            const response = await axios.get(`${endpoint}?imagePath=${filePath}`);
+            const productData = response.data;
+            tempFav.push(...productData);
+          } catch (error) {
+            console.error('Error fetching product data:', error);
+          }
+        }
+      }
+    }
+
+    const filteredFav = tempFav.flatMap(product => product.lang === 'en' ? [product] : []);
+    setFav(filteredFav);
+  };
 
   const mouseMoveFunc = (index) => {
     if (index > 9) {
@@ -135,8 +177,14 @@ export function NewGifts({gift, basketProductsQuantity, setBasketProductsQuantit
   };
 
   return (
-    <div className='Products'>
-      {Gift.map((el, index) => (
+    fav !== null && fav !== undefined && fav != false? !loading ? <div className='Favorites'>
+
+      <div className='Title'>
+        {favLabel?.[0]}
+      </div>
+
+      <div className='Products'>
+      {fav?.map((el, index) => (
         <div
           className={el.sale ? 'Product active' : 'Product'}
           onMouseMove={() => mouseMoveFunc(index)}
@@ -177,5 +225,48 @@ export function NewGifts({gift, basketProductsQuantity, setBasketProductsQuantit
         </div>
       ))}
     </div>
-  );
+    </div>:
+    <div className='FadeLoader'>
+    <FadeLoader
+          color='#006699'
+          loading={loading}
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+    </div>:
+    !loading ? <div className='BasketEmpty'>
+    <div className='Basket'>
+        <div className='Title'>
+            <h2>{favLabel?.[0]}</h2>
+        </div>
+        <div className='QtyBox'>
+            <div className='Quantity'>
+                <h2>0</h2>
+            </div>
+        </div>
+        
+        <div className='Text'>
+            <h3>{favLabel?.[1]}</h3>
+        </div>
+        <div className='BtnBox'>
+            <div className='Btn' onClick={() => navigate('/')} >
+                <button>{favLabel?.[2]}</button>
+            </div>
+        </div>
+        
+    </div>
+</div>:<div className='FadeLoader'>
+    <FadeLoader
+        color='#006699'
+        loading={loading}
+        size={100}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+        />
+</div>
+  )
 }
+
+
+

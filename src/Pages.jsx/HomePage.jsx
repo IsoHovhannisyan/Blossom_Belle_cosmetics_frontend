@@ -8,7 +8,7 @@ import '../css/HomePage/HomePage.css'
 import axios from '../axios';
 import FadeLoader from "react-spinners/FadeLoader";
 
-export function HomePage({show, setShow}) {
+export function HomePage({show, setShow, basketProductsQuantity, setBasketProductsQuantity}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [homePageLabel, setHomePageLabel] = useState([]);
@@ -29,23 +29,6 @@ export function HomePage({show, setShow}) {
 
 
   async function loadingData() {
-
-  //   const savedData = getSavedDataFromLocalStorage();
-  //   if (savedData) {
-  //     setHomePageLabel(savedData.homeLabelData.filter(el => el.lang == currentLanguage)[0].label.split(', '));
-  //     setSlider(savedData.sliderData.filter(el => el.lang == currentLanguage));
-  //     setAllProducts([...savedData.makeupData,...savedData.skincareData,...savedData.brushData,...savedData.hairData ]);
-  // }
-  // else{
-  //   fetchData()
-  //         .then(data => {
-  //             setSlider(data.sliderData.filter(el => el.lang == currentLanguage));
-  //             setAllProducts([...data.makeupData,...data.skincareData,...data.brushData,...data.hairData ]);
-  //         })
-  //         .catch(error => {
-  //             console.error("An error occurred while fetching data:", error);
-  //         });
-  //       }
 
         try{
           const [
@@ -83,17 +66,15 @@ export function HomePage({show, setShow}) {
       
           <h2 className='heading'>{homePageLabel?.[0]}</h2>
 
-          <div className='bestsellers'>
-            {<BestSellers bestSellers={bestSellers} />}
+          <div className=''>
+            {<BestSellers bestSellers={bestSellers} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}
           </div>
 
-          <h2 className='heading'>{homePageLabel?.[1]}</h2>
+          <h2 className='heading mt-[-9rem] mb-[9rem]'>{homePageLabel?.[1]}</h2>
 
-          <div className='newproducts'>
-            {<NewProducts newProducts={newProducts} indexForNewProducts={indexForNewProducts} />}
+          <div className='mt-[-7rem]'>
+            {<NewProducts newProducts={newProducts} indexForNewProducts={indexForNewProducts} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}
           </div>
-
-          <h2 className='heading'>{homePageLabel?.[2]}</h2>
         </div>
       </div>
         <div>

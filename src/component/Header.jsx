@@ -69,54 +69,69 @@ export function getSavedDataFromLocalStorage() {
 }
 
 export function Header({navbar, basketProductsQuantity}) {
-
     
     const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
+    const navigate = useNavigate();
+
+    const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('user_token') || null);
+    const [userName, setUserName] = useState( sessionStorage.getItem('user_name') ? JSON.parse(sessionStorage.getItem('user_name')): null)
 
     const [scrollDown, setScrollDown] = useState(false);
     const [showNavBar, setShowNavBar] = useState(false);
-    useState(()=>{
-        basketProductsQuantity = JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length;
-    },[basketProductsQuantity])
+    // useEffect(()=>{
+    //     basketProductsQuantity = JSON.parse(sessionStorage.getItem('Basket-Products'))?.filter(el=> el.lang === currentLanguage).length;
+    // },[basketProductsQuantity])
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollWindow);
     }, []);
 
     const onScrollWindow = () => {
-        if (window.innerWidth < 1100) {
-            setScrollDown(false);
-        } else {
-            setShowNavBar(false);
+        // if (window.innerWidth < 1100) {
+        //     setScrollDown(false);
+        // } else {
+            
             if (window.scrollY > 10) setScrollDown(true);
             else setScrollDown(false);
-        }
+        // }
     };
 
-    const navigate = useNavigate();
+    const logoutFunc = ()=>{
+        sessionStorage.setItem("user_token", '');
+        localStorage.setItem("activeHearts", null);
+
+        navigate('/');
+        window.location.reload();
+
+    }
 
   return (
     <div className='Header'>
 
         <div className='HeaderTop'>
             <div className='HeaderLeft'>
-                <i className=" Icone fa-solid fa-unlock-keyhole"></i>
-                <div className='Div' onClick={()=> navigate('/login')}>{navbar?.[0]?.log.split(', ')[0]}</div>
+                {isLoggedIn ? <i className=" Icone fa-solid fa-user"></i>: <i className=" Icone fa-solid fa-unlock-keyhole"></i>}
+                {isLoggedIn ? <div className='Div'>{userName}</div>: <div className='Div' onClick={()=> navigate('/login')}>{navbar?.[0]?.log.split(', ')[0]}</div>}
                 <div className='border'></div>
-                <div className='Div' onClick={()=> navigate('/register')}>{navbar?.[0]?.log.split(', ')[1]}</div>
+                {isLoggedIn ? <i className=" Div fa-solid fa-right-from-bracket" onClick={()=> logoutFunc()}></i>: <div className='Div' onClick={()=> navigate('/register')}>{navbar?.[0]?.log.split(', ')[1]}</div>}
                 <div className='border'></div>
                 {basketProductsQuantity != null && basketProductsQuantity != '0' ? <i className=" Icone fa-solid fa-bag-shopping" onClick={()=> navigate('/basket')}><div className=''>{basketProductsQuantity}</div></i>
                 :
                 <i className=" Icone fa-solid fa-bag-shopping" onClick={()=> navigate('/basket')}></i>
                 }
                 
-                <i className=" Icone fa-regular fa-heart"></i>
+                <i className=" Icone fa-regular fa-heart" onClick={()=> {
+                    if(sessionStorage.getItem("user_token")){
+                        navigate('/favorites')
+                    }else{
+                        navigate('/login')
+                    }
+                }}></i>
             </div>
             <div className='HeaderRight'>
                 <i className="Icone fa-solid fa-phone"></i>
                 <div className='Div'>+374 55 55 55 55</div>
                     <SelectLanguage />
-                
             </div>
 
         </div>

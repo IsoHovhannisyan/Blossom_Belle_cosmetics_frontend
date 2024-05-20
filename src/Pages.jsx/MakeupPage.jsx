@@ -8,7 +8,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import axios from '../axios';
 
 
-export function MakeupPage() {
+export function MakeupPage({basketProductsQuantity, setBasketProductsQuantity}) {
 
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
 
@@ -72,10 +72,10 @@ export function MakeupPage() {
         </div>    
       </div>
       <div className='Products_Box'>
-        <div className={toggle === 1 ? "box show": 'box'}> {<Face makeUp={makeUp} />}</div>
-        <div className={toggle === 2 ? "box show": 'box'}> {<Eye makeUp={makeUp}/>}</div>
-        <div className={toggle === 3 ? "box show": 'box'}> {<Cheek makeUp={makeUp} />}</div>
-        <div className={toggle === 4 ? "box show": 'box'}> {<Lip makeUp={makeUp} />}</div>
+        <div className={toggle === 1 ? "box show": 'box'}> {<Face makeUp={makeUp} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 2 ? "box show": 'box'}> {<Eye makeUp={makeUp} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 3 ? "box show": 'box'}> {<Cheek makeUp={makeUp} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 4 ? "box show": 'box'}> {<Lip makeUp={makeUp} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
       </div>
       
     </div>:

@@ -4,7 +4,7 @@ import axios from '../axios';
 import FadeLoader from "react-spinners/FadeLoader";
 import { GiftsSet } from '../component/Gifts/GiftsSet';
 
-export function GiftsPage() {
+export function GiftsPage({basketProductsQuantity, setBasketProductsQuantity}) {
   const currentLanguage = localStorage.getItem('Blossom-Belle-Language') || 'en';
   const [gift, setGift] = useState([]);
   const [categories,setCategories] = useState([]);
@@ -48,7 +48,7 @@ export function GiftsPage() {
       </div>
 
       <div className='Products_Box'>
-        <div className={toggle === 1 ? "box show": 'box'}> {< GiftsSet gift={gift}/>}</div>
+        <div className={toggle === 1 ? "box show": 'box'}> {< GiftsSet gift={gift} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity}/>}</div>
         {/* <div className={toggle === 2 ? "box show": 'box'}> {< LipBrushes brush={brush} />}</div> */}
       </div>
     </div>:

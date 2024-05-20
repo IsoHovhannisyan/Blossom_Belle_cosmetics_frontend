@@ -10,7 +10,7 @@ import axios from '../axios';
 
 
 
-export function HairPage() {
+export function HairPage({basketProductsQuantity, setBasketProductsQuantity}) {
   // localStorage.clear();
 
   const [hair, setHair] = useState([]);
@@ -74,10 +74,10 @@ export function HairPage() {
       </div>
 
       <div className='Products_Box'>
-        <div className={toggle === 1 ? "box show": 'box'}> {<Shampoo hair={hair} />}</div>
-        <div className={toggle === 2 ? "box show": 'box'}> {<Conditioner hair={hair} />}</div>
-        <div className={toggle === 3 ? "box show": 'box'}> {<HairOil hair={hair} />}</div>
-        <div className={toggle === 4 ? "box show": 'box'}> {<HairMask hair={hair} />}</div>
+        <div className={toggle === 1 ? "box show": 'box'}> {<Shampoo hair={hair} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 2 ? "box show": 'box'}> {<Conditioner hair={hair} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 3 ? "box show": 'box'}> {<HairOil hair={hair} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
+        <div className={toggle === 4 ? "box show": 'box'}> {<HairMask hair={hair} basketProductsQuantity={basketProductsQuantity} setBasketProductsQuantity={setBasketProductsQuantity} />}</div>
       </div>
     </div>:
     <div className='FadeLoader'>
