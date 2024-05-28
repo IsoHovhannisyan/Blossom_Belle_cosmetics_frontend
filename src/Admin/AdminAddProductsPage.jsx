@@ -292,9 +292,6 @@ export function AdminAddProductsPage() {
                       <div className=' w-[8%] h-[5rem] pt-6 border-r-2 font-bold'>{el.best_seller ? el.best_seller : 'false'}</div>
                       <div className=' w-[8%] h-[5rem] pt-6 border-r-2 font-bold'>{el.sale ? el.sale : '0'}</div>
                       <div className=' w-[8%] h-[5rem] pt-6 border-r-2 font-bold'>
-                        <button className='Admin_Products_btn' onClick={() => navigate(`/admin/edit/product?path=${el.path}&image=${el.image}&id=${el.id}`)}>
-                          Edit
-                        </button>
                         <button className='Admin_Products_btn' onClick={() => removeProduct(el.image)}>
                           Delete
                         </button>
