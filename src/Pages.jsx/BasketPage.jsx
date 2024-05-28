@@ -157,7 +157,7 @@ export function BasketPage({basketProductsQuantity, setBasketProductsQuantity}) 
                         {
                             basketProductsCurrentLang.map((el, index) => <div className='BasketProduct'>
                                 <div className='Image' onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)}>
-                                    <img src={`https://blossom-belle-cosmetics.vercel.app${el?.image}`} alt="" />
+                                    <img src={`http://localhost:8000/${el.image}`} alt="" />
                                 </div>
 
                                 <div className='Basket_Product_Title'>

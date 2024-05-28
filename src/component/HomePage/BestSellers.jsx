@@ -216,7 +216,7 @@ export default function BestSellers(props) {
               >
               <div className='image' onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)} >
                 <div className='ImageBackground' id={index}></div>
-                <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index} className='img' alt="" />
+                <img src={`http://localhost:8000/${el.image}`} id={index} className='img' alt="" />
                 <div className={el.new ? 'new active': 'new'}>
                   <img src={New} alt="" />
                 </div>

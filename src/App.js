@@ -109,7 +109,6 @@ export function App() {
           
           <Route path='/manager'  element={< AdminLoginPage />}/>
           <Route path='/manager/add/product' element={<AdminAddProductsPage />} />
-          <Route path='/admin/edit/product'  element={< AdminEditProductPage />}/>
           
         </Routes>
       <Footer footer={footer} />

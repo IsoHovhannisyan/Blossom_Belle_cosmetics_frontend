@@ -252,7 +252,7 @@ export function Checkout({ setMyData, setCheckoutData, setConfirmData, basketPro
                     basketProductsCurrentLang.map(el => <div className='Order_summary_product'>
                         <div className='ImageAndTitle'>
                             <div className='image'>
-                                <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} alt="" />
+                                <img src={`http://localhost:8000/${el.image}`} alt="" />
                             </div>
                             <div className='title'>
                                 <h3>{el.title}</h3>

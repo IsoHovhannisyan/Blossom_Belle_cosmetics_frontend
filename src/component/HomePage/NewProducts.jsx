@@ -213,7 +213,7 @@ export default function NewProducts(props) {
                 >
                 <div className='image' onClick={()=> navigate(`/product?path=${el.path}&id=${el.id}`)} >
                   <div className='ImageBackground' id={index + props.indexForNewProducts}></div>
-                  <img src={`https://blossom-belle-cosmetics.vercel.app${el.image}`} id={index + props.indexForNewProducts} className='img' alt="" />
+                  <img src={`http://localhost:8000/${el.image}`} id={index + props.indexForNewProducts} className='img' alt="" />
                   <div className={el.new ? 'new active': 'new'}>
                     <img src={New} alt="" />
                   </div>
